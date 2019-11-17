@@ -2,6 +2,7 @@ module.exports = {
   extends: ['react-app', 'airbnb', 'prettier', 'prettier/react'],
   plugins: ['prettier'],
   rules: {
+    "react/static-property-placement": ['error', 'static public field'],
     'react/jsx-filename-extension': [
       1,
       {
