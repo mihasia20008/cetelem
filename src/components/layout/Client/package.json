@@ -1,0 +1,6 @@
+{
+  "name": "client-layout",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Client.jsx"
+}
