@@ -1,0 +1,6 @@
+{
+  "name": "facebook-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FacebookIcon.jsx"
+}

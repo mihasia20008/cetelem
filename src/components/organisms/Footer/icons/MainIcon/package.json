@@ -1,0 +1,6 @@
+{
+  "name": "main-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MainIcon.jsx"
+}

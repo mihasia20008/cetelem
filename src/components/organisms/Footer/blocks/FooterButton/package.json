@@ -1,0 +1,6 @@
+{
+  "name": "footer-button",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FooterButton.jsx"
+}
