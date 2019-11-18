@@ -48,7 +48,7 @@ class Header extends PureComponent {
 
     return (
       <>
-        <LocationSelector />
+        <LocationSelector showIcon />
         <a className={styles.phone} href="tel: 88005005503">
           8 800 500 55 03
         </a>
@@ -81,7 +81,7 @@ class Header extends PureComponent {
         <Container>
           <div className={styles.content}>
             <Link to="/">
-              <img src={logo} alt="Cetelem" />
+              <img src={logo} alt="Сетелем" />
             </Link>
             {this.renderNavigation()}
             <div className={styles.spacer} />
