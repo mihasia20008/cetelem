@@ -1,0 +1,6 @@
+{
+  "name": "location-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LocationIcon.jsx"
+}

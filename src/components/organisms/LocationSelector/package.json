@@ -1,0 +1,6 @@
+{
+  "name": "location-selector",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LocationSelector.jsx"
+}

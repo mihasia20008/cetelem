@@ -1,4 +1,58 @@
 .header {
-  height: 200px;
-  background-color: #22b25c;
+  padding-top: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #fff;
+}
+
+.filledHeader {
+  background-color: #e8f7ef;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  margin-left: 30px;
+  font-weight: 500;
+  color: #7e7e7e;
+  text-decoration: none;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.activeLink {
+  color: #000;
+  cursor: default;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.phone,
+.personal {
+  margin-left: 60px;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    color: #7e7e7e;
+  }
+}
+
+.menuButton {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

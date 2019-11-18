@@ -1,6 +1,0 @@
-{
-  "name": "main-client-page",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./MainClient.jsx"
-}

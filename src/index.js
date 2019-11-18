@@ -9,14 +9,17 @@ import Routes from './routes';
 import store from './redux/configureStore';
 
 import history from './utilities/history';
+import { LayoutContextProvider } from './utilities/layoutContext';
 
 render(
   <Provider store={store}>
-    <Router history={history}>
-      <App>
-        <Routes />
-      </App>
-    </Router>
+    <LayoutContextProvider>
+      <Router history={history}>
+        <App>
+          <Routes />
+        </App>
+      </Router>
+    </LayoutContextProvider>
   </Provider>,
   document.getElementById('root')
 );

@@ -1,0 +1,6 @@
+{
+  "name": "find-cars-page",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CarsPage.jsx"
+}

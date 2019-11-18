@@ -21,22 +21,19 @@ class App extends PureComponent {
     return location.pathname.search('/admin') === 0;
   }
 
+  get isIndexPage() {
+    const { location } = this.props;
+    return location.pathname === '/';
+  }
+
   render() {
     const { children } = this.props;
 
     if (this.isAdminPages) {
-      return (
-        <AdminLayout>
-          {children}
-        </AdminLayout>
-      )
+      return <AdminLayout>{children}</AdminLayout>;
     }
 
-    return (
-      <ClientLayout>
-        {children}
-      </ClientLayout>
-    );
+    return <ClientLayout isIndexPage={this.isIndexPage}>{children}</ClientLayout>;
   }
 }
 

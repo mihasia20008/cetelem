@@ -1,16 +1,21 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import Header from '../../organisms/Header';
 
 class ClientLayout extends PureComponent {
+  static propTypes = {
+    isIndexPage: PropTypes.bool.isRequired,
+  };
+
   render() {
-    const { children } = this.props;
+    const { children, isIndexPage } = this.props;
 
     return (
-      <div>
-        <Header />
+      <>
+        <Header filled={isIndexPage} />
         {children}
-      </div>
+      </>
     );
   }
 }
