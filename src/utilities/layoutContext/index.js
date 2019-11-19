@@ -176,7 +176,6 @@ export const withLayoutContext = Component =>
   function LayoutContextWrapper(props) {
     return (
       <LayoutContext.Consumer>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         {layoutState => <Component {...props} {...sanityCheck(layoutState)} />}
       </LayoutContext.Consumer>
     );

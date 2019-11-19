@@ -1,0 +1,6 @@
+{
+  "name": "admin-login-page",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Login.jsx"
+}

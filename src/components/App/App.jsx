@@ -2,8 +2,12 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+import { ThemeProvider } from '@material-ui/styles';
+
 import AdminLayout from '../layout/Admin';
 import ClientLayout from '../layout/Client';
+
+import theme from './theme';
 
 class App extends PureComponent {
   static propTypes = {
@@ -30,7 +34,11 @@ class App extends PureComponent {
     const { children } = this.props;
 
     if (this.isAdminPages) {
-      return <AdminLayout>{children}</AdminLayout>;
+      return (
+        <ThemeProvider theme={theme}>
+          <AdminLayout>{children}</AdminLayout>
+        </ThemeProvider>
+      );
     }
 
     return <ClientLayout isIndexPage={this.isIndexPage}>{children}</ClientLayout>;

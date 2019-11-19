@@ -3,6 +3,8 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     "react/static-property-placement": ['error', 'static public field'],
+    'react/jsx-props-no-spreading': 0,
+    'import/prefer-default-export': 0,
     'react/jsx-filename-extension': [
       1,
       {

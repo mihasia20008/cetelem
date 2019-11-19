@@ -9,7 +9,6 @@ import LocationSelector from '../LocationSelector';
 
 import { withLayoutContext } from '../../../utilities/layoutContext';
 
-import logo from './logo.svg';
 import styles from './Header.module.scss';
 
 class Header extends PureComponent {
@@ -81,7 +80,7 @@ class Header extends PureComponent {
         <Container>
           <div className={styles.content}>
             <Link to="/">
-              <img src={logo} alt="Сетелем" />
+              <img src="/images/logo.svg" alt="Сетелем" />
             </Link>
             {this.renderNavigation()}
             <div className={styles.spacer} />

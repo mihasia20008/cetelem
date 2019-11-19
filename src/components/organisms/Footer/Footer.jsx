@@ -12,10 +12,6 @@ import FacebookIcon from './icons/FacebookIcon';
 import VkIcon from './icons/VkIcon';
 import OkIcon from './icons/OkIcon';
 
-import logo from './images/logo.svg';
-import AppStoreLogo from './images/AppStore.png';
-import GooglePlayLogo from './images/GooglePlay.png';
-
 import styles from './Footer.module.scss';
 
 class Footer extends PureComponent {
@@ -27,7 +23,7 @@ class Footer extends PureComponent {
             <div className={styles.top}>
               <div className={styles.main}>
                 <Link to="/" className={styles.logo}>
-                  <img src={logo} alt="Сетелем" />
+                  <img src="/images/footerLogo.svg" alt="Сетелем" />
                 </Link>
                 <div className={styles.location}>
                   Выберите город:
@@ -90,8 +86,8 @@ class Footer extends PureComponent {
                 </p>
               </div>
               <div className={styles.download}>
-                <img className={styles.downloadLogo} src={AppStoreLogo} alt="AppStore logo" />
-                <img className={styles.downloadLogo} src={GooglePlayLogo} alt="GooglePlay logo" />
+                <img className={styles.downloadLogo} src="/images/AppStore.png" alt="AppStore logo" />
+                <img className={styles.downloadLogo} src="/images/GooglePlay.png" alt="GooglePlay logo" />
               </div>
             </div>
           </div>

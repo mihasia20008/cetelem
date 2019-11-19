@@ -6,7 +6,6 @@ import styles from './FooterButton.module.scss';
 
 function FooterButton({ to, children, className, ...restProps }) {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <a href={to} className={cls(styles.button, className)} {...restProps}>
       {children}
     </a>
