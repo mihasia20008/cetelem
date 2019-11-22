@@ -11,7 +11,7 @@ import useCloseOnOutsideEvents from './useCloseOnOutsideEvents';
 import styles from './Dropdown.module.scss';
 
 function Dropdown(props) {
-  const { className, selected, initialName, options, disabled, onSelect } = props;
+  const { className, filled, selected, initialName, options, disabled, onSelect } = props;
 
   const dropdownRef = useRef(null);
 
@@ -23,10 +23,7 @@ function Dropdown(props) {
   // т к handleBlur не всегда вызывается в safari
   useCloseOnOutsideEvents({
     ref: dropdownRef,
-    callback: useCallback(
-      () => setOpen(false),
-      [setOpen]
-    ),
+    callback: useCallback(() => setOpen(false), [setOpen]),
   });
 
   const handleBlur = useCallback(
@@ -93,7 +90,10 @@ function Dropdown(props) {
   };
 
   return (
-    <div ref={dropdownRef} className={cls(styles.Dropdown, className)}>
+    <div
+      ref={dropdownRef}
+      className={cls(styles.Dropdown, filled && styles.filledDropdown, className)}
+    >
       {renderTrigger()}
       {renderOverlay()}
     </div>
@@ -111,6 +111,7 @@ Dropdown.propTypes = {
     })
   ),
   disabled: PropTypes.bool,
+  filled: PropTypes.bool,
   onSelect: PropTypes.func.isRequired,
 };
 
@@ -120,6 +121,7 @@ Dropdown.defaultProps = {
   initialName: 'Выберите',
   options: [],
   disabled: false,
+  filled: false,
 };
 
 export default Dropdown;

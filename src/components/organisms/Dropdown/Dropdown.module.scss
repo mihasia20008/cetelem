@@ -2,6 +2,26 @@
   position: relative;
 }
 
+.filledDropdown {
+  .trigger {
+    padding: 12px 15px;
+    width: 100%;
+    max-width: none;
+    border-radius: 2px;
+    background-color: #f8f8f8;
+  }
+
+  .triggerText {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .overlay {
+    left: 0;
+    max-width: none;
+  }
+}
+
 .trigger {
   display: flex;
   align-items: center;
@@ -28,6 +48,7 @@
   flex-grow: 1;
   font-size: 16px;
   font-weight: 500;
+  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -51,6 +72,7 @@
   min-width: 130px;
   max-height: 210px;
   background: #fff;
+  border-radius: 2px;
   overflow-y: scroll;
   box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.2);
 }

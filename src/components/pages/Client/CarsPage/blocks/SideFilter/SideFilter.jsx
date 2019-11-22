@@ -1,9 +1,40 @@
 import React, { PureComponent } from 'react';
 
-class CarsFilter extends PureComponent {
+import Dropdown from '../../../../../organisms/Dropdown';
+
+import styles from './SideFilter.module.scss';
+
+class SideFilter extends PureComponent {
   render() {
-    return <div  style={{ width: '100%', backgroundColor: 'yellow', height: '500px' }} />;
+    return (
+      <div className={styles.SideFilter}>
+        <Dropdown
+          filled
+          selected={2}
+          initialName="Модель"
+          options={[
+            {
+              id: 1,
+              name: 'Модель 1'
+            },
+            {
+              id: 2,
+              name: 'Модель 2'
+            },
+            {
+              id: 3,
+              name: 'Модель 3'
+            },
+            {
+              id: 4,
+              name: 'Модель 4'
+            },
+          ]}
+          onSelect={() => {}}
+        />
+      </div>
+    );
   }
 }
 
-export default CarsFilter;
+export default SideFilter;
