@@ -79,7 +79,7 @@ class Header extends PureComponent {
       <div className={cls(styles.header, filled && styles.filledHeader)}>
         <Container>
           <div className={styles.content}>
-            <Link to="/">
+            <Link to="/" className={styles.logo}>
               <img src="/images/logo.svg" alt="Сетелем" />
             </Link>
             {this.renderNavigation()}

@@ -13,6 +13,18 @@
   align-items: center;
 }
 
+.logo {
+  transition: 0.2s ease-in;
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:focus {
+    outline: none;
+    opacity: 0.7;
+  }
+}
+
 .link {
   margin-left: 30px;
   font-weight: 500;
@@ -22,6 +34,11 @@
 
   &:hover {
     color: #000;
+  }
+
+  &:focus {
+    color: #222;
+    outline: none;
   }
 }
 
@@ -44,6 +61,11 @@
 
   &:hover {
     color: #7e7e7e;
+  }
+
+  &:focus {
+    color: #555;
+    outline: none;
   }
 }
 
