@@ -1,0 +1,6 @@
+{
+  "name": "admin-sidebar-nav",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Navigation.jsx"
+}

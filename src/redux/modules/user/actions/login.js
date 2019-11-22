@@ -12,7 +12,7 @@ export default function loginUser(username, password) {
 
       if (!error) {
         localStorage.setItem(AUTH_KEY, data.token);
-        dispatch({ type: T.USER_LOGIN_SUCCESS, data });
+        dispatch({ type: T.USER_LOGIN_SUCCESS, data: data.user });
         return;
       }
 

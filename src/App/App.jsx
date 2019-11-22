@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import _get from 'lodash/get';
+
 import { ThemeProvider } from '@material-ui/styles';
 
 import Routes from '../routes';
-
 import AdminLayout from '../components/layout/Admin';
 import ClientLayout from '../components/layout/Client';
 
 import checkAuthStatus from '../utilities/checkAuthStatus';
+
+import { resetLoginStatus } from "../redux/modules/user/actions";
 
 import theme from './theme';
 
@@ -35,13 +38,24 @@ class App extends PureComponent {
     return location.pathname === '/';
   }
 
+  handleLogout = () => {
+    const { dispatch } = this.props;
+    dispatch(resetLoginStatus());
+  };
+
   render() {
     if (this.isAdminPages) {
+      const { location, userType, userName } = this.props;
       const authorized = checkAuthStatus();
       return (
         <ThemeProvider theme={theme}>
-          <AdminLayout authorized={authorized}>
-            <Routes authorized={authorized} />
+          <AdminLayout
+            authorized={authorized}
+            pathname={location.pathname}
+            userName={userName}
+            onLogout={this.handleLogout}
+          >
+            <Routes authorized={authorized} userType={userType} />
           </AdminLayout>
         </ThemeProvider>
       );
@@ -58,6 +72,8 @@ class App extends PureComponent {
 const mapStateToProps = state => {
   return {
     success: state.user.success,
+    userType: _get(state, 'user.data.role', null),
+    userName: _get(state, 'user.data.username', ''),
   };
 };
 

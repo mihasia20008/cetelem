@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cls from 'classnames';
 
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 
-import TopBar from '../../organisms/Admin/Topbar';
+import Topbar from '../../organisms/Admin/Topbar';
+import Sidebar from '../../organisms/Admin/Slidebar';
 // import Footer from '../../organisms/Admin/Footer';
 
 const useStyles = makeStyles(theme => ({
@@ -24,28 +25,41 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const AdminLayout = ({ children, authorized }) => {
+const AdminLayout = ({ children, authorized, pathname, userName, onLogout }) => {
   const styles = useStyles();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
-  // const [openSidebar, setOpenSidebar] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(false);
 
-  // const handleSidebarOpen = () => {
-  //   setOpenSidebar(true);
-  // };
+  const handleSidebarOpen = () => {
+    setOpenSidebar(true);
+  };
 
-  // const handleSidebarClose = () => {
-  //   setOpenSidebar(false);
-  // };
+  const handleSidebarClose = () => {
+    setOpenSidebar(false);
+  };
 
-  // const shouldOpenSidebar = isDesktop ? true : openSidebar;
+  useEffect(handleSidebarClose, [pathname]);
+
+  const shouldOpenSidebar = isDesktop ? true : openSidebar;
 
   if (authorized) {
     return (
       <div className={cls(styles.root, isDesktop && styles.shiftContent)}>
-        <TopBar authorized onSidebarOpen={() => {}} />
+        <Topbar
+          authorized
+          userName={userName}
+          onSidebarOpen={handleSidebarOpen}
+          onLogout={onLogout}
+        />
+        <Sidebar
+          onClose={handleSidebarClose}
+          open={shouldOpenSidebar}
+          variant={isDesktop ? 'persistent' : 'temporary'}
+          onLogout={onLogout}
+        />
         <div className={styles.content}>{children}</div>
       </div>
     );
@@ -53,14 +67,21 @@ const AdminLayout = ({ children, authorized }) => {
 
   return (
     <div className={styles.root}>
-      <TopBar authorized={false} onSidebarOpen={() => {}} />
+      <Topbar authorized={false} onSidebarOpen={() => {}} />
       <div className={styles.content}>{children}</div>
     </div>
   );
 };
 
 AdminLayout.propTypes = {
+  onLogout: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  authorized: PropTypes.bool.isRequired,
+  pathname: PropTypes.string,
+};
+
+AdminLayout.defaultProps = {
+  pathname: '',
 };
 
 export default AdminLayout;
