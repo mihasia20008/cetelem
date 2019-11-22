@@ -1,0 +1,9 @@
+.TopFilter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.filterItem:not(:first-child) {
+  margin-left: 40px;
+}

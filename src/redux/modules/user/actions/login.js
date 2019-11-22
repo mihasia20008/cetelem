@@ -18,6 +18,7 @@ export default function loginUser(username, password) {
 
       dispatch({ type: T.USER_LOGIN_ERROR, data: error });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       dispatch({ type: T.USER_LOGIN_ERROR, data: { message: 'Ошибка выполнения авторизации' } });
     } finally {

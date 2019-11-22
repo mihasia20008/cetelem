@@ -1,0 +1,34 @@
+.container {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+.sideFilter {
+  flex-basis: 297px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex-grow: 1;
+  padding-left: 30px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.title {
+  flex-shrink: 0;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+}

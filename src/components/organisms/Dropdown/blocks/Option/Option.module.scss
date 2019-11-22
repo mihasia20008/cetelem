@@ -1,0 +1,40 @@
+.Option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  width: 100%;
+  border: none;
+  color: #7e7e7e;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    color: #000;
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+    color: #222;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.name {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-left: 10px;
+  width: 14px;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "cars-list",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CarsList.jsx"
+}

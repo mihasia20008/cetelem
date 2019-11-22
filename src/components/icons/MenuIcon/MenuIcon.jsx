@@ -10,12 +10,7 @@ function MenuIcon({ className }) {
       xmlns="http://www.w3.org/2000/svg"
       className={cls(styles.MenuIcon, className)}
     >
-      <path
-        // fill-rule="evenodd"
-        // clip-rule="evenodd"
-        d="M0 0H26V2H0V0ZM0 9H26V11H0V9ZM26 18H0V20H26V18Z"
-        fill="#2B2A29"
-      />
+      <path d="M0 0H26V2H0V0ZM0 9H26V11H0V9ZM26 18H0V20H26V18Z" />
     </svg>
   );
 }

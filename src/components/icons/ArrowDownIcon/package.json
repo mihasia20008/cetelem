@@ -1,0 +1,6 @@
+{
+  "name": "arrow-down-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ArrowDownIcon.jsx"
+}

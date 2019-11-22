@@ -16,6 +16,7 @@ axios.interceptors.request.use(async (config) => {
     }
     return config;
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
     return config;
   }
