@@ -6,8 +6,7 @@ import { makeStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 
 import TopBar from '../../organisms/Admin/Topbar';
-
-import checkAuthStatus from '../../../utilities/checkAuthStatus';
+// import Footer from '../../organisms/Admin/Footer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,14 +24,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children, authorized }) => {
   const styles = useStyles();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
-  const authorized = checkAuthStatus();
-
   // const [openSidebar, setOpenSidebar] = useState(false);
 
   // const handleSidebarOpen = () => {
@@ -45,9 +42,18 @@ const AdminLayout = ({ children }) => {
 
   // const shouldOpenSidebar = isDesktop ? true : openSidebar;
 
+  if (authorized) {
+    return (
+      <div className={cls(styles.root, isDesktop && styles.shiftContent)}>
+        <TopBar authorized onSidebarOpen={() => {}} />
+        <div className={styles.content}>{children}</div>
+      </div>
+    );
+  }
+
   return (
-    <div className={cls(styles.root, authorized && isDesktop && styles.shiftContent)}>
-      <TopBar authorized={authorized} onSidebarOpen={() => {}} />
+    <div className={styles.root}>
+      <TopBar authorized={false} onSidebarOpen={() => {}} />
       <div className={styles.content}>{children}</div>
     </div>
   );

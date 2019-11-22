@@ -1,7 +1,7 @@
 import { AUTH_KEY } from "../../constants";
 
 export default function () {
-  const authorized = localStorage.getItem(AUTH_KEY);
+  const token = localStorage.getItem(AUTH_KEY);
 
-  return authorized === 'true';
+  return Boolean(token);
 }

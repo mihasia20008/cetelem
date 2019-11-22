@@ -3,11 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { RoutesPaths } from '../constants';
 
-import checkAuthStatus from '../utilities/checkAuthStatus';
-
-function AdminRoute({ path, component: Component, ...restProps }) {
-  const authorized = checkAuthStatus();
-
+function AdminRoute({ authorized, path, component: Component, ...restProps }) {
   return (
     <Route
       {...restProps}

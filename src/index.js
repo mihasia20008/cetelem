@@ -3,8 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 
-import App from './components/App';
-import Routes from './routes';
+import App from './App';
 
 import store from './redux/configureStore';
 
@@ -15,9 +14,7 @@ render(
   <Provider store={store}>
     <LayoutContextProvider>
       <Router history={history}>
-        <App>
-          <Routes />
-        </App>
+        <App />
       </Router>
     </LayoutContextProvider>
   </Provider>,

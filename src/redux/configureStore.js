@@ -2,6 +2,8 @@ import { createStore as reduxCreateStore, applyMiddleware, compose } from 'redux
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 
+import { ENABLE_LOGGER } from '../constants';
+
 import rootReducer from './modules/reducer';
 
 export const getEnhancer = () => {
@@ -31,7 +33,7 @@ function createStore(initialStore) {
 
   if (
     process.env.NODE_ENV !== 'production' &&
-    localStorage.getItem('OTT/hotels/enableReduxLogger')
+    localStorage.getItem(ENABLE_LOGGER) === 'true'
   ) {
     const logger = createLogger({
       collapsed: (getState, action, logEntry) => !logEntry.error,

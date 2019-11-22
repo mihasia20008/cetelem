@@ -1,11 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { ThemeProvider } from '@material-ui/styles';
 
-import AdminLayout from '../layout/Admin';
-import ClientLayout from '../layout/Client';
+import Routes from '../routes';
+
+import AdminLayout from '../components/layout/Admin';
+import ClientLayout from '../components/layout/Client';
+
+import checkAuthStatus from '../utilities/checkAuthStatus';
 
 import theme from './theme';
 
@@ -31,18 +36,29 @@ class App extends PureComponent {
   }
 
   render() {
-    const { children } = this.props;
-
     if (this.isAdminPages) {
+      const authorized = checkAuthStatus();
       return (
         <ThemeProvider theme={theme}>
-          <AdminLayout>{children}</AdminLayout>
+          <AdminLayout authorized={authorized}>
+            <Routes authorized={authorized} />
+          </AdminLayout>
         </ThemeProvider>
       );
     }
 
-    return <ClientLayout isIndexPage={this.isIndexPage}>{children}</ClientLayout>;
+    return (
+      <ClientLayout isIndexPage={this.isIndexPage}>
+        <Routes />
+      </ClientLayout>
+    );
   }
 }
 
-export default withRouter(App);
+const mapStateToProps = state => {
+  return {
+    success: state.user.success,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(App));

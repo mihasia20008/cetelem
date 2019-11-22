@@ -1,89 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import validate from 'validate.js';
+import _get from 'lodash/get';
 
-import { makeStyles } from '@material-ui/styles';
-import { Grid, Button, TextField, Typography } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import {
+  Grid,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+  Snackbar,
+  SnackbarContent,
+  IconButton,
+} from '@material-ui/core';
+import ErrorIcon from '@material-ui/icons/Error';
+import CloseIcon from '@material-ui/icons/Close';
 
-const schema = {
-  email: {
-    presence: { allowEmpty: false, message: '- обязательное поле!' },
-    email: {
-      message: "- неверное значение!"
-    },
-    length: {
-      maximum: 64,
-    },
-  },
-  password: {
-    presence: { allowEmpty: false, message: '- обязательное поле!' },
-    length: {
-      maximum: 128,
-    },
-  },
-};
+import { tryLogin, resetLoginStatus } from '../../../../redux/modules/user/actions';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: theme.palette.background.default,
-    height: '100%',
-  },
-  grid: {
-    height: '100%',
-  },
-  content: {
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  contentBody: {
-    flexGrow: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  form: {
-    paddingLeft: 100,
-    paddingRight: 100,
-    paddingBottom: 125,
-    flexBasis: 700,
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-    },
-  },
-  title: {
-    marginTop: theme.spacing(3),
-    textAlign: 'center',
-  },
-  textField: {
-    marginTop: theme.spacing(2),
-  },
-  buttonWrapper: {
-    position: 'relative',
-  },
-  button: {
-    margin: theme.spacing(2, 0),
-  },
-  buttonProgress: {
-    color: theme.palette.white,
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
-}));
+import { schema } from './schema';
+import { useStyles } from './styles';
 
-const Login = () => {
-  // const { history } = props;
+const Login = props => {
+  const { loading, error, errorMessage, dispatch } = props;
 
   const styles = useStyles();
 
   const [formState, setFormState] = useState({
-    isLoading: false,
     isValid: false,
     values: {},
     touched: {},
@@ -119,20 +62,12 @@ const Login = () => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    setFormState(oldFormState => ({
-      ...oldFormState,
-      isLoading: true,
-    }));
-    setTimeout(() => {
-      setFormState(oldFormState => ({
-        ...oldFormState,
-        isLoading: false,
-      }));
-    }, 2000);
-    // history.push('/');
+    dispatch(tryLogin(formState.values.login, formState.values.password));
   };
 
-  const hasError = field => (Boolean(formState.touched[field] && formState.errors[field]));
+  const hasError = field => Boolean(formState.touched[field] && formState.errors[field]);
+
+  const handleClose = () => dispatch(resetLoginStatus());
 
   return (
     <div className={styles.root}>
@@ -145,14 +80,14 @@ const Login = () => {
               </Typography>
               <TextField
                 className={styles.textField}
-                error={hasError('email')}
+                error={hasError('login')}
                 fullWidth
-                helperText={hasError('email') ? formState.errors.email[0] : null}
-                label="E-mail"
-                name="email"
+                helperText={hasError('login') ? formState.errors.login[0] : null}
+                label="Логин"
+                name="login"
                 onChange={handleChange}
                 type="text"
-                value={formState.values.email || ''}
+                value={formState.values.login || ''}
                 variant="outlined"
               />
               <TextField
@@ -179,18 +114,44 @@ const Login = () => {
                 >
                   Войти
                 </Button>
-                {formState.isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
+                {loading && <CircularProgress size={24} className={styles.buttonProgress} />}
               </div>
             </form>
           </div>
         </div>
       </Grid>
+      <Snackbar
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={error}
+        onClose={handleClose}
+        aria-describedby="login-error"
+      >
+        <SnackbarContent
+          className={styles.snackbar}
+          message={
+            <span id="client-snackbar" className={styles.snackbarMessage}>
+            <ErrorIcon className={styles.snackbarIcon} />
+              {errorMessage}
+          </span>
+          }
+          action={[
+            <IconButton key="close" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon className={styles.snackbarClose} />
+            </IconButton>,
+          ]}
+        />
+      </Snackbar>
     </div>
   );
 };
 
-// Login.propTypes = {
-//   history: PropTypes.object,
-// };
+const mapStateToProps = state => {
+  return {
+    loading: state.user.loading,
+    error: state.user.error,
+    errorMessage: _get(state, 'user.data.message', '')
+  };
+};
 
-export default withRouter(Login);
+export default connect(mapStateToProps)(Login);

@@ -10,3 +10,4 @@ export const RoutesPaths = {
 };
 
 export const AUTH_KEY = 'cetelem/authorized';
+export const ENABLE_LOGGER = 'cetelem/enableReduxLogger';
