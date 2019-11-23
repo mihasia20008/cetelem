@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import qs from 'qs';
 
 import Container from '../../../base/Container';
 
@@ -7,7 +8,7 @@ import TopFilter from './blocks/TopFilter';
 import SideFilter from './blocks/SideFilter';
 import Pagination from './blocks/Pagination';
 
-import { FILTER_TYPES, FILTER_NAMES, FILTERS_SORT } from "../../../../constants";
+import { FILTER_TYPES, FILTER_NAMES, FILTERS_SORT } from '../../../../constants';
 
 import styles from './CarsPage.module.scss';
 
@@ -206,7 +207,23 @@ class CarsPage extends PureComponent {
           value: 1400000,
         },
       },
+      pages: {
+        total: 4,
+        current: 1,
+        default: 1,
+      },
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { pages: prevPages } = prevState;
+    const { pages: nowPages } = this.state;
+    const { history, location } = this.props;
+
+    if (nowPages.current !== prevPages.current) {
+      const newQuery = { ...location.query, page: nowPages.current };
+      history.push(`${location.pathname}?${qs.stringify(newQuery)}`);
+    }
   }
 
   getFiltersByNames = (filters, names) => {
@@ -238,7 +255,7 @@ class CarsPage extends PureComponent {
           filters: {
             ...filters,
             [`${name}`]: updatedFilter,
-          }
+          },
         });
         break;
       }
@@ -252,7 +269,7 @@ class CarsPage extends PureComponent {
           filters: {
             ...filters,
             [`${name}`]: updatedFilter,
-          }
+          },
         });
         break;
       }
@@ -269,6 +286,16 @@ class CarsPage extends PureComponent {
   handleFilterApply = () => {
     // eslint-disable-next-line no-console
     console.log('apply');
+  };
+
+  handleGoToPage = page => {
+    this.setState(prevState => ({
+      ...prevState,
+      pages: {
+        ...prevState.pages,
+        current: page,
+      },
+    }));
   };
 
   renderSideFilter() {
@@ -306,6 +333,8 @@ class CarsPage extends PureComponent {
   }
 
   render() {
+    const { pages } = this.state;
+
     return (
       <div className={styles.container}>
         <Container>
@@ -317,7 +346,11 @@ class CarsPage extends PureComponent {
                 {this.renderTopFilters()}
               </div>
               <CarsList />
-              <Pagination />
+              <Pagination
+                current={pages.current}
+                total={pages.total}
+                onGoToPage={this.handleGoToPage}
+              />
             </div>
           </div>
         </Container>

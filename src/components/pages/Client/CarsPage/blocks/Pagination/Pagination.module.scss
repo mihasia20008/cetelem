@@ -1,0 +1,73 @@
+.Pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.page {
+  margin-right: 5px;
+  width: 32px;
+  height: 32px;
+  color: #000;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #e7e7e7;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: #d0d0d0;
+  }
+}
+
+.activePage {
+  background-color: #319f5e;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    cursor: default;
+    background-color: #319f5e;
+  }
+}
+
+.nextPage {
+  padding: 12px 0;
+  width: 93px;
+  background-color: #f4f4f4;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #e7e7e7;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: #d0d0d0;
+  }
+}
+
+.nextPageIcon {
+  margin-left: 10px;
+  fill: #000;
+}

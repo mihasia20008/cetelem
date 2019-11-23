@@ -1,0 +1,6 @@
+{
+  "name": "arrow-right-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ArrowRightIcon.jsx"
+}
