@@ -11,7 +11,7 @@ import useCloseOnOutsideEvents from './useCloseOnOutsideEvents';
 import styles from './Dropdown.module.scss';
 
 function Dropdown(props) {
-  const { className, filled, selected, initialName, options, disabled, onSelect } = props;
+  const { name, className, filled, selected, initialText, options, disabled, onSelect } = props;
 
   const dropdownRef = useRef(null);
 
@@ -47,11 +47,13 @@ function Dropdown(props) {
   const handleOpen = () => setOpen(!open);
 
   const handleSelect = id => {
-    onSelect(id);
+    onSelect(name, id);
     setOpen(false);
   };
 
-  const selectedName = (options.find(option => option.id === selected) || {}).name;
+  const selectedText = (options.find(option => option.id === selected) || {}).name;
+
+  const text = selectedText || initialText;
 
   const renderTrigger = () => {
     return (
@@ -62,7 +64,14 @@ function Dropdown(props) {
         onClick={handleOpen}
         onBlur={handleBlur}
       >
-        <span className={styles.triggerText}>{selectedName || initialName}</span>
+        <span
+          className={cls(
+            styles.triggerText,
+            text === selectedText ? styles.selectedText : styles.initialText
+          )}
+        >
+          {text}
+        </span>
         <ArrowDownIcon className={cls(styles.triggerIcon, open && styles.openTriggerIcon)} />
       </button>
     );
@@ -101,9 +110,10 @@ function Dropdown(props) {
 }
 
 Dropdown.propTypes = {
+  name: PropTypes.string.isRequired,
   className: PropTypes.string,
   selected: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  initialName: PropTypes.string,
+  initialText: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -118,7 +128,7 @@ Dropdown.propTypes = {
 Dropdown.defaultProps = {
   className: undefined,
   selected: '',
-  initialName: 'Выберите',
+  initialText: 'Выберите',
   options: [],
   disabled: false,
   filled: false,

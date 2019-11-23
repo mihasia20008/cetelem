@@ -1,0 +1,58 @@
+.Checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.itemWrap {
+  width: 65px;
+  text-align: center;
+}
+
+.Item {
+  position: relative;
+  padding: 0 0 8px;
+  border: none;
+  background-color: transparent;
+  color: #b6b6b6;
+  font-size: 20px;
+  font-weight: 700;
+
+  &:hover {
+    cursor: pointer;
+    color: #7e7e7e;
+  }
+
+  &:focus {
+    outline: none;
+    color: #7e7e7e;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: #22b25c;
+    opacity: 0.5;
+    transition: all 0.2s linear;
+  }
+}
+
+.checkedItem {
+  color: #000;
+
+  &:hover,
+  &:focus {
+    color: #000;
+  }
+
+  &::after {
+    width: 100%;
+    left: 0;
+    right: 0;
+    opacity: 1;
+  }
+}

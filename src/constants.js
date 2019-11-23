@@ -35,3 +35,45 @@ export const DEALER_ROUTES_LIST = [
 
 export const AUTH_KEY = 'cetelem/authorized';
 export const ENABLE_LOGGER = 'cetelem/enableReduxLogger';
+
+export const FILTER_TYPES = {
+  SELECT: 'select',
+  RANGE: 'range',
+  CHECKBOX: 'checkbox',
+};
+
+export const FILTER_NAMES = {
+  CITY: 'CITY',
+  SALON: 'SALON',
+  SORT: 'SORT',
+  TYPE: 'TYPE',
+  PRICE: 'PRICE',
+  MARK: 'MARK',
+  MODEL: 'MODEL',
+  GENERATION: 'GENERATION',
+  YEAR: 'YEAR',
+  GEAR: 'GEAR',
+  BODY: 'BODY',
+  COLOR: 'COLOR',
+  TRANSMISSION: 'TRANSMISSION',
+  LIMIT: 'LIMIT',
+};
+
+export const FILTERS_SORT = {
+  HEAD: [FILTER_NAMES.CITY, FILTER_NAMES.SALON, FILTER_NAMES.SORT],
+  SIDE: {
+    TOP: [FILTER_NAMES.TYPE],
+    BOTTOM: [
+      FILTER_NAMES.PRICE,
+      FILTER_NAMES.MARK,
+      FILTER_NAMES.MODEL,
+      FILTER_NAMES.GENERATION,
+      FILTER_NAMES.YEAR,
+      FILTER_NAMES.GEAR,
+      FILTER_NAMES.BODY,
+      FILTER_NAMES.COLOR,
+      FILTER_NAMES.TRANSMISSION,
+      FILTER_NAMES.LIMIT,
+    ],
+  },
+};

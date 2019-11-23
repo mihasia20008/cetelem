@@ -1,0 +1,6 @@
+{
+  "name": "range-filter",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Range.jsx"
+}

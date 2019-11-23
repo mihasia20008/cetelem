@@ -1,0 +1,107 @@
+.Range {
+  height: 4px;
+}
+
+.singleRange {
+  .activeTrack::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    right: 100%;
+    width: 7px;
+    background-color: #22b25c;
+  }
+
+  .label,
+  .valueLabel {
+    display: none;
+  }
+}
+
+.doubleRange {
+  margin-bottom: 62px;
+
+  .track::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    right: 100%;
+    width: 7px;
+    background-color: #e4e4e4;
+  }
+
+  .valueLabel {
+    display: none;
+  }
+}
+
+.wrap {
+  padding-left: 7px;
+  padding-right: 12px;
+}
+
+.track {
+  height: 4px;
+  border-radius: 0;
+  background-color: #e4e4e4;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    z-index: 0;
+    width: 12px;
+    background-color: #e4e4e4;
+  }
+}
+
+.activeTrack {
+  background-color: #22b25c;
+  border-radius: 0;
+}
+
+.sliderContainer {
+  z-index: 2;
+}
+
+.slider {
+  top: calc(50% - 3px);
+  width: 22px;
+  height: 22px;
+  background-color: #22b25c;
+  border: 2px solid #fff;
+}
+
+.label {
+  bottom: -32px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #000;
+  font-family: TTNorms, Arial, sans-serif;
+
+  .labelContainer {
+    position: static;
+  }
+}
+
+.labelMin {
+  margin-left: -7px;
+}
+
+.labelMax {
+  margin-right: -12px;
+}
+
+.value {
+  margin-top: 25px;
+  margin-bottom: 60px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}

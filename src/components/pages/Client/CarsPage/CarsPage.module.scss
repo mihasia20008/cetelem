@@ -32,3 +32,10 @@
   margin: 0;
   white-space: nowrap;
 }
+
+.topFilters {
+  display: none;
+  @media (min-width: 1200px) {
+    display: flex;
+  }
+}
