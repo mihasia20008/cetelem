@@ -1,0 +1,6 @@
+{
+  "name": "rating-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./RatingIcon.jsx"
+}

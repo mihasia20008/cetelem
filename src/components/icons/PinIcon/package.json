@@ -1,0 +1,6 @@
+{
+  "name": "pin-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PinIcon.jsx"
+}
