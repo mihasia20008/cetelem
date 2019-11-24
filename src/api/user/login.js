@@ -1,14 +1,38 @@
-import axios from 'axios';
+// import axios from 'axios';
+
+const fakeAuth = async ({ username, password }) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      switch (true) {
+        case username.toLowerCase() === 'admin' && password.toLowerCase() === 'admin': {
+          resolve({ data: { token: 'admin-fake-token', user: { username: 'admin', role: 0 } } });
+          break;
+        }
+        case username.toLowerCase() === 'dealer' && password.toLowerCase() === 'dealer': {
+          resolve({ data: { token: 'dealer-fake-token', user: { username: 'dealer', role: 1 } } });
+          break;
+        }
+        default: {
+          resolve({ data: { error: 'invalid user' } });
+          break;
+        }
+      }
+    }, 500);
+  });
+};
 
 async function loginRequest(auth) {
   try {
+    // const {
+    //   data: { error, ...data },
+    // } = await axios({
+    //   method: 'POST',
+    //   url: '/api/login',
+    //   data: auth,
+    // });
     const {
       data: { error, ...data },
-    } = await axios({
-      method: 'POST',
-      url: '/api/login',
-      data: auth,
-    });
+    } = await fakeAuth(auth);
     if (error) {
       if (error === 'invalid user') {
         return {
