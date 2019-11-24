@@ -11,7 +11,8 @@ export default ({ authorized, userType }) => (
   <Suspense fallback={<PageLoading />}>
     <Switch>
       <Route exact path="/" component={() => <Redirect to={RoutesPaths.cars} />} />
-      <Route path={RoutesPaths.cars} component={Pages.Cars} />
+      <Route path={RoutesPaths.carsDetail} component={Pages.CarsDetail} />
+      <Route path={RoutesPaths.carsList} component={Pages.CarsList} />
 
       <AdminRoute
         authorized={authorized}

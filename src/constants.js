@@ -7,7 +7,8 @@ export const ROLES = {
 };
 
 export const RoutesPaths = {
-  cars: '/cars',
+  carsList: '/cars',
+  carsDetail: '/cars/:id',
   dealers: '/dealers',
   admin: {
     main: ADMIN_PREFIX,

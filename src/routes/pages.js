@@ -4,7 +4,9 @@ import { lazy } from "react";
 
 export const Index = lazy(() => import('../components/pages/Client/IndexPage'));
 
-export const Cars = lazy(() => import('../components/pages/Client/CarsPage'));
+export const CarsList = lazy(() => import('../components/pages/Client/CarsPage'));
+
+export const CarsDetail = lazy(() => import('../components/pages/Client/CarsDetail'));
 
 // Admin pages
 

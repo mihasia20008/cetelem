@@ -1,0 +1,13 @@
+.CarsList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.item {
+  margin-bottom: 30px;
+  flex-basis: calc(33.33% - 20px);
+  &:not(:nth-child(3n)) {
+    margin-right: 30px;
+  }
+}

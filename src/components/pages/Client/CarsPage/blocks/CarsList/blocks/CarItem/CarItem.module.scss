@@ -1,0 +1,54 @@
+.CarItem {
+}
+
+.imageWrap {
+  margin-bottom: 15px;
+  max-width: 100%;
+  max-height: 220px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.link {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    color: #7e7e7e;
+  }
+}
+
+.name {
+  margin: 0;
+  max-width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.description {
+  margin-bottom: 15px;
+  max-width: 100%;
+  color: #7e7e7e;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}
