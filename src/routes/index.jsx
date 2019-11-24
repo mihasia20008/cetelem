@@ -10,7 +10,7 @@ import AdminRoute from './AdminRoute';
 export default ({ authorized, userType }) => (
   <Suspense fallback={<PageLoading />}>
     <Switch>
-      <Route exact path="/" component={() => <Redirect to={RoutesPaths.cars} />} />
+      <Route exact path={RoutesPaths.index} component={() => <Redirect to={RoutesPaths.carsList} />} />
       <Route path={RoutesPaths.carsDetail} component={Pages.CarsDetail} />
       <Route path={RoutesPaths.carsList} component={Pages.CarsList} />
 

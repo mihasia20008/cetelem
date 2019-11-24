@@ -7,6 +7,7 @@ export const ROLES = {
 };
 
 export const RoutesPaths = {
+  index: '/',
   carsList: '/cars',
   carsDetail: '/cars/:id',
   dealers: '/dealers',

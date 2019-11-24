@@ -60,6 +60,7 @@
   width: 85px;
   height: 23px;
   font-size: 14px;
+  line-height: 13px;
   color: #ffffff;
   border-radius: 5px;
   background-color: #b5a779;
@@ -146,6 +147,8 @@
 }
 
 .info {
+  position: relative;
+  z-index: 1;
   margin: 0 60px 60px;
 }
 
@@ -153,6 +156,156 @@
   margin: 0 0 30px;
   font-size: 22px;
   font-weight: 500;
+}
+
+.mainFeatures {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 770px;
+    background-color: #efece9;
+  }
+}
+
+.featureItem {
+  flex-basis: 300px;
+  flex-shrink: 0;
+  margin-bottom: 30px;
+}
+
+.featureName {
+  margin-bottom: 9px;
+  font-size: 14px;
+  color: #7e7e7e;
+}
+
+.additionalFeatures {
+  display: flex;
+}
+
+.additionalFeaturesColumn {
+  flex-basis: 400px;
+  flex-shrink: 0;
+}
+
+.additionalFeatureItem {
+  line-height: 28px;
+}
+
+.priceSidebar {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 20px 30px 30px;
+  width: 360px;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.pricesTitle {
+  margin: 0 0 7px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: #22b25c;
+}
+
+.totalPrice {
+  margin-bottom: 30px;
+}
+
+.basePrice {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.priceWithSale {
+  margin-right: 40px;
+  color: #000;
+}
+
+.priceSale {
+  text-decoration: line-through;
+  color: #b6b6b6;
+}
+
+.salesBlock {
+  margin-bottom: 30px;
+  background: #fbf7f3;
+  border-radius: 8px;
+}
+
+.saleItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+
+  &:first-child {
+    padding-top: 20px;
+  }
+  &:last-child {
+    padding-bottom: 20px;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid #efece9;
+  }
+}
+
+.saleName {
+  line-height: 19px;
+  color: #000000;
+}
+
+.saleValue {
+  font-weight: 700;
+  line-height: 19px;
+  color: #000000;
+}
+
+.paymentsList {
+  margin-bottom: 30px;
+}
+
+.paymentItem {
+  padding: 20px 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+  &:last-child {
+    padding-bottom: 0;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid #efece9;
+  }
+}
+
+.paymentName {
+  margin-bottom: 7px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.paymentValue {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
 }
 
 .map {
