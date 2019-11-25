@@ -334,6 +334,7 @@ class CarsPage extends PureComponent {
 
   render() {
     const { pages } = this.state;
+    const { location } = this.props;
 
     return (
       <div className={styles.container}>
@@ -345,7 +346,7 @@ class CarsPage extends PureComponent {
                 <h1 className={styles.title}>Подбор автомобиля</h1>
                 {this.renderTopFilters()}
               </div>
-              <CarsList />
+              <CarsList client={location.query.client_id} />
               <Pagination
                 current={pages.current}
                 total={pages.total}

@@ -11,6 +11,7 @@ export const RoutesPaths = {
   carsList: '/cars',
   carsDetail: '/cars/:id',
   dealers: '/dealers',
+  wrong: '/wrong',
   admin: {
     main: ADMIN_PREFIX,
     login: `${ADMIN_PREFIX}/login`,

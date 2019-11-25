@@ -8,6 +8,8 @@ export const CarsList = lazy(() => import('../components/pages/Client/CarsPage')
 
 export const CarsDetail = lazy(() => import('../components/pages/Client/CarsDetail'));
 
+export const WrongUserPage = lazy(() => import('../components/pages/Client/WrongUserPage'));
+
 // Admin pages
 
 export const AdminLogin = lazy(() => import('../components/pages/Admin/Login'));

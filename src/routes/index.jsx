@@ -6,13 +6,15 @@ import * as Pages from './pages';
 
 import PageLoading from './PageLoading';
 import AdminRoute from './AdminRoute';
+import ClientRoute from './ClientRoute';
 
 export default ({ authorized, userType }) => (
   <Suspense fallback={<PageLoading />}>
     <Switch>
       <Route exact path={RoutesPaths.index} component={() => <Redirect to={RoutesPaths.carsList} />} />
-      <Route path={RoutesPaths.carsDetail} component={Pages.CarsDetail} />
-      <Route path={RoutesPaths.carsList} component={Pages.CarsList} />
+      <ClientRoute path={RoutesPaths.carsDetail} component={Pages.CarsDetail} />
+      <ClientRoute path={RoutesPaths.carsList} component={Pages.CarsList} />
+      <ClientRoute path={RoutesPaths.wrong} component={Pages.WrongUserPage} />
 
       <AdminRoute
         authorized={authorized}
