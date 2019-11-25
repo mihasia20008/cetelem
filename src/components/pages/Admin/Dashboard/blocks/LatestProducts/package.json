@@ -1,0 +1,6 @@
+{
+  "name": "dashboard-latest-products",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LatestProducts.jsx"
+}

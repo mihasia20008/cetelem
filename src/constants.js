@@ -17,6 +17,7 @@ export const RoutesPaths = {
     dashboard: `${ADMIN_PREFIX}/dashboard`,
     cars: `${ADMIN_PREFIX}/cars`,
     users: `${ADMIN_PREFIX}/users`,
+    books: `${ADMIN_PREFIX}/books`,
     dealer: {
       main: DEALER_PREFIX,
     },
@@ -28,6 +29,7 @@ export const ADMIN_ROUTES_LIST = [
   `${RoutesPaths.admin.dashboard}`,
   `${RoutesPaths.admin.cars}`,
   `${RoutesPaths.admin.users}`,
+  `${RoutesPaths.admin.books}`,
 ];
 
 export const DEFAULT_DEALER_PATH = RoutesPaths.admin.dealer.main;

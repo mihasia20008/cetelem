@@ -5,6 +5,8 @@ import cls from 'classnames';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 
+import _noop from 'lodash/noop';
+
 import Topbar from '../../organisms/Admin/Topbar';
 import Sidebar from '../../organisms/Admin/Slidebar';
 // import Footer from '../../organisms/Admin/Footer';
@@ -67,7 +69,7 @@ const AdminLayout = ({ children, authorized, pathname, userName, onLogout }) => 
 
   return (
     <div className={styles.root}>
-      <Topbar authorized={false} onSidebarOpen={() => {}} />
+      <Topbar authorized={false} onSidebarOpen={_noop} onLogout={_noop} />
       <div className={styles.content}>{children}</div>
     </div>
   );
