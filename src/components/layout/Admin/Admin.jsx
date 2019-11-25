@@ -60,7 +60,6 @@ const AdminLayout = ({ children, authorized, pathname, userName, onLogout }) => 
           onClose={handleSidebarClose}
           open={shouldOpenSidebar}
           variant={isDesktop ? 'persistent' : 'temporary'}
-          onLogout={onLogout}
         />
         <div className={styles.content}>{children}</div>
       </div>

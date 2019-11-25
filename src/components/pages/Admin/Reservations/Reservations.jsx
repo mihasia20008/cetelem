@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
-import UsersTable from './blocks/UsersTable';
-import UsersToolbar from './blocks/UsersToolbar';
+import ReservationsTable from './blocks/ReservationsTable';
+import ReservationsToolbar from './blocks/ReservationsToolbar';
 
 import mockData from './data';
 
@@ -18,13 +18,13 @@ const useStyles = makeStyles(theme => ({
 function UsersPage() {
   const styles = useStyles();
 
-  const [users] = useState(mockData);
+  const [reservations] = useState(mockData);
 
   return (
     <div className={styles.root}>
-      <UsersToolbar />
+      <ReservationsToolbar />
       <div className={styles.content}>
-        <UsersTable users={users} />
+        <ReservationsTable reservations={reservations} />
       </div>
     </div>
   );

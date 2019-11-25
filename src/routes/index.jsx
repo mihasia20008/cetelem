@@ -35,6 +35,12 @@ export default ({ authorized, userType }) => (
       <AdminRoute
         authorized={authorized}
         userType={userType}
+        path={RoutesPaths.admin.reservations}
+        component={Pages.AdminReservations}
+      />
+      <AdminRoute
+        authorized={authorized}
+        userType={userType}
         path={RoutesPaths.admin.users}
         component={Pages.AdminUsers}
       />

@@ -16,6 +16,8 @@ export const AdminDashboard = lazy(() => import('../components/pages/Admin/Dashb
 
 export const AdminCars = lazy(() => import('../components/pages/Admin/Cars'));
 
+export const AdminReservations = lazy(() => import('../components/pages/Admin/Reservations'));
+
 export const AdminUsers = lazy(() => import('../components/pages/Admin/Users'));
 
 // Dealer pages

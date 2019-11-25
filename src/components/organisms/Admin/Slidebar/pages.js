@@ -4,7 +4,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import SettingsIcon from '@material-ui/icons/Settings';
+// import SettingsIcon from '@material-ui/icons/Settings';
 
 import { RoutesPaths } from "../../../../constants";
 
@@ -21,7 +21,7 @@ export const adminPages = [
   },
   {
     title: 'Бронирования',
-    href: RoutesPaths.admin.books,
+    href: RoutesPaths.admin.reservations,
     icon: <ShoppingCartIcon />
   },
   {
@@ -29,11 +29,11 @@ export const adminPages = [
     href: RoutesPaths.admin.users,
     icon: <PeopleIcon />
   },
-  {
-    title: 'Настройки',
-    href: '/settings',
-    icon: <SettingsIcon />
-  }
+  // {
+  //   title: 'Настройки',
+  //   href: '/settings',
+  //   icon: <SettingsIcon />
+  // }
 ];
 
 export const dealerPages = [];

@@ -1,12 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/styles';
 
-export default () => {
+import CarsTable from './blocks/CarsTable';
+import CarsToolbar from './blocks/CarsToolbar';
+
+import mockData from './data';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(3)
+  },
+  content: {
+    marginTop: theme.spacing(2)
+  }
+}));
+
+function UsersPage() {
+  const styles = useStyles();
+
+  const [cars] = useState(mockData);
+
   return (
-    <div>
-      Cars page
-      <br />
-      <Link to="/">To client</Link>
+    <div className={styles.root}>
+      <CarsToolbar />
+      <div className={styles.content}>
+        <CarsTable cars={cars} />
+      </div>
     </div>
   );
-};
+}
+
+export default UsersPage;
