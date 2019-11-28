@@ -2,10 +2,20 @@
   padding-top: 22px;
   padding-bottom: 20px;
   border-bottom: 1px solid #fff;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .filledHeader {
   background-color: #e8f7ef;
+}
+
+.fixedHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
 
 .content {

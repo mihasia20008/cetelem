@@ -14,6 +14,7 @@ import styles from './Header.module.scss';
 class Header extends PureComponent {
   static propTypes = {
     filled: PropTypes.bool.isRequired,
+    fixed: PropTypes.bool.isRequired,
   };
 
   renderNavigation() {
@@ -73,10 +74,10 @@ class Header extends PureComponent {
   }
 
   render() {
-    const { filled } = this.props;
+    const { filled, fixed } = this.props;
 
     return (
-      <div className={cls(styles.header, filled && styles.filledHeader)}>
+      <div className={cls(styles.header, filled && styles.filledHeader, fixed && styles.fixedHeader)}>
         <Container>
           <div className={styles.content}>
             <Link to="/" className={styles.logo}>
