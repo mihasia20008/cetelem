@@ -2,8 +2,11 @@
   margin: 0 auto;
   padding: 0 15px;
 
-  @media (min-width: 1440px) {
+  @media (min-width: 1200px) {
     padding: 0 80px;
+  }
+
+  @media (min-width: 1440px) {
     max-width: 1440px;
   }
 }
