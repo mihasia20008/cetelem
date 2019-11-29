@@ -6,7 +6,7 @@ import ArrowDownIcon from '../../icons/ArrowDownIcon';
 
 import Option from './blocks/Option';
 
-import useCloseOnOutsideEvents from './useCloseOnOutsideEvents';
+import useCloseOnOutsideEvents from '../../../utilities/useCloseOnOutsideEvents';
 
 import styles from './Dropdown.module.scss';
 
