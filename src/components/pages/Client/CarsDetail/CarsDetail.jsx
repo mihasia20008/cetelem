@@ -4,13 +4,28 @@ import cls from 'classnames';
 
 import Container from '../../../base/Container';
 import Button from '../../../base/Button';
+import Modal from '../../../organisms/Modal';
 
 import PinIcon from '../../../icons/PinIcon';
 import RatingIcon from '../../../icons/RatingIcon';
 
+import BookForm from './blocks/BookForm';
+
 import styles from './CarsDetail.module.scss';
 
 class CarsDetail extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      openBookModal: false,
+    };
+  }
+
+  handleOpenBookForm = () => this.setState({ openBookModal: true });
+
+  handleCloseBookForm = () => this.setState({ openBookModal: false });
+
   renderHead = () => {
     return (
       <div className={styles.head}>
@@ -250,7 +265,7 @@ class CarsDetail extends PureComponent {
             </div>
           </div>
         </div>
-        <Button text="Бронировать" onClick={() => {console.log('book')}} />
+        <Button text="Бронировать" onClick={this.handleOpenBookForm} />
       </div>
     );
   };
@@ -305,6 +320,8 @@ class CarsDetail extends PureComponent {
   };
 
   render() {
+    const { openBookModal } = this.state;
+
     return (
       <div className={styles.container}>
         <Container>
@@ -323,6 +340,9 @@ class CarsDetail extends PureComponent {
             {this.renderMap()}
           </div>
         </Container>
+        <Modal id="book-modal" open={openBookModal} onClose={this.handleCloseBookForm}>
+          <BookForm />
+        </Modal>
       </div>
     );
   }

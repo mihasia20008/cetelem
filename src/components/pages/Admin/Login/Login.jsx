@@ -46,16 +46,17 @@ const Login = props => {
   const handleChange = event => {
     event.persist();
 
+    const { name, type, value, checked } = event.target;
+
     setFormState(oldFormState => ({
       ...oldFormState,
       values: {
         ...oldFormState.values,
-        [event.target.name]:
-          event.target.type === 'checkbox' ? event.target.checked : event.target.value,
+        [name]: type === 'checkbox' ? checked : value,
       },
       touched: {
         ...oldFormState.touched,
-        [event.target.name]: true,
+        [name]: true,
       },
     }));
   };
@@ -131,9 +132,9 @@ const Login = props => {
           className={styles.snackbar}
           message={
             <span id="client-snackbar" className={styles.snackbarMessage}>
-            <ErrorIcon className={styles.snackbarIcon} />
+              <ErrorIcon className={styles.snackbarIcon} />
               {errorMessage}
-          </span>
+            </span>
           }
           action={[
             <IconButton key="close" aria-label="close" color="inherit" onClick={handleClose}>
@@ -150,7 +151,7 @@ const mapStateToProps = state => {
   return {
     loading: state.user.loading,
     error: state.user.error,
-    errorMessage: _get(state, 'user.data.message', '')
+    errorMessage: _get(state, 'user.data.message', ''),
   };
 };
 

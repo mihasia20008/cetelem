@@ -1,0 +1,6 @@
+{
+  "name": "phone-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PhoneIcon.jsx"
+}

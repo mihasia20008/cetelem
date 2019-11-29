@@ -1,0 +1,6 @@
+{
+  "name": "close-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CloseIcon.jsx"
+}

@@ -1,0 +1,146 @@
+.BookForm {
+  background-color: #22b25c;
+  border-radius: 12px;
+
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: flex-start;
+    width: 840px;
+    padding: 77px 40px;
+  }
+}
+
+.carInfo {
+  position: relative;
+  flex-basis: 260px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid #239b53;
+}
+
+.imageWrap {
+  width: 260px;
+  border-radius: 12px;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.contentWrap {
+  padding: 15px 15px 18px;
+}
+
+.carName {
+  margin: 0 0 15px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+  color: #fff;
+}
+
+.carDescription {
+  margin: 0;
+  font-size: 12px;
+  line-height: 14px;
+  color: #fff;
+}
+
+.presentationIcon {
+  position: absolute;
+  top: -25px;
+  right: -15px;
+}
+
+.formContent {
+  flex-grow: 1;
+  padding-left: 30px;
+}
+
+.bookInfo {
+  margin: 10px 0 0;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #fff;
+  user-select: none;
+}
+
+.bookImportant {
+  text-decoration: underline;
+}
+
+.bookText {
+  margin: 40px 0 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: #fff;
+  user-select: none;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.inputWrap {
+  position: relative;
+  flex-basis: 238px;
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 23px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.inputPlaceholder {
+  position: absolute;
+  left: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #fff;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.input {
+  padding: 16px 16px 16px 48px;
+  font-family: TTNorms, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #fff;
+  border-radius: 8px;
+  background-color: rgba(#26854c, 0.5);
+  border: 1px solid rgba(#26854c, 0.5);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.inputError {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #f44336;
+}
+
+.emptyError {
+  height: 24px;
+}
+
+.bookButton {
+  max-width: 160px;
+  text-transform: initial;
+}

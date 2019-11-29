@@ -1,6 +1,6 @@
 .Button {
-  padding: 16px 0;
   width: 100%;
+  font-family: TTNorms, Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 18px;
@@ -21,4 +21,25 @@
     outline: none;
     background-color: lighten(#22b25c, 7%);
   }
+}
+
+.inverseButton {
+  color: #22b25c;
+  background-color: #fff;
+
+  &:hover {
+    background-color: #f3f3f3;
+  }
+
+  &:focus {
+    background-color: #f0f0f0;
+  }
+}
+
+.defaultSize {
+  padding: 16px 0;
+}
+
+.bigSize {
+  padding: 18px 0;
 }

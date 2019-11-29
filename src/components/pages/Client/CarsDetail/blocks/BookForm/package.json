@@ -1,0 +1,6 @@
+{
+  "name": "detail-car-book-form",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./BookForm.jsx"
+}
