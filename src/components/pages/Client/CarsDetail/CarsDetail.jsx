@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import cls from 'classnames';
 
 import Container from '../../../base/Container';
@@ -7,11 +6,17 @@ import Button from '../../../base/Button';
 import Modal from '../../../organisms/Modal';
 
 import PinIcon from '../../../icons/PinIcon';
-import RatingIcon from '../../../icons/RatingIcon';
 
 import BookForm from './blocks/BookForm';
+import DealerMap from './blocks/DealerMap';
+import Gallery from './blocks/Gallery';
 
 import styles from './CarsDetail.module.scss';
+
+const IMAGES_LIST = Array.from(Array(5).keys()).map(index => ({
+  src: `/images/${index % 3 + 1}.jpg`,
+  id: index,
+}));
 
 class CarsDetail extends PureComponent {
   constructor(props) {
@@ -270,55 +275,6 @@ class CarsDetail extends PureComponent {
     );
   };
 
-  renderMap = () => {
-    return (
-      <div className={styles.map}>
-        <YMaps>
-          <Map
-            width="100%"
-            height="100%"
-            defaultState={{
-              center: [55.751574, 37.573856],
-              zoom: 11,
-              behaviors: ['scrollZoom'],
-            }}
-          >
-            <Placemark
-              geometry={[55.680775, 37.477516]}
-              options={{
-                iconLayout: 'default#image',
-                iconImageHref: '/images/map-mark.svg',
-                iconImageSize: [40, 50],
-                iconImageOffset: [-20, -50],
-              }}
-            />
-          </Map>
-        </YMaps>
-        <div className={styles.dealerMapInfo}>
-          <div className={styles.dealerPinWrap}>
-            <PinIcon />
-          </div>
-          <div className={styles.dealerMapContent}>
-            <h3 className={styles.dealerMapName}>Major Land Rover Новорижский</h3>
-            <div className={styles.dealerMapRating}>
-              {Array.from(Array(5).keys()).map(index => (
-                <RatingIcon key={index} className={styles.dealerMapRatingIcon} active={index < 4} />
-              ))}
-            </div>
-            <p className={styles.dealerMapAddress}>
-              Новорижское шоссе, 9-й, Москва,
-              <br />
-              Московская обл., 308010
-            </p>
-            <a href="tel: 88005005503" className={styles.dealerMapPhone}>
-              8 800 500 55 03
-            </a>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   render() {
     const { openBookModal } = this.state;
 
@@ -328,7 +284,7 @@ class CarsDetail extends PureComponent {
           <div className={styles.wrapper}>
             <div className={styles.top}>
               {this.renderHead()}
-              <div className={styles.slider} />
+              <Gallery images={IMAGES_LIST} />
               {this.renderShortInfo()}
             </div>
             <div className={styles.info}>
@@ -337,7 +293,7 @@ class CarsDetail extends PureComponent {
               {this.renderAdditionalFeatures()}
               {this.renderPriceSidebar()}
             </div>
-            {this.renderMap()}
+            <DealerMap />
           </div>
         </Container>
         <Modal id="book-modal" open={openBookModal} onClose={this.handleCloseBookForm}>

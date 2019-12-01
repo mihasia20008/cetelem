@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
+import PropTypes from 'prop-types';
 
 import CloseIcon from '../../../icons/CloseIcon';
 
@@ -14,7 +15,7 @@ function Layout(props) {
 
   useCloseOnOutsideEvents({
     ref: contentRef,
-    callback: useCallback(() => onClose(), [onClose]),
+    callback: useCallback(onClose, [onClose]),
     isOpen: mounted,
   });
 
@@ -29,12 +30,23 @@ function Layout(props) {
       <div className={styles.backdrop} />
       <div className={styles.content} ref={contentRef}>
         {children}
-        <button type="button" className={styles.closer} onClick={onClose}>
-          <CloseIcon className={styles.closerIcon} />
-        </button>
+        {onClose && (
+          <button type="button" className={styles.closer} onClick={onClose}>
+            <CloseIcon className={styles.closerIcon} />
+          </button>
+        )}
       </div>
     </div>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClose: PropTypes.func,
+};
+
+Layout.defaultProps = {
+  onClose: undefined,
+};
 
 export default Layout;

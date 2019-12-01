@@ -23,6 +23,12 @@ function Modal(props) {
 Modal.propTypes = {
   id: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  onClose: PropTypes.func,
+};
+
+Modal.defaultProps = {
+  onClose: undefined,
 };
 
 export default Modal;

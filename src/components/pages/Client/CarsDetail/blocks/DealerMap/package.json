@@ -1,0 +1,6 @@
+{
+  "name": "detail-car-map",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DealerMap.jsx"
+}
