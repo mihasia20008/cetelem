@@ -16,10 +16,14 @@
   overflow-x: hidden;
 
   @media (min-width: 768px) {
-    top: 325px;
     right: initial;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  @media (min-width: 1441px) {
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
