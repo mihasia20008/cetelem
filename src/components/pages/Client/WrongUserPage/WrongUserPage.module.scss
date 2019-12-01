@@ -1,0 +1,50 @@
+.WrongUserPage {
+  position: relative;
+  height: 475px;
+}
+
+.content {
+  padding-top: 96px;
+  padding-bottom: 104px;
+  @media (min-width: 1440px) {
+    padding-left: 60px;
+  }
+}
+
+.title {
+  margin: 0 0 42px;
+  font-weight: 700;
+  font-size: 48px;
+
+  @media (min-width: 1440px) {
+    font-size: 58px;
+    line-height: 68px;
+  }
+}
+
+.button {
+  display: block;
+  width: 278px;
+  padding: 35px 0;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 27px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #22b25c;
+  transition: 0.2s ease-in;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    cursor: pointer;
+    background-color: #7e7e7e;
+  }
+}
+
+.imageWrap {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

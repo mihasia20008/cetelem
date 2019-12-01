@@ -1,18 +1,29 @@
 import React from 'react';
 
-export default () => {
+import Container from '../../../base/Container';
+
+import styles from './WrongUserPage.module.scss';
+
+function WrongUserPage() {
   return (
-    <div
-      style={{
-        padding: '50px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <h1>404</h1>
-      <p>Вы зашли по неправильному адресу</p>
+    <div className={styles.WrongUserPage}>
+      <Container>
+        <div className={styles.content}>
+          <h2 className={styles.title}>
+            Получите автокредит
+            <br />
+            на лучших условиях
+          </h2>
+          <a className={styles.button} href="https://google.com">
+            Начать оформление
+          </a>
+        </div>
+      </Container>
+      <div className={styles.imageWrap}>
+        <img className={styles.image} src="/images/some-auto.png" alt="some auto" />
+      </div>
     </div>
   );
-};
+}
+
+export default WrongUserPage;
