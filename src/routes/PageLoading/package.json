@@ -1,0 +1,6 @@
+{
+  "name": "page-loading",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PageLoading.jsx"
+}

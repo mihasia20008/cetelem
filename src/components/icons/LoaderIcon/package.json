@@ -1,0 +1,6 @@
+{
+  "name": "loader-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LoaderIcon.jsx"
+}
