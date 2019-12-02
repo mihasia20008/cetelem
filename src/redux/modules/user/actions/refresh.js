@@ -1,14 +1,14 @@
-import loginRequest from '../../../../api/user/login';
+import refreshRequest from '../../../../api/user/refresh';
 
 import { AUTH_KEY } from "../../../../constants";
 
 import * as T from '../types';
 
-export default function loginUser(login, password) {
+export default function refreshUser() {
   return async dispatch => {
     try {
       dispatch({ type: T.USER_FETCH_START });
-      const { data, error } = await loginRequest({ login, password });
+      const { data, error } = await refreshRequest();
 
       if (!error) {
         localStorage.setItem(AUTH_KEY, data.csrf);
@@ -16,6 +16,7 @@ export default function loginUser(login, password) {
         return;
       }
 
+      localStorage.removeItem(AUTH_KEY);
       dispatch({ type: T.USER_FETCH_ERROR, data: error });
     } catch (error) {
       // eslint-disable-next-line no-console

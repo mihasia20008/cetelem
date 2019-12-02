@@ -2,12 +2,11 @@ import axios from 'axios';
 
 import { NOT_AUTHORISED } from '../response';
 
-async function loginRequest(auth) {
+async function refreshRequest() {
   try {
     const { data } = await axios({
       method: 'POST',
-      url: '/api/v1/session',
-      data: auth,
+      url: '/api/v1/refresh',
     });
 
     return {
@@ -26,7 +25,7 @@ async function loginRequest(auth) {
         data: null,
         error: {
           status: NOT_AUTHORISED,
-          message: 'Неверный логин или пароль',
+          message: 'Ошибка аутентификации',
         },
       };
     }
@@ -43,4 +42,4 @@ async function loginRequest(auth) {
   }
 }
 
-export default loginRequest;
+export default refreshRequest;

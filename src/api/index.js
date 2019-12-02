@@ -11,7 +11,7 @@ axios.interceptors.request.use(async (config) => {
       // eslint-disable-next-line no-param-reassign
       config.headers = {
         ...config.headers,
-        Authorization: `bearer ${token}`
+        'X-CSRF-Token': token,
       };
     }
     return config;

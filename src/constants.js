@@ -2,8 +2,8 @@ const ADMIN_PREFIX = '/admin';
 const DEALER_PREFIX = `${ADMIN_PREFIX}/dealer`;
 
 export const ROLES = {
-  ADMIN: 0,
-  DEALER: 1,
+  ADMIN: 'admin',
+  DEALER: 'dealer',
 };
 
 export const RoutesPaths = {

@@ -13,7 +13,7 @@ import ClientLayout from '../components/layout/Client';
 
 import checkAuthStatus from '../utilities/checkAuthStatus';
 
-import { resetLoginStatus } from "../redux/modules/user/actions";
+import { tryRefresh, resetLoginStatus } from "../redux/modules/user/actions";
 
 import theme from './theme';
 
@@ -27,6 +27,15 @@ class App extends PureComponent {
   static defaultProps = {
     location: {},
   };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const authorized = checkAuthStatus();
+
+    if (authorized) {
+      dispatch(tryRefresh());
+    }
+  }
 
   get isAdminPages() {
     const { location } = this.props;
@@ -72,8 +81,9 @@ class App extends PureComponent {
 const mapStateToProps = state => {
   return {
     success: state.user.success,
+    error: state.user.error,
     userType: _get(state, 'user.data.role', null),
-    userName: _get(state, 'user.data.username', ''),
+    userName: _get(state, 'user.data.login', ''),
   };
 };
 
