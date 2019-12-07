@@ -80,6 +80,18 @@ function SimpleTable(props) {
     </TableBody>
   );
 
+  const renderNoData = () => {
+    if (statuses.success && !list.length) {
+      return (
+        <div className={styles.noDataWrapper}>
+          Нет данных
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   const renderTableLoader = () => {
     if (statuses.initial || statuses.loading) {
       return (
@@ -98,6 +110,7 @@ function SimpleTable(props) {
         {renderTableHeader()}
         {renderTableBody()}
       </Table>
+      {renderNoData()}
       <div className={styles.actionsWrap}>
         <TablePagination
           component="div"

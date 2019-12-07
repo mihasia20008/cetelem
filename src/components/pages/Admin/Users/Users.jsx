@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/styles';
 
 import _get from 'lodash/get';
 
-import { getUsers, clearError } from '../../../../redux/modules/users/actions';
+import { getUsers, clearError } from '../../../../redux/modules/admin/users/actions';
 
 import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function UsersPage(props) {
-  const { users, dispatch } = props;
+  const { users: { data, ...statuses }, dispatch } = props;
   const styles = useStyles();
 
   const [openCreateForm, toggleCreateForm] = useState(false);
@@ -77,8 +77,6 @@ function UsersPage(props) {
 
     return `${day}.${month}.${date.getFullYear()}`;
   };
-
-  const { data, ...statuses } = users;
 
   return (
     <div className={styles.root}>

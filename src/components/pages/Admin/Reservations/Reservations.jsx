@@ -1,33 +1,97 @@
-import React, { useState } from 'react';
+import React, {useEffect} from 'react';
+import { connect } from 'react-redux';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+
 import { makeStyles } from '@material-ui/styles';
+import { Card } from '@material-ui/core';
 
-import ReservationsTable from './blocks/ReservationsTable';
+import _get from 'lodash/get';
+
+import { getReservations, clearError } from '../../../../redux/modules/admin/reservations/actions';
+
+import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
+import ErrorShower from '../../../organisms/Admin/ErrorShower';
+
 import ReservationsToolbar from './blocks/ReservationsToolbar';
-
-import mockData from './data';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   content: {
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
+  inner: {
+    minWidth: 1050,
+  },
 }));
 
-function UsersPage() {
+function ReservationsPage(props) {
   const styles = useStyles();
+  const { reservations: { data, ...statuses }, dispatch } = props;
 
-  const [reservations] = useState(mockData);
+  useEffect(() => {
+    dispatch(getReservations());
+  }, [dispatch]);
+
+  const handleCloseError = () => {
+    dispatch(clearError());
+  };
 
   return (
     <div className={styles.root}>
       <ReservationsToolbar />
       <div className={styles.content}>
-        <ReservationsTable reservations={reservations} />
+        <Card>
+          <PerfectScrollbar>
+            <div className={styles.inner}>
+              <SimpleTable
+                headers={[
+                  {
+                    id: 'id',
+                    text: 'ID',
+                  },
+                  {
+                    id: 'client',
+                    text: 'Клиент',
+                  },
+                  {
+                    id: 'dealer',
+                    text: 'Дилер',
+                  },
+                  {
+                    id: 'car',
+                    text: 'Автомобиль'
+                  },
+                  {
+                    id: 'date',
+                    text: 'Дата бронирования',
+                  },
+                  {
+                    id: ACTIONS_COLUMN_ID,
+                    text: '',
+                  },
+                ]}
+                list={data}
+                statuses={statuses}
+              />
+            </div>
+          </PerfectScrollbar>
+        </Card>
       </div>
+      <ErrorShower
+        open={Boolean(statuses.error)}
+        message={_get(statuses, 'error.message')}
+        onClose={handleCloseError}
+      />
     </div>
   );
 }
 
-export default UsersPage;
+const mapStateToProps = state => {
+  return {
+    reservations: state.admin.reservations,
+  };
+};
+
+export default connect(mapStateToProps)(ReservationsPage);

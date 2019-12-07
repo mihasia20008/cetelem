@@ -1,6 +1,6 @@
 import { USERS_FETCH_START, USERS_FETCH_END, USERS_FETCH_ERROR, USERS_LIST_LOADED } from '../types';
 
-import { getList as getListRequest } from '../../../../api/admin/users';
+import { getList as getListRequest } from '../../../../../api/admin/users';
 
 export default function getUsers() {
   return async dispatch => {
