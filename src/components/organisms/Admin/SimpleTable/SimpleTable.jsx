@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import qs from 'qs';
 
 import {
   CircularProgress,
@@ -16,12 +18,27 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './SimpleTable.module.scss';
 
 export const ACTIONS_COLUMN_ID = 'actions';
+export const PER_PAGE_VARIANTS = [5, 10, 25];
 
 function SimpleTable(props) {
-  const { headers, list, statuses } = props;
+  const { location, history, headers, list, statuses } = props;
+  const { page: queryPage, per_page: queryPerPage } = location.query;
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(queryPage ? +queryPage - 1 : 0);
+  const [rowsPerPage, setRowsPerPage] = useState(
+    PER_PAGE_VARIANTS.includes(+queryPerPage) ? +queryPerPage : 10
+  );
+
+  useEffect(() => {
+    const query = { ...location.query, page: page + 1, per_page: rowsPerPage };
+    history.push(`${location.pathname}?${qs.stringify(query)}`);
+  }, [history, location.pathname, location.query, page, rowsPerPage]);
+
+  useEffect(() => {
+    if (statuses.success && page * rowsPerPage >= list.length) {
+      setPage(0);
+    }
+  }, [list, page, rowsPerPage, statuses.success]);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -29,6 +46,7 @@ function SimpleTable(props) {
 
   const handleRowsPerPageChange = event => {
     setRowsPerPage(event.target.value);
+    setPage(0);
   };
 
   const getItemsOnPageInfo = ({ from, to, count }) => {
@@ -82,11 +100,7 @@ function SimpleTable(props) {
 
   const renderNoData = () => {
     if (statuses.success && !list.length) {
-      return (
-        <div className={styles.noDataWrapper}>
-          Нет данных
-        </div>
-      );
+      return <div className={styles.noDataWrapper}>Нет данных</div>;
     }
 
     return null;
@@ -119,7 +133,7 @@ function SimpleTable(props) {
           onChangeRowsPerPage={handleRowsPerPageChange}
           labelRowsPerPage="Элементов на странице"
           labelDisplayedRows={getItemsOnPageInfo}
-          page={page}
+          page={statuses.success ? page : 0}
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[5, 10, 25]}
         />
@@ -151,4 +165,4 @@ SimpleTable.defaultProps = {
   statuses: {},
 };
 
-export default SimpleTable;
+export default withRouter(SimpleTable);
