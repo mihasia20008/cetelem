@@ -10,13 +10,13 @@ export default function loginUser(login, password) {
       dispatch({ type: T.USER_FETCH_START });
       const { data, error } = await loginRequest({ login, password });
 
-      if (!error) {
-        localStorage.setItem(AUTH_KEY, data.csrf);
-        dispatch({ type: T.USER_LOGIN_SUCCESS, data: data.user });
+      if (error) {
+        dispatch({ type: T.USER_FETCH_ERROR, data: error });
         return;
       }
 
-      dispatch({ type: T.USER_FETCH_ERROR, data: error });
+      localStorage.setItem(AUTH_KEY, data.csrf);
+      dispatch({ type: T.USER_LOGIN_SUCCESS, data: data.user });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

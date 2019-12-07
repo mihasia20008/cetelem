@@ -1,29 +1,49 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import speakingurl from 'speakingurl';
 
 import CarItem from './blocks/CarItem';
+
+import formatNumber from '../../../../../../utilities/formatNumber';
 
 import styles from './CarsList.module.scss';
 
 class CarsList extends PureComponent {
   static propTypes = {
-    client: PropTypes.string.isRequired,
+    list: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string,
+        description: PropTypes.string,
+        price: PropTypes.number,
+        image: PropTypes.string,
+      })
+    ),
+  };
+
+  static defaultProps = {
+    list: [],
+  };
+
+  createDetailLink = (id, name) => {
+    const slug = speakingurl(`${name} ${id}`, { separator: '-' }).toLowerCase();
+    return `/cars/${slug}`;
   };
 
   render() {
-    const { client } = this.props;
+    const { list } = this.props;
 
     return (
       <div className={styles.CarsList}>
-        {Array.from(Array(6).keys()).map(index => {
+        {list.map(item => {
           return (
-            <div key={index} className={styles.item}>
+            <div key={item.id} className={styles.item}>
               <CarItem
-                link={`/cars/${index}?client_id=${client}`}
-                image="/images/Auto.jpg"
-                name="Land Rover Range Rover"
-                description="3.0d AT (235 л.с.) 4 WD Inscription"
-                price="4 699 000 ₽"
+                link={this.createDetailLink(item.id, item.name)}
+                image={item.image}
+                name={item.name}
+                description={item.description}
+                price={`${formatNumber(item.price)} ₽`}
               />
             </div>
           );

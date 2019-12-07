@@ -3,8 +3,9 @@ import axios from 'axios';
 import { AUTH_KEY } from '../constants';
 
 import * as userRequests from './user';
+import * as carsRequests from './cars';
 
-axios.interceptors.request.use(async (config) => {
+axios.interceptors.request.use(async config => {
   try {
     const token = localStorage !== undefined && localStorage.getItem(AUTH_KEY);
     if (token) {
@@ -23,5 +24,6 @@ axios.interceptors.request.use(async (config) => {
 });
 
 export {
-  userRequests
+  userRequests,
+  carsRequests,
 };

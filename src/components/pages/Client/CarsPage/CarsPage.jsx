@@ -1,12 +1,18 @@
 import React, { PureComponent } from 'react';
 import qs from 'qs';
+import { connect } from 'react-redux';
+
+import _isEqual from 'lodash/isEqual';
 
 import Container from '../../../base/Container';
+import PageLoading from '../../../../routes/PageLoading';
 
 import CarsList from './blocks/CarsList';
 import TopFilter from './blocks/TopFilter';
 import SideFilter from './blocks/SideFilter';
 import Pagination from './blocks/Pagination';
+
+import { loadCars } from '../../../../redux/modules/cars/actions';
 
 import { FILTER_TYPES, FILTER_NAMES, FILTERS_SORT } from '../../../../constants';
 
@@ -207,22 +213,28 @@ class CarsPage extends PureComponent {
           value: 1400000,
         },
       },
-      pages: {
-        total: 4,
-        current: 1,
-        default: 1,
-      },
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { pages: prevPages } = prevState;
-    const { pages: nowPages } = this.state;
-    const { history, location } = this.props;
+  componentDidMount() {
+    const {
+      location: { query },
+      dispatch,
+    } = this.props;
+    dispatch(loadCars(query));
+  }
 
-    if (nowPages.current !== prevPages.current) {
-      const newQuery = { ...location.query, page: nowPages.current };
-      history.push(`${location.pathname}?${qs.stringify(newQuery)}`);
+  componentDidUpdate(prevProps) {
+    const {
+      location: { query: prevQuery },
+    } = prevProps;
+    const {
+      location: { query },
+      dispatch,
+    } = this.props;
+
+    if (!_isEqual(prevQuery, query)) {
+      dispatch(loadCars(query));
     }
   }
 
@@ -289,13 +301,10 @@ class CarsPage extends PureComponent {
   };
 
   handleGoToPage = page => {
-    this.setState(prevState => ({
-      ...prevState,
-      pages: {
-        ...prevState.pages,
-        current: page,
-      },
-    }));
+    const { history, location } = this.props;
+
+    const query = { ...location.query, page };
+    history.push(`${location.pathname}?${qs.stringify(query)}`);
   };
 
   renderSideFilter() {
@@ -332,10 +341,26 @@ class CarsPage extends PureComponent {
     );
   }
 
-  render() {
-    const { pages } = this.state;
-    const { location } = this.props;
+  renderContent() {
+    const { initial, loading, error, meta, list } = this.props;
 
+    if (initial || loading) {
+      return <PageLoading />;
+    }
+
+    if (error) {
+      return <div>Error {JSON.stringify(error)}</div>;
+    }
+
+    return (
+      <>
+        <CarsList list={list} />
+        <Pagination current={meta.page} total={meta.total} onGoToPage={this.handleGoToPage} />
+      </>
+    );
+  }
+
+  render() {
     return (
       <div className={styles.container}>
         <Container>
@@ -346,12 +371,7 @@ class CarsPage extends PureComponent {
                 <h1 className={styles.title}>Подбор автомобиля</h1>
                 {this.renderTopFilters()}
               </div>
-              <CarsList client={location.query.client_id} />
-              <Pagination
-                current={pages.current}
-                total={pages.total}
-                onGoToPage={this.handleGoToPage}
-              />
+              {this.renderContent()}
             </div>
           </div>
         </Container>
@@ -360,4 +380,15 @@ class CarsPage extends PureComponent {
   }
 }
 
-export default CarsPage;
+const mapStateToProps = state => {
+  return {
+    initial: state.cars.initial,
+    success: state.cars.success,
+    loading: state.cars.loading,
+    error: state.cars.error,
+    list: state.cars.list,
+    meta: state.cars.meta,
+  };
+};
+
+export default connect(mapStateToProps)(CarsPage);

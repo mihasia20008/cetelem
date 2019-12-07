@@ -12,8 +12,8 @@ function createHistory(params) {
   const scrollTo = (x, y) => setTimeout(window.scrollTo(x, y), 0);
   const history = createBrowserHistory(params);
 
-  history.listen(location => {
-    if (location.action === 'POP') {
+  history.listen((location, action) => {
+    if (action === 'POP') {
       return;
     }
     if (location.state && location.state.ignoreScroll) {
