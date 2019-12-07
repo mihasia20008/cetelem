@@ -142,7 +142,7 @@ SimpleTable.propTypes = {
     initial: PropTypes.bool,
     loading: PropTypes.bool,
     success: PropTypes.bool,
-    error: PropTypes.bool,
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }),
 };
 
