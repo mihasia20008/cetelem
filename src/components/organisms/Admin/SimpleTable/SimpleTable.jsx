@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import qs from 'qs';
 
+import _isEqual from 'lodash/isEqual';
+
 import {
   CircularProgress,
   IconButton,
@@ -30,15 +32,21 @@ function SimpleTable(props) {
   );
 
   useEffect(() => {
-    const query = { ...location.query, page: page + 1, per_page: rowsPerPage };
-    history.push(`${location.pathname}?${qs.stringify(query)}`);
+    const query = {
+      ...location.query,
+      page: (page + 1).toString(),
+      per_page: rowsPerPage.toString(),
+    };
+    if (!_isEqual(query, location.query)) {
+      history.push(`${location.pathname}?${qs.stringify(query)}`);
+    }
   }, [history, location.pathname, location.query, page, rowsPerPage]);
 
   useEffect(() => {
     if (statuses.success && page * rowsPerPage >= list.length) {
       setPage(0);
     }
-  }, [list, page, rowsPerPage, statuses.success]);
+  }, [list.length, page, rowsPerPage, statuses.success]);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
