@@ -1,0 +1,29 @@
+.SimpleTable {
+  position: relative;
+}
+
+.tableHead {
+  background-color: #fafafa;
+}
+
+.headItem {
+  font-size: 14px;
+}
+
+.actionsWrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.loaderWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(#000, 0.1);
+}

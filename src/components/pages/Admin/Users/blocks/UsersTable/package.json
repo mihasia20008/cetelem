@@ -1,6 +1,0 @@
-{
-  "name": "users-table",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./UsersTable.jsx"
-}

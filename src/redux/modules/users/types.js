@@ -1,8 +1,7 @@
-export const USER_FETCH_START = 'user/FETCH_START';
-export const USER_FETCH_END = 'user/FETCH_END';
-export const USER_FETCH_ERROR = 'user/FETCH_ERROR';
+export const USERS_FETCH_START = 'users/FETCH_START';
+export const USERS_FETCH_END = 'users/FETCH_END';
 
-export const USER_RESET_STATUS = 'user/RESET_STATUS';
+export const USERS_FETCH_ERROR = 'users/FETCH_ERROR';
+export const USERS_CLEAR_ERROR = 'users/CLEAR_ERROR';
 
-export const USER_LOGIN_SUCCESS = 'user/LOGIN_SUCCESS';
-export const USER_REFRESH_SUCCESS = 'user/REFRESH_SUCCESS';
+export const USERS_LIST_LOADED = 'users/list/LOADED';

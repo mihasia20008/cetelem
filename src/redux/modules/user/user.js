@@ -11,7 +11,16 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case T.USER_RESET_STATUS: {
-      return { ...initialState };
+      return {
+        ...initialState,
+        initial: false,
+      };
+    }
+    case T.USER_SKIP_LOGIN: {
+      return {
+        ...state,
+        initial: false,
+      };
     }
     case T.USER_FETCH_START: {
       return {

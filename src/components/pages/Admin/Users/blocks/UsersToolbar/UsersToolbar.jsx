@@ -5,7 +5,7 @@ import cls from 'classnames';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
 
-import SearchInput from '../../../../../organisms/Admin/SearchInput';
+// import SearchInput from '../../../../../organisms/Admin/SearchInput';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UsersToolbar = props => {
-  const { className, ...rest } = props;
+  const { className, onOpenCreateForm, ...rest } = props;
 
   const styles = useStyles();
 
@@ -39,16 +39,17 @@ const UsersToolbar = props => {
       className={cls(styles.root, className)}
     >
       <div className={styles.row}>
-        <SearchInput
-          className={styles.searchInput}
-          placeholder="Найти"
-        />
+        {/* <SearchInput */}
+        {/*  className={styles.searchInput} */}
+        {/*  placeholder="Найти" */}
+        {/* /> */}
       </div>
       <div className={styles.row}>
         <span className={styles.spacer} />
         <Button
           color="primary"
           variant="contained"
+          onClick={onOpenCreateForm}
         >
           Добавить
         </Button>
@@ -58,7 +59,8 @@ const UsersToolbar = props => {
 };
 
 UsersToolbar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  onOpenCreateForm: PropTypes.func.isRequired,
 };
 
 

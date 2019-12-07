@@ -9,12 +9,9 @@ import {
   CircularProgress,
   TextField,
   Typography,
-  Snackbar,
-  SnackbarContent,
-  IconButton,
 } from '@material-ui/core';
-import ErrorIcon from '@material-ui/icons/Error';
-import CloseIcon from '@material-ui/icons/Close';
+
+import ErrorShower from '../../../organisms/Admin/ErrorShower';
 
 import { tryLogin, resetLoginStatus } from '../../../../redux/modules/user/actions';
 
@@ -115,34 +112,17 @@ const Login = props => {
                 >
                   Войти
                 </Button>
-                {loading && <CircularProgress size={24} className={styles.buttonProgress} />}
+                {loading && <CircularProgress size={24} />}
               </div>
             </form>
           </div>
         </div>
       </Grid>
-      <Snackbar
-        autoHideDuration={3000}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={error}
+      <ErrorShower
+        open={Boolean(error)}
+        message={errorMessage}
         onClose={handleClose}
-        aria-describedby="login-error"
-      >
-        <SnackbarContent
-          className={styles.snackbar}
-          message={
-            <span id="client-snackbar" className={styles.snackbarMessage}>
-              <ErrorIcon className={styles.snackbarIcon} />
-              {errorMessage}
-            </span>
-          }
-          action={[
-            <IconButton key="close" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon className={styles.snackbarClose} />
-            </IconButton>,
-          ]}
-        />
-      </Snackbar>
+      />
     </div>
   );
 };

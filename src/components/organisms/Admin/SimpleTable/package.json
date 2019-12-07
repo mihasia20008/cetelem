@@ -1,0 +1,6 @@
+{
+  "name": "admin-simple-table",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SimpleTable.jsx"
+}

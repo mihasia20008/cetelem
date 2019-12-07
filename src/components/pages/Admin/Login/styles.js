@@ -50,20 +50,5 @@ export const useStyles = makeStyles(theme => ({
     left: '50%',
     marginTop: -12,
     marginLeft: -12,
-  },
-  snackbar: {
-    backgroundColor: theme.palette.error.dark,
-  },
-  snackbarMessage: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  snackbarIcon: {
-    fontSize: 20,
-    opacity: 0.9,
-    marginRight: theme.spacing(1),
-  },
-  snackbarClose: {
-    fontSize: 20,
   }
 }));

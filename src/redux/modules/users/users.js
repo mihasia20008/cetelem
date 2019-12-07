@@ -5,36 +5,37 @@ const initialState = {
   success: false,
   error: false,
   loading: false,
-  data: null,
+  data: [],
 };
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case T.USER_RESET_STATUS: {
-      return { ...initialState };
-    }
-    case T.USER_FETCH_START: {
+    case T.USERS_FETCH_START: {
       return {
-        ...initialState,
-        data: state.data,
+        ...state,
         initial: false,
         loading: true,
       };
     }
-    case T.USER_FETCH_ERROR: {
-      return {
-        ...state,
-        error: true,
-        data: action.data,
-      };
-    }
-    case T.USER_FETCH_END: {
+    case T.USERS_FETCH_END: {
       return {
         ...state,
         loading: false,
       };
     }
-    case T.USER_LOGIN_SUCCESS: {
+    case T.USERS_FETCH_ERROR: {
+      return {
+        ...state,
+        error: action.data,
+      };
+    }
+    case T.USERS_CLEAR_ERROR: {
+      return {
+        ...state,
+        error: false,
+      };
+    }
+    case T.USERS_LIST_LOADED: {
       return {
         ...state,
         success: true,

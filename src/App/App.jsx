@@ -8,12 +8,13 @@ import _get from 'lodash/get';
 import { ThemeProvider } from '@material-ui/styles';
 
 import Routes from '../routes';
+import PageLoading from '../routes/PageLoading';
 import AdminLayout from '../components/layout/Admin';
 import ClientLayout from '../components/layout/Client';
 
 import checkAuthStatus from '../utilities/checkAuthStatus';
 
-import { tryAccess, resetLoginStatus } from "../redux/modules/user/actions";
+import { tryAccess, skipLogin, resetLoginStatus } from '../redux/modules/user/actions';
 
 import theme from './theme';
 
@@ -34,6 +35,8 @@ class App extends PureComponent {
 
     if (this.isAdminPages && authorized) {
       dispatch(tryAccess());
+    } else {
+      dispatch(skipLogin());
     }
   }
 
@@ -42,9 +45,19 @@ class App extends PureComponent {
     return location.pathname.search('/admin') === 0;
   }
 
+  get isLoginPage() {
+    const { location } = this.props;
+    return location.pathname.search('/admin/login') === 0;
+  }
+
   get isIndexPage() {
     const { location } = this.props;
     return location.pathname === '/';
+  }
+
+  get isAuthorized() {
+    const { userStatuses } = this.props;
+    return checkAuthStatus() && !userStatuses.error;
   }
 
   handleLogout = () => {
@@ -52,22 +65,36 @@ class App extends PureComponent {
     dispatch(resetLoginStatus());
   };
 
+  renderAdminContent = () => {
+    const { userStatuses, userType } = this.props;
+
+    if (userStatuses.loading && !this.isLoginPage || userStatuses.initial) {
+      return <PageLoading />;
+    }
+
+    return <Routes authorized={this.isAuthorized} userType={userType} />;
+  };
+
+  renderAdminLayout() {
+    const { location, userName } = this.props;
+
+    return (
+      <ThemeProvider theme={theme}>
+        <AdminLayout
+          authorized={this.isAuthorized}
+          pathname={location.pathname}
+          userName={userName}
+          onLogout={this.handleLogout}
+        >
+          {this.renderAdminContent()}
+        </AdminLayout>
+      </ThemeProvider>
+    );
+  }
+
   render() {
     if (this.isAdminPages) {
-      const { location, userType, userName, error } = this.props;
-      const authorized = checkAuthStatus() && !error;
-      return (
-        <ThemeProvider theme={theme}>
-          <AdminLayout
-            authorized={authorized}
-            pathname={location.pathname}
-            userName={userName}
-            onLogout={this.handleLogout}
-          >
-            <Routes authorized={authorized} userType={userType} />
-          </AdminLayout>
-        </ThemeProvider>
-      );
+      return this.renderAdminLayout();
     }
 
     return (
@@ -80,8 +107,12 @@ class App extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    success: state.user.success,
-    error: state.user.error,
+    userStatuses: {
+      initial: state.user.initial,
+      success: state.user.success,
+      loading: state.user.loading,
+      error: state.user.error,
+    },
     userType: _get(state, 'user.data.role', null),
     userName: _get(state, 'user.data.login', ''),
   };
