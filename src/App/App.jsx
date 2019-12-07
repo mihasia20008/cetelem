@@ -13,7 +13,7 @@ import ClientLayout from '../components/layout/Client';
 
 import checkAuthStatus from '../utilities/checkAuthStatus';
 
-import { tryRefresh, resetLoginStatus } from "../redux/modules/user/actions";
+import { tryAccess, resetLoginStatus } from "../redux/modules/user/actions";
 
 import theme from './theme';
 
@@ -32,8 +32,8 @@ class App extends PureComponent {
     const { dispatch } = this.props;
     const authorized = checkAuthStatus();
 
-    if (authorized) {
-      dispatch(tryRefresh());
+    if (this.isAdminPages && authorized) {
+      dispatch(tryAccess());
     }
   }
 
@@ -54,8 +54,8 @@ class App extends PureComponent {
 
   render() {
     if (this.isAdminPages) {
-      const { location, userType, userName } = this.props;
-      const authorized = checkAuthStatus();
+      const { location, userType, userName, error } = this.props;
+      const authorized = checkAuthStatus() && !error;
       return (
         <ThemeProvider theme={theme}>
           <AdminLayout

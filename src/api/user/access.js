@@ -2,12 +2,11 @@ import axios from 'axios';
 
 import { NOT_AUTHORISED } from '../response';
 
-async function loginRequest(auth) {
+async function accessRequest() {
   try {
     const { data } = await axios({
-      method: 'POST',
-      url: '/api/v1/session',
-      data: auth,
+      method: 'GET',
+      url: '/api/v1/current_user',
     });
 
     return {
@@ -20,7 +19,7 @@ async function loginRequest(auth) {
         data: null,
         error: {
           status: NOT_AUTHORISED,
-          message: 'Неверный логин или пароль',
+          message: 'Время действия сессии истекло',
         },
       };
     }
@@ -37,4 +36,4 @@ async function loginRequest(auth) {
   }
 }
 
-export default loginRequest;
+export default accessRequest;

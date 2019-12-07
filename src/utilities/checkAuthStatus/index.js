@@ -1,7 +1,5 @@
-import { AUTH_KEY } from "../../constants";
+import { USER_ID_KEY } from "../../constants";
 
 export default function () {
-  const token = localStorage.getItem(AUTH_KEY);
-
-  return Boolean(token);
+  return Boolean(localStorage.getItem(USER_ID_KEY));
 }

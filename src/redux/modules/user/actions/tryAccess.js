@@ -1,22 +1,22 @@
-import loginRequest from '../../../../api/user/login';
+import { access as accessRequest } from '../../../../api/user';
 
-import { AUTH_KEY } from "../../../../constants";
+import { USER_ID_KEY } from '../../../../constants';
 
 import * as T from '../types';
 
-export default function loginUser(login, password) {
+export default function tryAccess() {
   return async dispatch => {
     try {
       dispatch({ type: T.USER_FETCH_START });
-      const { data, error } = await loginRequest({ login, password });
+      const { data, error } = await accessRequest();
 
       if (error) {
         dispatch({ type: T.USER_FETCH_ERROR, data: error });
         return;
       }
 
-      localStorage.setItem(AUTH_KEY, data.csrf);
-      dispatch({ type: T.USER_LOGIN_SUCCESS, data: data.user });
+      localStorage.setItem(USER_ID_KEY, data.id);
+      dispatch({ type: T.USER_LOGIN_SUCCESS, data });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

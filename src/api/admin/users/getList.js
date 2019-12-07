@@ -1,17 +1,22 @@
 import axios from 'axios';
 
-import { NOT_AUTHORISED } from '../response';
+import { NOT_AUTHORISED } from '../../response';
 
-async function loginRequest(auth) {
+async function getList() {
   try {
     const { data } = await axios({
-      method: 'POST',
-      url: '/api/v1/session',
-      data: auth,
+      method: 'GET',
+      url: '/api/v1/admin/users',
     });
 
     return {
-      data,
+      data: {
+        csrf: data.csrf,
+        user: {
+          login: 'admin',
+          role: 'admin'
+        },
+      },
       error: null,
     };
   } catch (err) {
@@ -37,4 +42,4 @@ async function loginRequest(auth) {
   }
 }
 
-export default loginRequest;
+export default getList;

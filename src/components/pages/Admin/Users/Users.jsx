@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 
 import UsersTable from './blocks/UsersTable';
@@ -30,4 +31,8 @@ function UsersPage() {
   );
 }
 
-export default UsersPage;
+const mapStateToProps = () => {
+  return {};
+};
+
+export default connect(mapStateToProps)(UsersPage);

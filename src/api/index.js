@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-import { AUTH_KEY } from '../constants';
+import { AUTH_TOKEN_KEY } from '../constants';
 
 import * as userRequests from './user';
 import * as carsRequests from './cars';
 
 axios.interceptors.request.use(async config => {
   try {
-    const token = localStorage !== undefined && localStorage.getItem(AUTH_KEY);
+    const token = localStorage !== undefined && localStorage.getItem(AUTH_TOKEN_KEY);
     if (token) {
       // eslint-disable-next-line no-param-reassign
       config.headers = {
