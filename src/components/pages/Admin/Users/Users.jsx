@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
   content: {
     marginTop: theme.spacing(2),
   },
+  wrapper: {
+    overflowX: 'auto',
+  },
   inner: {
     minWidth: 1050,
   },
@@ -131,7 +134,7 @@ function UsersPage(props) {
     <div className={styles.root}>
       <UsersToolbar onOpenCreateForm={handleOpenUserForm} />
       <div className={styles.content}>
-        <Card>
+        <Card className={styles.wrapper}>
           <PerfectScrollbar>
             <div className={styles.inner}>
               <SimpleTable

@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
   content: {
     marginTop: theme.spacing(2),
   },
+  wrapper: {
+    overflowX: 'auto',
+  },
   inner: {
     minWidth: 1050,
   },
@@ -58,7 +61,7 @@ function DealerCars(props) {
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <Card>
+        <Card className={styles.wrapper}>
           <PerfectScrollbar>
             <div className={styles.inner}>
               <SimpleTable

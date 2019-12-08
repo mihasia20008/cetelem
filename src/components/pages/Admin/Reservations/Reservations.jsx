@@ -21,6 +21,9 @@ const useStyles = makeStyles(theme => ({
   content: {
     marginTop: theme.spacing(2),
   },
+  wrapper: {
+    overflowX: 'auto',
+  },
   inner: {
     minWidth: 1050,
   },
@@ -42,7 +45,7 @@ function ReservationsPage(props) {
     <div className={styles.root}>
       <ReservationsToolbar />
       <div className={styles.content}>
-        <Card>
+        <Card className={styles.wrapper}>
           <PerfectScrollbar>
             <div className={styles.inner}>
               <SimpleTable
