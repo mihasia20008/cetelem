@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/styles';
 
 import { clearError, getCars } from '../../../../redux/modules/admin/cars/actions';
 
-import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
+import SimpleTable from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 
 import CarsToolbar from './blocks/CarsToolbar';
@@ -104,8 +104,12 @@ function CarsPage(props) {
                     text: 'Комплектация',
                   },
                   {
-                    id: ACTIONS_COLUMN_ID,
-                    text: '',
+                    id: 'created_at',
+                    text: 'Дата создания',
+                  },
+                  {
+                    id: 'updated_at',
+                    text: 'Дата изменения',
                   },
                 ]}
                 list={filteredList}

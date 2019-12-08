@@ -101,9 +101,9 @@ function SimpleTable(props) {
           );
         }
         if (typeof column.formatter === 'function') {
-          return <TableCell key={column.id}>{column.formatter(item[column.id])}</TableCell>;
+          return <TableCell key={column.id} className={styles.tableCell}>{column.formatter(item[column.id])}</TableCell>;
         }
-        return <TableCell key={column.id}>{item[column.id]}</TableCell>;
+        return <TableCell key={column.id} className={styles.tableCell}>{item[column.id]}</TableCell>;
       })}
     </>
   );

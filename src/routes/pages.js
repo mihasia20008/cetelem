@@ -12,7 +12,7 @@ export const WrongUserPage = lazy(() => import('../components/pages/Client/Wrong
 
 // Admin pages
 
-export const AdminLogin = lazy(() => import('../components/pages/Admin/Login'));
+export const AdminLogin = lazy(() => import('../components/pages/Login'));
 
 export const AdminDashboard = lazy(() => import('../components/pages/Admin/Dashboard'));
 

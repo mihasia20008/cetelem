@@ -11,9 +11,9 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import ErrorShower from '../../../organisms/Admin/ErrorShower';
+import ErrorShower from '../../organisms/Admin/ErrorShower';
 
-import { tryLogin, resetLoginStatus } from '../../../../redux/modules/user/actions';
+import { tryLogin, resetLoginStatus } from '../../../redux/modules/user/actions';
 
 import { schema } from './schema';
 import { useStyles } from './styles';
