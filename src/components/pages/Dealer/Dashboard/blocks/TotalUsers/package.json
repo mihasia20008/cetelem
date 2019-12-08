@@ -1,0 +1,6 @@
+{
+  "name": "dashboard-total-users",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TotalUsers.jsx"
+}

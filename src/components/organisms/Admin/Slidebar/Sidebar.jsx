@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Drawer } from '@material-ui/core';
 
-import { adminPages } from "./pages";
+import { adminPages, dealerPages } from "./pages";
 
-// import { Profile, SidebarNav } from './components';
 import Navigation from './Navigation';
+
+import { ROLES } from "../../../../constants";
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Sidebar = props => {
-  const { open, variant, onClose, className, ...rest } = props;
+  const { open, variant, userType, onClose, className, ...rest } = props;
 
   const styles = useStyles();
 
@@ -48,7 +49,7 @@ const Sidebar = props => {
       >
         <Navigation
           className={styles.nav}
-          pages={adminPages}
+          pages={userType === ROLES.ADMIN ? adminPages : dealerPages}
         />
       </div>
     </Drawer>

@@ -1,0 +1,6 @@
+{
+  "name": "dashboard-users-by-device",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./UsersByDevice.jsx"
+}

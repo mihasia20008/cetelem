@@ -1,0 +1,6 @@
+{
+  "name": "dashboard-latest-orders",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LatestOrders.jsx"
+}

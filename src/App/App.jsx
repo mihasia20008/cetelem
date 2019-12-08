@@ -76,7 +76,7 @@ class App extends PureComponent {
   };
 
   renderAdminLayout() {
-    const { location, userName } = this.props;
+    const { location, userName, userType } = this.props;
 
     return (
       <ThemeProvider theme={theme}>
@@ -84,6 +84,7 @@ class App extends PureComponent {
           authorized={this.isAuthorized}
           pathname={location.pathname}
           userName={userName}
+          userType={userType}
           onLogout={this.handleLogout}
         >
           {this.renderAdminContent()}

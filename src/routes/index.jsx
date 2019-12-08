@@ -8,55 +8,125 @@ import PageLoading from './PageLoading';
 import AdminRoute from './AdminRoute';
 import ClientRoute from './ClientRoute';
 
-export default ({ authorized, userType }) => (
-  <Suspense fallback={<PageLoading />}>
-    <Switch>
-      <Route exact path={RoutesPaths.index} component={() => <Redirect to={RoutesPaths.carsList} />} />
-      <ClientRoute path={RoutesPaths.carsDetail} component={Pages.CarsDetail} />
-      <ClientRoute path={RoutesPaths.carsList} component={Pages.CarsList} />
-      <ClientRoute path={RoutesPaths.wrong} component={Pages.WrongUserPage} />
+export default function Routes({ authorized, userType }) {
+  const AdminRoutesList = () => [
+    <AdminRoute
+      key={RoutesPaths.admin.dashboard}
+      path={RoutesPaths.admin.dashboard}
+      component={Pages.AdminDashboard}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <AdminRoute
+      key={RoutesPaths.admin.cars}
+      path={RoutesPaths.admin.cars}
+      component={Pages.AdminCars}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <AdminRoute
+      key={RoutesPaths.admin.dealerCars}
+      path={RoutesPaths.admin.dealerCars}
+      component={Pages.AdminDealerCars}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <AdminRoute
+      key={RoutesPaths.admin.reservations}
+      path={RoutesPaths.admin.reservations}
+      component={Pages.AdminReservations}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <AdminRoute
+      key={RoutesPaths.admin.users}
+      path={RoutesPaths.admin.users}
+      component={Pages.AdminUsers}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <Route
+      key={RoutesPaths.admin.main}
+      path={RoutesPaths.admin.main}
+      component={() => <Redirect to={RoutesPaths.login} />}
+    />,
+  ];
 
-      <AdminRoute
-        authorized={authorized}
-        userType={userType}
-        path={RoutesPaths.admin.login}
-        component={Pages.AdminLogin}
-      />
-      <AdminRoute
-        authorized={authorized}
-        userType={userType}
-        path={RoutesPaths.admin.dashboard}
-        component={Pages.AdminDashboard}
-      />
-      <AdminRoute
-        authorized={authorized}
-        userType={userType}
-        path={RoutesPaths.admin.cars}
-        component={Pages.AdminCars}
-      />
-      <AdminRoute
-        authorized={authorized}
-        userType={userType}
-        path={RoutesPaths.admin.dealerCars}
-        component={Pages.AdminDealerCars}
-      />
-      <AdminRoute
-        authorized={authorized}
-        userType={userType}
-        path={RoutesPaths.admin.reservations}
-        component={Pages.AdminReservations}
-      />
-      <AdminRoute
-        authorized={authorized}
-        userType={userType}
-        path={RoutesPaths.admin.users}
-        component={Pages.AdminUsers}
-      />
+  const DealerRoutesList = () => [
+    <AdminRoute
+      key={RoutesPaths.dealer.dashboard}
+      path={RoutesPaths.dealer.dashboard}
+      component={Pages.DealerDashboard}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <AdminRoute
+      key={RoutesPaths.dealer.cars}
+      path={RoutesPaths.dealer.cars}
+      component={Pages.DealerDashboard}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <AdminRoute
+      key={RoutesPaths.dealer.reservations}
+      path={RoutesPaths.dealer.reservations}
+      component={Pages.DealerDashboard}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <AdminRoute
+      key={RoutesPaths.dealer.personal}
+      path={RoutesPaths.dealer.personal}
+      component={Pages.DealerDashboard}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <Route
+      key={RoutesPaths.dealer.main}
+      path={RoutesPaths.dealer.main}
+      component={() => <Redirect to={RoutesPaths.login} />}
+    />,
+  ];
 
-      <Route
-        path={RoutesPaths.admin.main}
-        component={() => <Redirect to={RoutesPaths.admin.login} />}
-      />
-    </Switch>
-  </Suspense>
-);
+  const ClientRoutesList = () => [
+    <ClientRoute
+      key={RoutesPaths.carsDetail}
+      path={RoutesPaths.carsDetail}
+      component={Pages.CarsDetail}
+    />,
+    <ClientRoute
+      key={RoutesPaths.carsList}
+      path={RoutesPaths.carsList}
+      component={Pages.CarsList}
+    />,
+    <ClientRoute
+      key={RoutesPaths.wrong}
+      path={RoutesPaths.wrong}
+      component={Pages.WrongUserPage}
+    />,
+  ];
+
+  return (
+    <Suspense fallback={<PageLoading />}>
+      <Switch>
+        <Route
+          exact
+          path={RoutesPaths.index}
+          component={() => <Redirect to={RoutesPaths.carsList} />}
+        />
+        {ClientRoutesList()}
+
+        <AdminRoute
+          authorized={authorized}
+          userType={userType}
+          path={RoutesPaths.login}
+          component={Pages.AdminLogin}
+        />
+
+        {DealerRoutesList()}
+
+        {AdminRoutesList()}
+      </Switch>
+    </Suspense>
+  );
+}

@@ -12,21 +12,25 @@ export const RoutesPaths = {
   carsDetail: '/cars/:id',
   dealers: '/dealers',
   wrong: '/wrong',
+  login: `${ADMIN_PREFIX}/login`,
   admin: {
     main: ADMIN_PREFIX,
-    login: `${ADMIN_PREFIX}/login`,
     dashboard: `${ADMIN_PREFIX}/dashboard`,
     cars: `${ADMIN_PREFIX}/cars`,
     dealerCars: `${ADMIN_PREFIX}/dealer_cars`,
     users: `${ADMIN_PREFIX}/users`,
     reservations: `${ADMIN_PREFIX}/reservations`,
-    dealer: {
-      main: DEALER_PREFIX,
-    },
+  },
+  dealer: {
+    main: DEALER_PREFIX,
+    dashboard: `${DEALER_PREFIX}/dashboard`,
+    cars: `${DEALER_PREFIX}/cars`,
+    reservations: `${DEALER_PREFIX}/reservations`,
+    personal: `${DEALER_PREFIX}/personal`,
   },
 };
 
-export const DEFAULT_ADMIN_PATH = RoutesPaths.admin.main;
+export const DEFAULT_ADMIN_PATH = RoutesPaths.admin.dashboard;
 export const ADMIN_ROUTES_LIST = [
   `${RoutesPaths.admin.dashboard}`,
   `${RoutesPaths.admin.cars}`,
@@ -35,9 +39,12 @@ export const ADMIN_ROUTES_LIST = [
   `${RoutesPaths.admin.reservations}`,
 ];
 
-export const DEFAULT_DEALER_PATH = RoutesPaths.admin.dealer.main;
+export const DEFAULT_DEALER_PATH = RoutesPaths.dealer.dashboard;
 export const DEALER_ROUTES_LIST = [
-  `${RoutesPaths.admin.dealer.main}`,
+  `${RoutesPaths.dealer.dashboard}`,
+  `${RoutesPaths.dealer.cars}`,
+  `${RoutesPaths.dealer.reservations}`,
+  `${RoutesPaths.dealer.personal}`,
 ];
 
 export const CLIENT_ID_KEY = 'cetelem/client_id';

@@ -17,12 +17,8 @@ function AdminRoute({ authorized, userType, path, component: Component, ...restP
       render={matchProps => {
         const { location } = matchProps;
 
-        if (!authorized && location.pathname !== RoutesPaths.admin.login) {
-          return <Redirect to={RoutesPaths.admin.login} />;
-        }
-
-        if (authorized && location.pathname === RoutesPaths.admin.login) {
-          return <Redirect to={RoutesPaths.admin.dashboard} />;
+        if (!authorized && location.pathname !== RoutesPaths.login) {
+          return <Redirect to={RoutesPaths.login} />;
         }
 
         if (userType === ROLES.ADMIN && !ADMIN_ROUTES_LIST.includes(location.pathname)) {

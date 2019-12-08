@@ -5,7 +5,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import StorageIcon from '@material-ui/icons/Storage';
-// import SettingsIcon from '@material-ui/icons/Settings';
+import PersonIcon from '@material-ui/icons/Person';
 
 import { RoutesPaths } from "../../../../constants";
 
@@ -35,11 +35,27 @@ export const adminPages = [
     href: RoutesPaths.admin.users,
     icon: <PeopleIcon />
   },
-  // {
-  //   title: 'Настройки',
-  //   href: '/settings',
-  //   icon: <SettingsIcon />
-  // }
 ];
 
-export const dealerPages = [];
+export const dealerPages = [
+  {
+    title: 'Главная',
+    href: RoutesPaths.dealer.dashboard,
+    icon: <DashboardIcon />
+  },
+  {
+    title: 'Каталог автомобилей',
+    href: RoutesPaths.dealer.cars,
+    icon: <DirectionsCarIcon />
+  },
+  {
+    title: 'Бронирования',
+    href: RoutesPaths.dealer.reservations,
+    icon: <ShoppingCartIcon />
+  },
+  {
+    title: 'Личные данные',
+    href: RoutesPaths.dealer.personal,
+    icon: <PersonIcon />
+  },
+];

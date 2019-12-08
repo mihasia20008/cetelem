@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const AdminLayout = ({ children, authorized, pathname, userName, onLogout }) => {
+const AdminLayout = ({ children, authorized, pathname, userName, userType, onLogout }) => {
   const styles = useStyles();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
@@ -59,6 +59,7 @@ const AdminLayout = ({ children, authorized, pathname, userName, onLogout }) => 
         <Sidebar
           onClose={handleSidebarClose}
           open={shouldOpenSidebar}
+          userType={userType}
           variant={isDesktop ? 'persistent' : 'temporary'}
         />
         <div className={styles.content}>{children}</div>
