@@ -1,5 +1,5 @@
 {
-  "name": "dashboard-admin-page",
+  "name": "dealer-dashboard-page",
   "version": "0.0.0",
   "private": true,
   "main": "./Dashboard.jsx"

@@ -1,0 +1,6 @@
+{
+  "name": "cars-list-toolbar",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CarsListToolbar.jsx"
+}

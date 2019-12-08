@@ -10,6 +10,8 @@ import * as adminCarsRequests from './admin/cars';
 import * as adminDealerCarsRequests from './admin/dealerCars';
 import * as adminReservationsRequests from './admin/reservations';
 
+import * as dealerCarsListRequests from './dealer/carsList';
+
 axios.interceptors.request.use(async config => {
   try {
     const token = localStorage !== undefined && localStorage.getItem(AUTH_TOKEN_KEY);
@@ -36,4 +38,6 @@ export {
   adminCarsRequests,
   adminDealerCarsRequests,
   adminReservationsRequests,
+
+  dealerCarsListRequests,
 };
