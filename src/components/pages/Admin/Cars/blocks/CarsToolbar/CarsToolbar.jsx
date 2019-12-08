@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cls from 'classnames';
 
 import { makeStyles } from '@material-ui/styles';
-import { Button } from '@material-ui/core';
 
 import SearchInput from '../../../../../organisms/Admin/SearchInput';
 
@@ -42,12 +41,6 @@ const CarsToolbar = props => {
           value={searchText}
           onChange={onSearch}
         />
-      </div>
-      <div className={styles.row}>
-        <span className={styles.spacer} />
-        <Button color="primary" variant="contained">
-          Добавить
-        </Button>
       </div>
     </div>
   );
