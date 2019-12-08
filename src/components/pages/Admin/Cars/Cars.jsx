@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -32,6 +32,7 @@ function CarsPage(props) {
     dispatch,
   } = props;
   const styles = useStyles();
+  const [searchText, onChangeSearchText] = useState('');
 
   useEffect(() => {
     dispatch(getCars());
@@ -41,9 +42,30 @@ function CarsPage(props) {
     dispatch(clearError());
   };
 
+  const handleSearch = event => {
+    event.persist();
+    onChangeSearchText(event.target.value);
+  };
+
+  const filteredList = searchText
+    ? data.filter(item =>
+        Object.values(item).some(value => {
+          if (!value) {
+            return false;
+          }
+          return (
+            value
+              .toString()
+              .toLowerCase()
+              .search(searchText.toLowerCase()) !== -1
+          );
+        })
+      )
+    : data;
+
   return (
     <div className={styles.root}>
-      <CarsToolbar />
+      <CarsToolbar searchText={searchText} onSearch={handleSearch} />
       <div className={styles.content}>
         <Card>
           <PerfectScrollbar>
@@ -83,7 +105,7 @@ function CarsPage(props) {
                     text: '',
                   },
                 ]}
-                list={data}
+                list={filteredList}
                 statuses={statuses}
               />
             </div>
