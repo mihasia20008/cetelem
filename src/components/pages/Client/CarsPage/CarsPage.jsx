@@ -355,7 +355,7 @@ class CarsPage extends PureComponent {
     return (
       <>
         <CarsList list={list} />
-        <Pagination current={meta.page} total={meta.total} onGoToPage={this.handleGoToPage} />
+        <Pagination current={meta.page} total={meta.pagesCount} onGoToPage={this.handleGoToPage} />
       </>
     );
   }

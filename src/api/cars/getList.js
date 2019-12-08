@@ -3,6 +3,7 @@ import qs from 'qs';
 import _pick from 'lodash/pick';
 
 const page = 'x-page';
+const pagesCount = 'x-pages-number';
 const perPage = 'x-per-page';
 const total = 'x-total';
 
@@ -36,6 +37,7 @@ export async function carListRequest(params) {
           page: +headers[page],
           total: +headers[total],
           perPage: +headers[perPage],
+          pagesCount: +headers[pagesCount],
         }
       },
       error: null,
