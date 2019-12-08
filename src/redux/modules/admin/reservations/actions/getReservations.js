@@ -5,14 +5,14 @@ import {
   RESERVATIONS_LIST_LOADED,
 } from '../types';
 
-import { getList as getListRequest } from '../../../../../api/admin/reservations';
+import { adminReservationsRequests } from '../../../../../api';
 
-export default function getUsers() {
+export default function getReservations() {
   return async dispatch => {
     try {
       dispatch({ type: RESERVATIONS_FETCH_START });
 
-      const { error, data } = await getListRequest();
+      const { error, data } = await adminReservationsRequests.getList();
 
       if (error) {
         dispatch({ type: RESERVATIONS_CLEAR_ERROR, data: error });

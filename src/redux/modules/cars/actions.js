@@ -1,4 +1,4 @@
-import { loadCarsList } from '../../../api/cars';
+import { carsRequests } from '../../../api';
 
 import * as T from './types';
 
@@ -6,7 +6,7 @@ export function loadCars(query) {
   return async dispatch => {
     try {
       dispatch({ type: T.CARS_FETCH_START});
-      const { error, data } = await loadCarsList(query);
+      const { error, data } = await carsRequests.loadCarsList(query);
 
       if (error) {
         dispatch({ type: T.CARS_FETCH_ERROR, data: error });

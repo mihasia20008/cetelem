@@ -105,7 +105,9 @@ function BookForm() {
       <div className={styles.formContent}>
         <p className={styles.bookInfo}>
           Вы хотите забронировать{' '}
-          <span className={styles.bookImportant}>Land Rover Discovery V</span> у дилера{' '}
+          <span className={styles.bookImportant}>Land Rover Discovery V</span>
+          <br/>
+          у дилера{' '}
           <span className={styles.bookImportant}>Major Land Rover</span>
         </p>
         <p className={styles.bookText}>

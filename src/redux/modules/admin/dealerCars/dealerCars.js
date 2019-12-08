@@ -9,44 +9,41 @@ const initialState = {
   data: [],
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function dealerCarsReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case T.USERS_FETCH_START: {
+    case T.DEALER_CARS_FETCH_START: {
       return {
         ...state,
         initial: false,
-        reload: false,
         loading: true,
       };
     }
-    case T.USERS_FETCH_END: {
+    case T.DEALER_CARS_FETCH_END: {
       return {
         ...state,
         loading: false,
       };
     }
-    case T.USERS_FETCH_ERROR: {
+    case T.DEALER_CARS_FETCH_ERROR: {
       return {
         ...state,
         error: action.data,
       };
     }
-    case T.USERS_CLEAR_ERROR: {
+    case T.DEALER_CARS_CLEAR_ERROR: {
       return {
         ...state,
         error: false,
       };
     }
-    case T.USERS_LIST_LOADED: {
+    case T.DEALER_CARS_LIST_LOADED: {
       return {
         ...state,
         success: true,
         data: action.data,
       };
     }
-    case T.USERS_ITEM_CREATED:
-    case T.USERS_ITEM_UPDATED:
-    case T.USERS_ITEM_DELETED: {
+    case T.DEALER_CARS_ITEM_DELETED: {
       return {
         ...state,
         reload: true,

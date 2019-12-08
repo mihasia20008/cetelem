@@ -5,14 +5,14 @@ import {
   CARS_LIST_LOADED,
 } from '../types';
 
-import { getList as getListRequest } from '../../../../../api/admin/cars';
+import { adminCarsRequests } from '../../../../../api';
 
-export default function getUsers() {
+export default function getCars() {
   return async dispatch => {
     try {
       dispatch({ type: CARS_FETCH_START });
 
-      const { error, data } = await getListRequest();
+      const { error, data } = await adminCarsRequests.getList();
 
       if (error) {
         dispatch({ type: CARS_FETCH_ERROR, data: error });
