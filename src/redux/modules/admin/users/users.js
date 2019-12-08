@@ -14,6 +14,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         initial: false,
+        reload: false,
         loading: true,
       };
     }
@@ -40,6 +41,14 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         success: true,
         data: action.data,
+      };
+    }
+    case T.USERS_ITEM_CREATED:
+    case T.USERS_ITEM_UPDATED:
+    case T.USERS_ITEM_DELETED: {
+      return {
+        ...state,
+        reload: true,
       };
     }
     default: {

@@ -1,15 +1,12 @@
 export const schema = {
   login: {
-    presence: { allowEmpty: false, message: '- обязательное поле!' },
-    // email: {
-    //   message: '- неверное значение!',
-    // },
+    presence: { allowEmpty: false, message: '^Логин - обязательное поле!' },
     length: {
       maximum: 64,
     },
   },
   password: {
-    presence: { allowEmpty: false, message: '- обязательное поле!' },
+    presence: { allowEmpty: false, message: '^Пароль - обязательное поле!' },
     length: {
       maximum: 128,
     },

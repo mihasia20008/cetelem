@@ -104,7 +104,7 @@ const Login = props => {
                 <Button
                   className={styles.button}
                   color="primary"
-                  disabled={!formState.isValid}
+                  disabled={!formState.isValid || loading}
                   fullWidth
                   size="large"
                   type="submit"
@@ -112,7 +112,7 @@ const Login = props => {
                 >
                   Войти
                 </Button>
-                {loading && <CircularProgress size={24} />}
+                {loading && <CircularProgress size={24} className={styles.buttonProgress} />}
               </div>
             </form>
           </div>

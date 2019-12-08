@@ -1,4 +1,4 @@
-import { refresh as refreshRequest } from "../../../../api/user";
+import { userRequests } from "../../../../api";
 
 import { AUTH_TOKEN_KEY } from "../../../../constants";
 
@@ -8,7 +8,7 @@ export default function tryRefresh() {
   return async dispatch => {
     try {
       dispatch({ type: T.USER_FETCH_START });
-      const { data, error } = await refreshRequest();
+      const { data, error } = await userRequests.refresh();
 
       if (!error) {
         localStorage.setItem(AUTH_TOKEN_KEY, data.csrf);

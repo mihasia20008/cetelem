@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-async function createUser(form) {
+async function updateUser(id, form) {
   try {
     const { data } = await axios({
-      method: 'POST',
-      url: '/api/v1/admin/users',
+      method: 'PATCH',
+      url: `/api/v1/admin/users/${id}`,
       data: form
     });
 
@@ -25,4 +25,4 @@ async function createUser(form) {
   }
 }
 
-export default createUser;
+export default updateUser;

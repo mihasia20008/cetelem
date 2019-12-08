@@ -1,13 +1,13 @@
-import { USERS_FETCH_START, USERS_FETCH_END, USERS_FETCH_ERROR, USERS_LIST_LOADED } from '../types';
+import { adminUsersRequests } from '../../../../../api';
 
-import { getList as getListRequest } from '../../../../../api/admin/users';
+import { USERS_FETCH_START, USERS_FETCH_END, USERS_FETCH_ERROR, USERS_LIST_LOADED } from '../types';
 
 export default function getUsers() {
   return async dispatch => {
     try {
       dispatch({ type: USERS_FETCH_START });
 
-      const { error, data } = await getListRequest();
+      const { error, data } = await adminUsersRequests.getList();
 
       if (error) {
         dispatch({ type: USERS_FETCH_ERROR, data: error });

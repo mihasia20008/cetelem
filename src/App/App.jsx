@@ -68,7 +68,7 @@ class App extends PureComponent {
   renderAdminContent = () => {
     const { userStatuses, userType } = this.props;
 
-    if (userStatuses.loading && !this.isLoginPage || userStatuses.initial) {
+    if ((userStatuses.loading && !this.isLoginPage) || userStatuses.initial) {
       return <PageLoading />;
     }
 

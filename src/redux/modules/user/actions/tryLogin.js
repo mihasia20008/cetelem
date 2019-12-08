@@ -1,4 +1,4 @@
-import { login as loginRequest } from '../../../../api/user';
+import { userRequests } from '../../../../api';
 
 import { AUTH_TOKEN_KEY, USER_ID_KEY } from "../../../../constants";
 
@@ -8,7 +8,7 @@ export default function tryLogin(login, password) {
   return async dispatch => {
     try {
       dispatch({ type: T.USER_FETCH_START });
-      const { data, error } = await loginRequest({ login, password });
+      const { data, error } = await userRequests.login({ login, password });
 
       if (error) {
         dispatch({ type: T.USER_FETCH_ERROR, data: error });

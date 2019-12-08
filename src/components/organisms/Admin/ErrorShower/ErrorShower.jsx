@@ -28,13 +28,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ErrorShower(props) {
-  const { open, autoHideDuration, message, onClose } = props;
+  const { open, autoHideDuration, message, onClose, position } = props;
   const styles = useStyles();
 
   return (
     <Snackbar
       autoHideDuration={autoHideDuration}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      anchorOrigin={position}
       open={open}
       onClose={onClose}
       aria-describedby="error-shower"
@@ -62,12 +62,20 @@ ErrorShower.propTypes = {
   autoHideDuration: PropTypes.number,
   message: PropTypes.string,
   onClose: PropTypes.func,
+  position: PropTypes.shape({
+    vertical: PropTypes.string,
+    horizontal: PropTypes.string,
+  })
 };
 
 ErrorShower.defaultProps = {
   autoHideDuration: 3000,
   message: '',
   onClose: _noop,
+  position: {
+    vertical: 'bottom',
+    horizontal: 'center'
+  }
 };
 
 export default ErrorShower;

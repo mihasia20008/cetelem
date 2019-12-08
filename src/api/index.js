@@ -5,6 +5,10 @@ import { AUTH_TOKEN_KEY } from '../constants';
 import * as userRequests from './user';
 import * as carsRequests from './cars';
 
+import * as adminUsersRequests from './admin/users';
+import * as adminCarsRequests from './admin/cars';
+import * as adminReservationsRequests from './admin/reservations';
+
 axios.interceptors.request.use(async config => {
   try {
     const token = localStorage !== undefined && localStorage.getItem(AUTH_TOKEN_KEY);
@@ -26,4 +30,7 @@ axios.interceptors.request.use(async config => {
 export {
   userRequests,
   carsRequests,
+  adminUsersRequests,
+  adminCarsRequests,
+  adminReservationsRequests,
 };

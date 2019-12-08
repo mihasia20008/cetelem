@@ -1,4 +1,4 @@
-import { access as accessRequest } from '../../../../api/user';
+import { userRequests } from '../../../../api';
 
 import { USER_ID_KEY } from '../../../../constants';
 
@@ -8,7 +8,7 @@ export default function tryAccess() {
   return async dispatch => {
     try {
       dispatch({ type: T.USER_FETCH_START });
-      const { data, error } = await accessRequest();
+      const { data, error } = await userRequests.access();
 
       if (error) {
         dispatch({ type: T.USER_FETCH_ERROR, data: error });

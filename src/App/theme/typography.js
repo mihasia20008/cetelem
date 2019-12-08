@@ -39,9 +39,9 @@ export default {
   h6: {
     color: palette.text.primary,
     fontWeight: 500,
-    fontSize: '14px',
-    letterSpacing: '-0.05px',
-    lineHeight: '20px'
+    fontSize: '20px',
+    letterSpacing: '-0.06px',
+    lineHeight: '24px'
   },
   subtitle1: {
     color: palette.text.primary,

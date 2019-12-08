@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -7,12 +7,14 @@ import { makeStyles } from '@material-ui/styles';
 
 import _get from 'lodash/get';
 
-import { getUsers, clearError } from '../../../../redux/modules/admin/users/actions';
+import * as usersActions from '../../../../redux/modules/admin/users/actions';
 
 import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
+import ConfirmDialog from '../../../organisms/Admin/ConfirmDialog';
 
 import UsersToolbar from './blocks/UsersToolbar';
+import UserForm from './blocks/UserForm';
 
 import { ROLES } from '../../../../constants';
 
@@ -27,30 +29,77 @@ const useStyles = makeStyles(theme => ({
     minWidth: 1050,
   },
   formContainer: {
-    width: '75%',
+    width: '50%',
     [theme.breakpoints.down('sm')]: {
       width: '100%',
     },
-  }
+  },
 }));
 
 function UsersPage(props) {
-  const { users: { data, ...statuses }, dispatch } = props;
+  const {
+    users: { data, ...statuses },
+    dispatch,
+  } = props;
   const styles = useStyles();
 
-  const [openCreateForm, toggleCreateForm] = useState(false);
+  const [openUserForm, toggleUserForm] = useState(false);
+  const [editingUser, setUserEdit] = useState({ id: null });
+  const [deletingUserId, setUserDelete] = useState(null);
+
+  const handleOpenUserForm = () => toggleUserForm(true);
+
+  const handleCloseUserForm = useCallback(() => {
+    if (editingUser.id) {
+      setUserEdit({ id: null });
+    }
+    toggleUserForm(false);
+  }, [editingUser.id]);
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(usersActions.getUsers());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (statuses.reload && !statuses.loading) {
+      dispatch(usersActions.getUsers());
+      handleCloseUserForm();
+    }
+  }, [dispatch, handleCloseUserForm, statuses.loading, statuses.reload]);
+
+  useEffect(() => {
+    if (editingUser.id) {
+      handleOpenUserForm();
+    }
+  }, [editingUser.id]);
+
   const handleCloseError = () => {
-    dispatch(clearError());
+    dispatch(usersActions.clearError());
   };
 
-  const handleOpenCreateForm = () => toggleCreateForm(true);
+  const handleSubmitForm = values => {
+    if (editingUser.id) {
+      dispatch(usersActions.updateUser(editingUser.id, values));
+    } else {
+      dispatch(usersActions.createUser(values));
+    }
+  };
 
-  const handleCloseCreateForm = () => toggleCreateForm(false);
+  const handleEditUser = id => {
+    const user = data.find(item => item.id === id);
+    if (user) {
+      setUserEdit(user);
+    }
+  };
+
+  const handleDeleteUser = id => setUserDelete(id);
+
+  const handleCancelDelete = () => setUserDelete(null);
+
+  const handleConfirmDelete = () => {
+    dispatch(usersActions.deleteUser(deletingUserId));
+    setUserDelete(null);
+  };
 
   const renderUserRole = role => {
     switch (role) {
@@ -80,7 +129,7 @@ function UsersPage(props) {
 
   return (
     <div className={styles.root}>
-      <UsersToolbar onOpenCreateForm={handleOpenCreateForm} />
+      <UsersToolbar onOpenCreateForm={handleOpenUserForm} />
       <div className={styles.content}>
         <Card>
           <PerfectScrollbar>
@@ -112,7 +161,9 @@ function UsersPage(props) {
                   },
                 ]}
                 list={data}
-                statuses={statuses}
+                statuses={openUserForm ? {} : statuses}
+                onEdit={handleEditUser}
+                onDelete={handleDeleteUser}
               />
             </div>
           </PerfectScrollbar>
@@ -120,15 +171,44 @@ function UsersPage(props) {
       </div>
       <Drawer
         anchor="right"
-        open={openCreateForm}
+        open={openUserForm}
         classes={{
-          paper: styles.formContainer
+          paper: styles.formContainer,
         }}
-        onClose={handleCloseCreateForm}>
-        Create Form
+        onClose={handleCloseUserForm}
+      >
+        <UserForm
+          texts={{
+            title: 'Создание пользователя',
+            subtitle: 'Заполните все обязательные поля',
+            submit: 'Создать',
+          }}
+          user={editingUser}
+          statuses={statuses}
+          onCancel={handleCloseUserForm}
+          onSubmit={handleSubmitForm}
+          onCloseError={handleCloseError}
+        />
       </Drawer>
+      <ConfirmDialog
+        open={Boolean(deletingUserId)}
+        texts={{
+          title: 'Удаление записи',
+          body: (
+            <>
+              Вы собираетесь удалить данную запись.
+              <br />
+              <b>Данное действие невозможно отменить.</b> Хотите продолжить?
+            </>
+          ),
+          cancel: 'Отмена',
+          confirm: 'Удалить',
+        }}
+        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+      />
       <ErrorShower
-        open={Boolean(statuses.error)}
+        open={Boolean(statuses.error) && !openUserForm}
         message={_get(statuses, 'error.message')}
         onClose={handleCloseError}
       />

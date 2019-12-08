@@ -15,6 +15,7 @@ import {
   TablePagination,
   TableRow,
 } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import styles from './SimpleTable.module.scss';
@@ -23,7 +24,7 @@ export const ACTIONS_COLUMN_ID = 'actions';
 export const PER_PAGE_VARIANTS = [5, 10, 25];
 
 function SimpleTable(props) {
-  const { location, history, headers, list, statuses } = props;
+  const { location, history, headers, list, statuses, onEdit, onDelete } = props;
   const { page: queryPage, per_page: queryPerPage } = location.query;
 
   const [page, setPage] = useState(queryPage ? +queryPage - 1 : 0);
@@ -57,6 +58,10 @@ function SimpleTable(props) {
     setPage(0);
   };
 
+  const handleEditItem = (id) => () => onEdit(id);
+
+  const handleDeleteItem = (id) => () => onDelete(id);
+
   const getItemsOnPageInfo = ({ from, to, count }) => {
     return ''
       .concat(from, '-')
@@ -81,10 +86,17 @@ function SimpleTable(props) {
       {headers.map(column => {
         if (column.id === ACTIONS_COLUMN_ID) {
           return (
-            <TableCell key={ACTIONS_COLUMN_ID}>
-              <IconButton size="small">
-                <DeleteIcon color="error" />
-              </IconButton>
+            <TableCell key={ACTIONS_COLUMN_ID} className={styles.actionsColumn}>
+              {onEdit && (
+                <IconButton size="small" onClick={handleEditItem(item.id)}>
+                  <EditIcon />
+                </IconButton>
+              )}
+              {onDelete && (
+                <IconButton size="small" onClick={handleDeleteItem(item.id)}>
+                  <DeleteIcon color="error" />
+                </IconButton>
+              )}
             </TableCell>
           );
         }
@@ -166,11 +178,15 @@ SimpleTable.propTypes = {
     success: PropTypes.bool,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }),
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 SimpleTable.defaultProps = {
   list: [],
   statuses: {},
+  onEdit: undefined,
+  onDelete: undefined,
 };
 
 export default withRouter(SimpleTable);
