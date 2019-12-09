@@ -1,0 +1,6 @@
+{
+  "name": "dealer-info-reducer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./info.js"
+}

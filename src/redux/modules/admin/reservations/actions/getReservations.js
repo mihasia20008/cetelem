@@ -1,7 +1,7 @@
 import {
   RESERVATIONS_FETCH_START,
   RESERVATIONS_FETCH_END,
-  RESERVATIONS_CLEAR_ERROR,
+  RESERVATIONS_FETCH_ERROR,
   RESERVATIONS_LIST_LOADED,
 } from '../types';
 
@@ -15,7 +15,7 @@ export default function getReservations() {
       const { error, data } = await adminReservationsRequests.getList();
 
       if (error) {
-        dispatch({ type: RESERVATIONS_CLEAR_ERROR, data: error });
+        dispatch({ type: RESERVATIONS_FETCH_ERROR, data: error });
         return;
       }
 
@@ -24,7 +24,7 @@ export default function getReservations() {
       // eslint-disable-next-line no-console
       console.log(error);
       dispatch({
-        type: RESERVATIONS_CLEAR_ERROR,
+        type: RESERVATIONS_FETCH_ERROR,
         data: { message: 'Ошибка получения списка бронирований' },
       });
     } finally {

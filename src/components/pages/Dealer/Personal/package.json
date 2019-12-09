@@ -1,0 +1,6 @@
+{
+  "name": "dealer-personal-admin-page",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Personal.jsx"
+}

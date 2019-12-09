@@ -77,7 +77,7 @@ export default function Routes({ authorized, userType }) {
     <AdminRoute
       key={RoutesPaths.dealer.personal}
       path={RoutesPaths.dealer.personal}
-      component={Pages.DealerDashboard}
+      component={Pages.DealerPersonal}
       authorized={authorized}
       userType={userType}
     />,
