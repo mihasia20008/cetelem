@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/styles';
 import _get from 'lodash/get';
 
 import * as usersActions from '../../../../redux/modules/admin/users/actions';
+import { getDealers } from '../../../../redux/modules/filters/actions';
 
 import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
@@ -42,6 +43,8 @@ const useStyles = makeStyles(theme => ({
 function UsersPage(props) {
   const {
     users: { data, ...statuses },
+    dealersLoaded,
+    dealers,
     dispatch,
   } = props;
   const styles = useStyles();
@@ -61,7 +64,10 @@ function UsersPage(props) {
 
   useEffect(() => {
     dispatch(usersActions.getUsers());
-  }, [dispatch]);
+    if (!dealersLoaded) {
+      dispatch(getDealers());
+    }
+  }, [dealersLoaded, dispatch]);
 
   useEffect(() => {
     if (statuses.reload && !statuses.loading) {
@@ -118,6 +124,15 @@ function UsersPage(props) {
     }
   };
 
+  const renderUserDealer = (id, user) => {
+    if (user.role === ROLES.ADMIN) {
+      return '';
+    }
+
+    const dealer = dealers.find(item => item.id === id) || [];
+    return dealer.name || 'Не определено';
+  };
+
   const renderUserRegistration = (date = new Date()) => {
     const dateInstance = new Date(date);
     const day = dateInstance
@@ -154,6 +169,11 @@ function UsersPage(props) {
                     formatter: renderUserRole,
                   },
                   {
+                    id: 'dealer_id',
+                    text: 'Дилер',
+                    formatter: renderUserDealer,
+                  },
+                  {
                     id: 'date',
                     text: 'Дата регистрации',
                     formatter: renderUserRegistration,
@@ -181,12 +201,17 @@ function UsersPage(props) {
         onClose={handleCloseUserForm}
       >
         <UserForm
-          texts={{
+          texts={editingUser.id ? {
+            title: 'Редактирование пользователя',
+            subtitle: 'Заполните все обязательные поля',
+            submit: 'Изменить',
+          } : {
             title: 'Создание пользователя',
             subtitle: 'Заполните все обязательные поля',
             submit: 'Создать',
           }}
           user={editingUser}
+          dealers={dealers}
           statuses={statuses}
           onCancel={handleCloseUserForm}
           onSubmit={handleSubmitForm}
@@ -220,8 +245,11 @@ function UsersPage(props) {
 }
 
 const mapStateToProps = state => {
+  const dealers = _get(state, 'filters.data.dealers.options', []).filter(item => item.id !== 0);
   return {
     users: state.admin.users,
+    dealers,
+    dealersLoaded: _get(state, 'filters.success'),
   };
 };
 

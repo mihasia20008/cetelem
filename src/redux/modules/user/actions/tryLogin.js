@@ -18,8 +18,7 @@ export default function tryLogin(login, password) {
       localStorage.setItem(AUTH_TOKEN_KEY, data.csrf);
       localStorage.setItem(USER_ID_KEY, data.user.id);
       if (data.user.role === ROLES.DEALER) {
-        localStorage.setItem(DEALER_ID_KEY, 1);
-        // localStorage.setItem(DEALER_ID_KEY, data.user.dealer_id);
+        localStorage.setItem(DEALER_ID_KEY, data.user.dealer_id);
       }
       dispatch({ type: T.USER_LOGIN_SUCCESS, data: data.user });
     } catch (error) {

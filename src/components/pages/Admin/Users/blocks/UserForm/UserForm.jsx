@@ -21,7 +21,7 @@ import ErrorShower from '../../../../../organisms/Admin/ErrorShower';
 
 import { ROLES } from '../../../../../../constants';
 
-import { defaultSchema, passwordSchema } from './schema';
+import { defaultSchema, passwordSchema, dealerSchema } from './schema';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function UserForm(props) {
-  const { texts, user, statuses, onCancel, onSubmit, onCloseError } = props;
+  const { texts, user, dealers, statuses, onCancel, onSubmit, onCloseError } = props;
   const styles = useStyles();
   const [formState, setFormState] = useState({
     isValid: false,
@@ -56,19 +56,27 @@ function UserForm(props) {
       password: '',
       confirm: '',
       role: user.role || ROLES.DEALER,
+      dealer_id: (dealers.find(dealer => dealer.id === user.dealer_id) || []).id || 0
     },
     touched: {},
     errors: {},
   });
 
   useEffect(() => {
-    const compiledSchema =
-      !user.id || formState.values.password
-        ? {
-            ...defaultSchema,
-            ...passwordSchema,
-          }
-        : defaultSchema;
+    let compiledSchema = defaultSchema;
+    if (!user.id || formState.values.password) {
+      compiledSchema = {
+        ...compiledSchema,
+        ...passwordSchema,
+      };
+    }
+    if (formState.values.role === ROLES.DEALER) {
+      compiledSchema = {
+        ...compiledSchema,
+        ...dealerSchema
+      };
+    }
+    console.log(compiledSchema);
     const errors = validate(formState.values, compiledSchema);
 
     setFormState(oldFormState => ({
@@ -193,6 +201,34 @@ function UserForm(props) {
                 ))}
               </TextField>
             </Grid>
+            {formState.values.role === ROLES.DEALER && (
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Выберите дилера"
+                  error={hasError('dealer_id')}
+                  helperText={hasError('dealer_id') ? formState.errors.dealer_id[0] : null}
+                  margin="dense"
+                  name="dealer_id"
+                  onChange={handleChange}
+                  required
+                  select
+                  // eslint-disable-next-line react/jsx-sort-props
+                  SelectProps={{ native: true }}
+                  value={formState.values.dealer_id}
+                  variant="outlined"
+                >
+                  <option key="0" value={0}>
+                    Не выбрано
+                  </option>
+                  {dealers.map(option => (
+                    <option key={option.id} value={option.id}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
+              </Grid>
+            )}
           </Grid>
         </CardContent>
         <Divider />
@@ -237,6 +273,10 @@ UserForm.propTypes = {
     login: PropTypes.string,
     role: PropTypes.oneOf(Object.values(ROLES)),
   }),
+  dealers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
   onCancel: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCloseError: PropTypes.func.isRequired,
@@ -246,6 +286,7 @@ UserForm.defaultProps = {
   user: {
     id: null,
   },
+  dealers: [],
 };
 
 export default UserForm;

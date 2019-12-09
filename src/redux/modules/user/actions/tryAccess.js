@@ -17,8 +17,7 @@ export default function tryAccess() {
 
       localStorage.setItem(USER_ID_KEY, data.id);
       if (data.role === ROLES.DEALER) {
-        localStorage.setItem(DEALER_ID_KEY, 1);
-        // localStorage.setItem(DEALER_ID_KEY, data.dealer_id);
+        localStorage.setItem(DEALER_ID_KEY, data.dealer_id);
       }
       dispatch({ type: T.USER_LOGIN_SUCCESS, data });
     } catch (error) {

@@ -30,3 +30,13 @@ export const passwordSchema = {
     }
   },
 };
+
+export const dealerSchema = {
+  dealer_id: {
+    numericality: {
+      onlyInteger: true,
+      greaterThan: 0,
+      notGreaterThan: "^Дилер - обязательно для заполнения"
+    }
+  }
+};
