@@ -15,6 +15,7 @@ export default function carsListReducer(state = initialState, action = {}) {
       return {
         ...state,
         initial: false,
+        reload: false,
         loading: true,
       };
     }
@@ -41,6 +42,12 @@ export default function carsListReducer(state = initialState, action = {}) {
         ...state,
         success: true,
         data: action.data,
+      };
+    }
+    case T.CARS_LIST_XML_UPLOADED: {
+      return {
+        ...state,
+        reload: true,
       };
     }
     default: {

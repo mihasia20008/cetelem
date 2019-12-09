@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import { makeStyles } from '@material-ui/styles';
-import { Card, Typography } from '@material-ui/core';
+import { Card, Drawer, Typography } from '@material-ui/core';
 
 import _get from 'lodash/get';
 
@@ -15,6 +15,7 @@ import ErrorShower from '../../../organisms/Admin/ErrorShower';
 import formatNumber from '../../../../utilities/formatNumber';
 
 import CarsListToolbar from './blocks/CarsListToolbar';
+import CarsListForm from './blocks/CarsListForm';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +30,12 @@ const useStyles = makeStyles(theme => ({
   inner: {
     minWidth: 1050,
   },
+  formContainer: {
+    width: '50%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
 }));
 
 function CarsListPage(props) {
@@ -38,19 +45,38 @@ function CarsListPage(props) {
     dispatch,
   } = props;
 
+  const [openImportForm, toggleImportForm] = useState(false);
+
+  const handleOpenImportForm = () => toggleImportForm(true);
+
+  const handleCloseImportForm = useCallback(() => {
+    toggleImportForm(false);
+  }, []);
+
   useEffect(() => {
     dispatch(carsListActions.getCarsList());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (statuses.reload && !statuses.loading) {
+      dispatch(carsListActions.getCarsList());
+      handleCloseImportForm();
+    }
+  }, [dispatch, handleCloseImportForm, statuses.loading, statuses.reload]);
+
   const handleCloseError = () => {
     dispatch(carsListActions.clearError());
+  };
+
+  const handleSubmitForm = files => {
+    dispatch(carsListActions.uploadFile(files[0]));
   };
 
   const renderFormattedPrice = text => `${formatNumber(text)} ₽`;
 
   return (
     <div className={styles.root}>
-      <CarsListToolbar onOpenImportForm={() => {}} />
+      <CarsListToolbar onOpenImportForm={handleOpenImportForm} />
       <div className={styles.content}>
         <Card className={styles.wrapper}>
           <PerfectScrollbar>
@@ -96,6 +122,25 @@ function CarsListPage(props) {
           </PerfectScrollbar>
         </Card>
       </div>
+      <Drawer
+        anchor="right"
+        open={openImportForm}
+        classes={{
+          paper: styles.formContainer,
+        }}
+        onClose={handleCloseImportForm}
+      >
+        <CarsListForm
+          texts={{
+            title: 'Загрузка данных',
+            submit: 'Загрузить',
+          }}
+          statuses={statuses}
+          onCancel={handleCloseImportForm}
+          onSubmit={handleSubmitForm}
+          onCloseError={handleCloseError}
+        />
+      </Drawer>
       <ErrorShower
         open={Boolean(statuses.error)}
         message={_get(statuses, 'error.message')}

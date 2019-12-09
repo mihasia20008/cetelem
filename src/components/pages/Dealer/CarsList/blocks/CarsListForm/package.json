@@ -1,0 +1,6 @@
+{
+  "name": "cars-list-form",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CarsListForm.jsx"
+}
