@@ -7,14 +7,14 @@ import {
 
 import { dealerCarsListRequests } from '../../../../../api';
 
-import { USER_ID_KEY } from "../../../../../constants";
+import { DEALER_ID_KEY } from "../../../../../constants";
 
 export default function getCarsList() {
   return async dispatch => {
     try {
       dispatch({ type: CARS_LIST_FETCH_START });
 
-      const id = localStorage.getItem(USER_ID_KEY);
+      const id = localStorage.getItem(DEALER_ID_KEY);
       const { error, data } = await dealerCarsListRequests.getList(id);
 
       if (error) {

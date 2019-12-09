@@ -1,6 +1,6 @@
 import { userRequests } from '../../../../api';
 
-import { AUTH_TOKEN_KEY, USER_ID_KEY } from "../../../../constants";
+import { AUTH_TOKEN_KEY, USER_ID_KEY, DEALER_ID_KEY, ROLES } from "../../../../constants";
 
 import * as T from '../types';
 
@@ -17,6 +17,10 @@ export default function tryLogin(login, password) {
 
       localStorage.setItem(AUTH_TOKEN_KEY, data.csrf);
       localStorage.setItem(USER_ID_KEY, data.user.id);
+      if (data.user.role === ROLES.DEALER) {
+        localStorage.setItem(DEALER_ID_KEY, 1);
+        // localStorage.setItem(DEALER_ID_KEY, data.user.dealer_id);
+      }
       dispatch({ type: T.USER_LOGIN_SUCCESS, data: data.user });
     } catch (error) {
       // eslint-disable-next-line no-console

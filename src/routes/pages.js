@@ -29,3 +29,5 @@ export const AdminUsers = lazy(() => import('../components/pages/Admin/Users'));
 export const DealerDashboard = lazy(() => import('../components/pages/Dealer/Dashboard'));
 
 export const DealerCarsList = lazy(() => import('../components/pages/Dealer/CarsList'));
+
+export const DealerReservations = lazy(() => import('../components/pages/Dealer/Reservations'));

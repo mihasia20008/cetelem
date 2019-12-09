@@ -1,0 +1,6 @@
+{
+  "name": "dealer-reservations-admin-page",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Reservations.jsx"
+}

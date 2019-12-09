@@ -50,6 +50,7 @@ export const DEALER_ROUTES_LIST = [
 export const CLIENT_ID_KEY = 'cetelem/client_id';
 export const AUTH_TOKEN_KEY = 'cetelem/authorized';
 export const USER_ID_KEY = 'cetelem/user/id';
+export const DEALER_ID_KEY = 'cetelem/dealer/id';
 export const ENABLE_LOGGER = 'cetelem/enableReduxLogger';
 
 export const FILTER_TYPES = {

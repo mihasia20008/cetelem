@@ -11,6 +11,7 @@ import * as adminDealerCarsRequests from './admin/dealerCars';
 import * as adminReservationsRequests from './admin/reservations';
 
 import * as dealerCarsListRequests from './dealer/carsList';
+import * as dealerReservationsRequests from './dealer/reservations';
 
 axios.interceptors.request.use(async config => {
   try {
@@ -40,4 +41,5 @@ export {
   adminReservationsRequests,
 
   dealerCarsListRequests,
+  dealerReservationsRequests,
 };

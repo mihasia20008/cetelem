@@ -1,6 +1,6 @@
 import { userRequests } from '../../../../api';
 
-import { USER_ID_KEY } from '../../../../constants';
+import { USER_ID_KEY, DEALER_ID_KEY, ROLES } from '../../../../constants';
 
 import * as T from '../types';
 
@@ -16,6 +16,10 @@ export default function tryAccess() {
       }
 
       localStorage.setItem(USER_ID_KEY, data.id);
+      if (data.role === ROLES.DEALER) {
+        localStorage.setItem(DEALER_ID_KEY, 1);
+        // localStorage.setItem(DEALER_ID_KEY, data.dealer_id);
+      }
       dispatch({ type: T.USER_LOGIN_SUCCESS, data });
     } catch (error) {
       // eslint-disable-next-line no-console
