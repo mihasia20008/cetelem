@@ -1,0 +1,6 @@
+{
+  "name": "dealers-toolbar",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DealersToolbar.jsx"
+}

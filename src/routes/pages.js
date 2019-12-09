@@ -20,6 +20,8 @@ export const AdminCars = lazy(() => import('../components/pages/Admin/Cars'));
 
 export const AdminDealerCars = lazy(() => import('../components/pages/Admin/DealerCars'));
 
+export const AdminDealersList = lazy(() => import('../components/pages/Admin/DealersList'));
+
 export const AdminReservations = lazy(() => import('../components/pages/Admin/Reservations'));
 
 export const AdminUsers = lazy(() => import('../components/pages/Admin/Users'));

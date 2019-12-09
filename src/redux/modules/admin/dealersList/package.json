@@ -1,0 +1,6 @@
+{
+  "name": "dealers-list-reducer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dealersList.js"
+}

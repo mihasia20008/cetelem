@@ -9,6 +9,7 @@ import * as filtersRequests from './filters';
 import * as adminUsersRequests from './admin/users';
 import * as adminCarsRequests from './admin/cars';
 import * as adminDealerCarsRequests from './admin/dealerCars';
+import * as adminDealersRequests from './admin/dealersList';
 import * as adminReservationsRequests from './admin/reservations';
 
 import * as dealerCarsListRequests from './dealer/carsList';
@@ -40,6 +41,7 @@ export {
 
   adminUsersRequests,
   adminCarsRequests,
+  adminDealersRequests,
   adminDealerCarsRequests,
   adminReservationsRequests,
 

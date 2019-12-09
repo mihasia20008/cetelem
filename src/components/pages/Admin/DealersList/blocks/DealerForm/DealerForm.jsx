@@ -21,7 +21,7 @@ import ErrorShower from '../../../../../organisms/Admin/ErrorShower';
 
 import { ROLES } from '../../../../../../constants';
 
-import { defaultSchema, passwordSchema, dealerSchema } from './schema';
+import { dealerSchema } from './schema';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,44 +46,29 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function UserForm(props) {
-  const { texts, user, dealers, statuses, onCancel, onSubmit, onCloseError } = props;
+function DealerForm(props) {
+  const { texts, dealer, statuses, onCancel, onSubmit, onCloseError } = props;
   const styles = useStyles();
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
-      login: user.login || '',
-      password: '',
-      confirm: '',
-      role: user.role || ROLES.DEALER,
-      dealer_id: (dealers.find(dealer => dealer.id === user.dealer_id) || []).id || 0
+      name: dealer.name || '',
+      address: dealer.address || '',
+      phone: dealer.phone || '',
     },
     touched: {},
     errors: {},
   });
 
   useEffect(() => {
-    let compiledSchema = defaultSchema;
-    if (!user.id || formState.values.password) {
-      compiledSchema = {
-        ...compiledSchema,
-        ...passwordSchema,
-      };
-    }
-    if (formState.values.role === ROLES.DEALER) {
-      compiledSchema = {
-        ...compiledSchema,
-        ...dealerSchema
-      };
-    }
-    const errors = validate(formState.values, compiledSchema);
+    const errors = validate(formState.values, dealerSchema);
 
     setFormState(oldFormState => ({
       ...oldFormState,
       isValid: !errors,
       errors: errors || {},
     }));
-  }, [formState.values, user.id]);
+  }, [formState.values, dealer.id]);
 
   const handleChange = event => {
     event.persist();
@@ -111,21 +96,6 @@ function UserForm(props) {
     onSubmit(formState.values);
   };
 
-  const roles = [
-    // {
-    //   value: 'user',
-    //   label: 'Пользователь',
-    // },
-    {
-      value: ROLES.ADMIN,
-      label: 'Администратор',
-    },
-    {
-      value: ROLES.DEALER,
-      label: 'Дилер',
-    },
-  ];
-
   return (
     <Card className={styles.root}>
       <form autoComplete="off" noValidate onSubmit={handleSubmitForm}>
@@ -136,98 +106,45 @@ function UserForm(props) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                error={hasError('login')}
-                helperText={hasError('login') ? formState.errors.login[0] : null}
-                label="Логин"
+                error={hasError('name')}
+                helperText={hasError('name') ? formState.errors.name[0] : null}
+                label="Название"
                 margin="dense"
-                name="login"
+                name="name"
                 onChange={handleChange}
                 required
-                value={formState.values.login}
+                value={formState.values.name}
                 variant="outlined"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                error={hasError('password')}
-                helperText={hasError('password') ? formState.errors.password[0] : null}
-                label="Пароль"
+                error={hasError('address')}
+                helperText={hasError('address') ? formState.errors.address[0] : null}
+                label="Адрес"
                 margin="dense"
-                name="password"
-                type="password"
-                onChange={handleChange}
-                required={!user.id}
-                value={formState.values.password}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                error={hasError('confirm')}
-                helperText={hasError('confirm') ? formState.errors.confirm[0] : null}
-                label="Повторите пароль"
-                margin="dense"
-                name="confirm"
-                type="password"
-                onChange={handleChange}
-                required={!user.id}
-                value={formState.values.confirm}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Выберите роль"
-                error={hasError('role')}
-                helperText={hasError('role') ? formState.errors.role[0] : null}
-                margin="dense"
-                name="role"
+                name="address"
                 onChange={handleChange}
                 required
-                select
-                // eslint-disable-next-line react/jsx-sort-props
-                SelectProps={{ native: true }}
-                value={formState.values.role}
+                value={formState.values.address}
                 variant="outlined"
-              >
-                {roles.map(option => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              />
             </Grid>
-            {formState.values.role === ROLES.DEALER && (
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Выберите дилера"
-                  error={hasError('dealer_id')}
-                  helperText={hasError('dealer_id') ? formState.errors.dealer_id[0] : null}
-                  margin="dense"
-                  name="dealer_id"
-                  onChange={handleChange}
-                  required
-                  select
-                  // eslint-disable-next-line react/jsx-sort-props
-                  SelectProps={{ native: true }}
-                  value={formState.values.dealer_id}
-                  variant="outlined"
-                >
-                  <option key="0" value={0}>
-                    Не выбрано
-                  </option>
-                  {dealers.map(option => (
-                    <option key={option.id} value={option.id}>
-                      {option.name}
-                    </option>
-                  ))}
-                </TextField>
-              </Grid>
-            )}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('phone')}
+                helperText={hasError('phone') ? formState.errors.phone[0] : null}
+                label="Номер телефона"
+                margin="dense"
+                name="phone"
+                onChange={handleChange}
+                required
+                value={formState.values.phone}
+                variant="outlined"
+              />
+            </Grid>
           </Grid>
         </CardContent>
         <Divider />
@@ -261,31 +178,26 @@ function UserForm(props) {
   );
 }
 
-UserForm.propTypes = {
+DealerForm.propTypes = {
   texts: PropTypes.shape({
     title: PropTypes.string,
     subtitle: PropTypes.string,
     submit: PropTypes.string,
   }).isRequired,
-  user: PropTypes.shape({
+  dealer: PropTypes.shape({
     id: PropTypes.number,
     login: PropTypes.string,
     role: PropTypes.oneOf(Object.values(ROLES)),
   }),
-  dealers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  })),
   onCancel: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCloseError: PropTypes.func.isRequired,
 };
 
-UserForm.defaultProps = {
-  user: {
+DealerForm.defaultProps = {
+  dealer: {
     id: null,
   },
-  dealers: [],
 };
 
-export default UserForm;
+export default DealerForm;
