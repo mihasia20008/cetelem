@@ -31,8 +31,8 @@ class Footer extends PureComponent {
                 </div>
               </div>
               <div className={styles.phone}>
-                <a className={styles.phoneLink} href="tel: 88005005503">
-                  8 800 500 55 03
+                <a className={styles.phoneLink} href="tel: 88005005502">
+                  8 (800) 500-55-02
                 </a>
                 <div className={styles.phoneText}>Для звонков по России</div>
               </div>

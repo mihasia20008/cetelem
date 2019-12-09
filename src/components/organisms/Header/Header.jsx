@@ -49,8 +49,8 @@ class Header extends PureComponent {
     return (
       <>
         <LocationSelector showIcon />
-        <a className={styles.phone} href="tel: 88005005503">
-          8 800 500 55 03
+        <a className={styles.phone} href="tel: 88005005502">
+          8 (800) 500-55-02
         </a>
         <Link className={styles.personal} to="/personal">
           Личный кабинет
