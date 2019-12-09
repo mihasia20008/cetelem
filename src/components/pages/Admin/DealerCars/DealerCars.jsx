@@ -71,7 +71,7 @@ function DealerCars(props) {
                     text: 'ID',
                   },
                   {
-                    id: 'dealer_id',
+                    id: 'dealer_name',
                     text: 'Дилер',
                   },
                   {
