@@ -119,7 +119,7 @@ function SimpleTable(props) {
   );
 
   const renderNoData = () => {
-    if (statuses.success && !list.length) {
+    if (!statuses.initial && !statuses.loading && !list.length) {
       return <div className={styles.noDataWrapper}>Нет данных</div>;
     }
 

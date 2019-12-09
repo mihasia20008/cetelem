@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   signOutButton: {
     marginLeft: theme.spacing(1),
   },
+  link: {
+    lineHeight: 0,
+  }
 }));
 
 const Topbar = ({ className, userName, authorized, onSidebarOpen, onLogout }) => {
@@ -63,7 +66,7 @@ const Topbar = ({ className, userName, authorized, onSidebarOpen, onLogout }) =>
   return (
     <AppBar className={cls(styles.root, className)}>
       <Toolbar>
-        <Link to="/admin">
+        <Link className={styles.link} to="/admin">
           <img alt="Сетелем" src="/images/footerLogo.svg" />
         </Link>
         <div className={styles.flexGrow} />
