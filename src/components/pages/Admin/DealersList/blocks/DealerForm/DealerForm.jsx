@@ -18,6 +18,7 @@ import {
   Checkbox,
   CircularProgress,
 } from '@material-ui/core';
+import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/styles';
 
 import ErrorShower from '../../../../../organisms/Admin/ErrorShower';
@@ -61,14 +62,15 @@ function DealerForm(props) {
       used_car_saling: Boolean(dealer.used_car_saling),
       phone: _get(dealer, 'contact_infos.0.value', ''),
       code: dealer.code || '',
+      rate: _get(dealer, 'rate', 0),
       postcode: _get(dealer, 'address.postcode', ''),
       country: _get(dealer, 'address.country', ''),
       region: _get(dealer, 'address.region', ''),
       city: _get(dealer, 'address.city', ''),
       street: _get(dealer, 'address.street', ''),
       building: _get(dealer, 'address.building', ''),
-      locationX: _get(dealer, 'address.location.0', ''),
-      locationY: _get(dealer, 'address.location.1', ''),
+      locationX: _get(dealer, 'address.location.x', ''),
+      locationY: _get(dealer, 'address.location.y', ''),
     },
     touched: {},
     errors: {},
@@ -92,6 +94,22 @@ function DealerForm(props) {
       values: {
         ...oldFormState.values,
         [name]: type === 'checkbox' ? checked : value,
+      },
+      touched: {
+        ...oldFormState.touched,
+        [name]: true,
+      },
+    }));
+  };
+
+  const changeRating = (event, value) => {
+    event.persist();
+    const { name } = event.target;
+    setFormState(oldFormState => ({
+      ...oldFormState,
+      values: {
+        ...oldFormState.values,
+        [name]: value,
       },
       touched: {
         ...oldFormState.touched,
@@ -191,6 +209,14 @@ function DealerForm(props) {
                 name="used_car_saling"
                 checked={formState.values.used_car_saling}
                 onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body1">Рейтинг</Typography>
+              <Rating
+                name="rate"
+                value={formState.values.rate}
+                onChange={changeRating}
               />
             </Grid>
             <Grid item xs={12}>

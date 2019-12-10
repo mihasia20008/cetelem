@@ -21,6 +21,7 @@ export default function updateDealer(id, values) {
         official_dealer: Boolean(form.official_dealer),
         used_car_saling: Boolean(form.used_car_saling),
         code: form.code,
+        rate: form.rate,
         contact_infos_attributes: [{ "value_type": "phone", "value": form.phone }],
         address_attributes: {
           postcode: form.postcode,
