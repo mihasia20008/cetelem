@@ -21,7 +21,7 @@ import {
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/styles';
 
-import ErrorShower from '../../../../../organisms/Admin/ErrorShower';
+import ErrorShower from '../../../../organisms/Admin/ErrorShower';
 
 import { dealerSchema } from './schema';
 
@@ -48,8 +48,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function DealerForm(props) {
-  const { texts, dealer, statuses, onCancel, onSubmit, onCloseError } = props;
+function PersonalForm(props) {
+  const { texts, dealer, statuses, onSubmit, onCloseError } = props;
   const styles = useStyles();
   const [formState, setFormState] = useState({
     isValid: false,
@@ -211,7 +211,7 @@ function DealerForm(props) {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">Рейтинг</Typography>
-              <Rating name="rate" value={formState.values.rate} onChange={changeRating} />
+              <Rating name="rate" value={formState.values.rate} onChange={changeRating} disabled />
             </Grid>
             <Grid item xs={12}>
               <Typography variant="subtitle1">Фактический адрес</Typography>
@@ -343,9 +343,6 @@ function DealerForm(props) {
             </Button>
             {statuses.loading && <CircularProgress size={24} className={styles.buttonProgress} />}
           </div>
-          <Button color="primary" variant="outlined" onClick={onCancel}>
-            Отмена
-          </Button>
         </CardActions>
       </form>
       <ErrorShower
@@ -361,7 +358,7 @@ function DealerForm(props) {
   );
 }
 
-DealerForm.propTypes = {
+PersonalForm.propTypes = {
   texts: PropTypes.shape({
     title: PropTypes.string,
     subtitle: PropTypes.string,
@@ -370,15 +367,14 @@ DealerForm.propTypes = {
   dealer: PropTypes.shape({
     id: PropTypes.number,
   }),
-  onCancel: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCloseError: PropTypes.func.isRequired,
 };
 
-DealerForm.defaultProps = {
+PersonalForm.defaultProps = {
   dealer: {
     id: null,
   },
 };
 
-export default DealerForm;
+export default PersonalForm;

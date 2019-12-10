@@ -1,0 +1,6 @@
+{
+  "name": "dealer-personal-forme",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PersonalForm.jsx"
+}
