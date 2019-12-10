@@ -4,7 +4,7 @@ export async function bookCarRequest(id, form) {
   try {
     const { data } = await axios({
       method: 'POST',
-      url: `api/v1/dealer_cars/${id}/book`,
+      url: `/api/v1/dealer_cars/${id}/book`,
       data: form,
     });
 
