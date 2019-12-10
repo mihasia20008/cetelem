@@ -91,6 +91,8 @@ class Gallery extends PureComponent {
   render() {
     const { images } = this.props;
     const { wrapperWidth, currentImage, fullScreenOpen, fullScreenImage } = this.state;
+    const imageCount = images.length;
+    const widthFactor = imageCount > NEXT_TRIGGER ? imageCount + 1 : imageCount;
 
     return (
       <div className={styles.Gallery} ref={this.galleryRef}>
@@ -103,7 +105,7 @@ class Gallery extends PureComponent {
           <div
             className={styles.track}
             style={{
-              width: (images.length + 1) * 520 - 20,
+              width: widthFactor * 520 - 20,
               transform: `translate3d(${-520 * currentImage}px, 0px, 0px)`,
             }}
           >
@@ -115,10 +117,12 @@ class Gallery extends PureComponent {
                 </div>
               );
             })}
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-            <div key={images.length} className={styles.item} onClick={this.handleImageClick(0)}>
-              <img className={styles.image} src={images[0].src} alt="" />
-            </div>
+            {widthFactor > NEXT_TRIGGER && (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+              <div key={images.length} className={styles.item} onClick={this.handleImageClick(0)}>
+                <img className={styles.image} src={images[0].src} alt="" />
+              </div>
+            )}
           </div>
         </div>
         <ModalGateway>
