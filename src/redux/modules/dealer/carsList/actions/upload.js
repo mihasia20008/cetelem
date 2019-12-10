@@ -7,15 +7,15 @@ import {
 
 import { dealerCarsListRequests } from '../../../../../api';
 
-// import { DEALER_ID_KEY } from "../../../../../constants";
+import { DEALER_ID_KEY } from "../../../../../constants";
 
 export default function uploadFile(file) {
   return async dispatch => {
     try {
       dispatch({ type: CARS_LIST_FETCH_START });
 
-      // const id = localStorage.getItem(DEALER_ID_KEY);
-      const { error } = await dealerCarsListRequests.uploadFile(file);
+      const id = localStorage.getItem(DEALER_ID_KEY);
+      const { error } = await dealerCarsListRequests.uploadFile(id, file);
 
       if (error) {
         dispatch({ type: CARS_LIST_FETCH_ERROR, data: error });

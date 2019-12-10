@@ -1,18 +1,18 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-async function uploadFile(file) {
+async function uploadFile(id, file) {
   try {
-    // const { data } = await axios({
-    //   method: 'POST',
-    //   url: '/api/v1/dealers/upload_xml',
-    //   data: { xml: file },
-    // });
+    const { data } = await axios({
+      method: 'POST',
+      url: `/api/v1/dealers/upload_xml?id=${id}`,
+      data: { xml: file },
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
 
-    console.log(file);
-    const res = await new Promise(resolve => setTimeout(() => resolve('est'), 2000));
-    console.log(res);
     return {
-      data: {},
+      data,
       error: null,
     };
   } catch (err) {
