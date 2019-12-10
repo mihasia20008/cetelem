@@ -271,20 +271,20 @@ class CarsDetail extends PureComponent {
         <div className={styles.salesBlock}>
           {car.credit_discount && (
             <div className={styles.saleItem}>
-              <span className={styles.saleName}>При покупке в крелит</span>
-              <span className={styles.saleValue}>{formatNumber(car.credit_discount)} ₽</span>
+              <span className={styles.saleName}>При покупке в кредит</span>
+              <span className={styles.saleValue}>- {formatNumber(car.credit_discount)} ₽</span>
             </div>
           )}
           {car.insurance_discount && (
             <div className={styles.saleItem}>
               <span className={styles.saleName}>При покупке страховки</span>
-              <span className={styles.saleValue}>{formatNumber(car.insurance_discount)} ₽</span>
+              <span className={styles.saleValue}>- {formatNumber(car.insurance_discount)} ₽</span>
             </div>
           )}
           {car.tradein_discount && (
             <div className={styles.saleItem}>
               <span className={styles.saleName}>Trade-In</span>
-              <span className={styles.saleValue}>{formatNumber(car.tradein_discount)} ₽</span>
+              <span className={styles.saleValue}>- {formatNumber(car.tradein_discount)} ₽</span>
             </div>
           )}
         </div>
