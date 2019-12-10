@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import cls from 'classnames';
 import _capitalize from 'lodash/capitalize';
 import _times from 'lodash/times';
+import _get from 'lodash/get';
 
 import PageLoading from '../../../../routes/PageLoading';
 import Container from '../../../base/Container';
@@ -68,16 +69,39 @@ class CarsDetail extends PureComponent {
     return engine;
   };
 
-  getSortedFeatures = (car) => {
+  getSortedFeatures = car => {
     if (!car.extra_options) {
       return [];
     }
 
     const options = car.extra_options.map(option => option.name).sort();
     const itemPerColumn = Math.ceil(options.length / 2);
-    return _times(2, index =>
-      options.slice(index * itemPerColumn, (index + 1) * itemPerColumn)
-    );
+    return _times(2, index => options.slice(index * itemPerColumn, (index + 1) * itemPerColumn));
+  };
+
+  renderDealerAddress = info => {
+    if (!info) {
+      return 'Адрес не указан';
+    }
+
+    let address = '';
+    if (info.street) {
+      address = `${info.street}`;
+    }
+    if (info.building) {
+      address = address ? `${address}, ${info.building}` : info.building;
+    }
+    if (info.city) {
+      address = address ? `${address}, ${info.city}` : info.city;
+    }
+    if (info.region) {
+      address = address ? `${address}, <br />${info.region}` : info.region;
+    }
+    if (info.postcode) {
+      address = address ? `${address}, ${info.postcode}` : info.postcode;
+    }
+
+    return <span dangerouslySetInnerHTML={{ __html: address }} />;
   };
 
   renderHead() {
@@ -104,9 +128,10 @@ class CarsDetail extends PureComponent {
           <div className={styles.dealerContent}>
             <h3 className={styles.dealerName}>{dealer.trade_name}</h3>
             <p className={styles.dealerAddress}>
-              Новорижское шоссе, 9-й, Москва,
-              <br />
-              Московская обл., 308010
+              {this.renderDealerAddress(dealer.address)}
+              {/* Новорижское шоссе, 9-й, Москва, */}
+              {/* <br /> */}
+              {/* Московская обл., 308010 */}
             </p>
           </div>
         </div>
@@ -216,7 +241,9 @@ class CarsDetail extends PureComponent {
           <div key={columnIndex} className={styles.additionalFeaturesColumn}>
             {column.map((option, optionIndex) => (
               // eslint-disable-next-line react/no-array-index-key
-              <div key={optionIndex} className={styles.additionalFeatureItem}>{option}</div>
+              <div key={optionIndex} className={styles.additionalFeatureItem}>
+                {option}
+              </div>
             ))}
           </div>
         ))}
@@ -308,7 +335,13 @@ class CarsDetail extends PureComponent {
               {this.renderAdditionalFeatures()}
               {this.renderPriceSidebar()}
             </div>
-            <DealerMap name={dealer.trade_name} />
+            <DealerMap
+              name={dealer.trade_name}
+              address={this.renderDealerAddress(dealer.address)}
+              rating={_get(dealer, 'rate', 0)}
+              location={_get(dealer, 'address.location', { x: 55.751574, y: 37.573856 })}
+              phone={_get(dealer, 'contact_infos.0.value', '')}
+            />
           </div>
         </Container>
         <Modal id="book-modal" open={openBookModal} onClose={this.handleCloseBookForm}>

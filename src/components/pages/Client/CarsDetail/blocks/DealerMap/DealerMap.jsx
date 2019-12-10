@@ -1,13 +1,24 @@
 import React from 'react';
-import { Map, Placemark, YMaps } from "react-yandex-maps";
+import { Map, Placemark, YMaps } from 'react-yandex-maps';
 
-import PinIcon from "../../../../../icons/PinIcon";
-import RatingIcon from "../../../../../icons/RatingIcon";
+import PinIcon from '../../../../../icons/PinIcon';
+import RatingIcon from '../../../../../icons/RatingIcon';
 
 import styles from './DealerMap.module.scss';
 
 function DealerMap(props) {
-  const { name } = props;
+  const { name, address, rating, location, phone } = props;
+
+  const formatPhone = text => {
+    try {
+      const cleaned = text.toString().replace(/\D/g, '');
+      const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/);
+      return `${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
+    } catch (e) {
+      return '';
+    }
+  };
+
   return (
     <div className={styles.DealerMap}>
       <YMaps>
@@ -15,13 +26,13 @@ function DealerMap(props) {
           width="100%"
           height="100%"
           defaultState={{
-            center: [55.751574, 37.573856],
-            zoom: 11,
+            center: [+location.x, +location.y],
+            zoom: 14,
             behaviors: ['scrollZoom'],
           }}
         >
           <Placemark
-            geometry={[55.680775, 37.477516]}
+            geometry={[+location.x, +location.y]}
             options={{
               iconLayout: 'default#image',
               iconImageHref: '/images/map-mark.svg',
@@ -39,17 +50,15 @@ function DealerMap(props) {
           <h3 className={styles.name}>{name}</h3>
           <div className={styles.rating}>
             {Array.from(Array(5).keys()).map(index => (
-              <RatingIcon key={index} className={styles.ratingIcon} active={index < 4} />
+              <RatingIcon key={index} className={styles.ratingIcon} active={index < rating} />
             ))}
           </div>
-          <p className={styles.address}>
-            Новорижское шоссе, 9-й, Москва,
-            <br />
-            Московская обл., 308010
-          </p>
-          <a href="tel: 88005005503" className={styles.phone}>
-            8 800 500 55 03
-          </a>
+          <p className={styles.address}>{address}</p>
+          {phone && (
+            <a href={`tel: ${phone}`} className={styles.phone}>
+              {formatPhone(phone)}
+            </a>
+          )}
         </div>
       </div>
     </div>
