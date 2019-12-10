@@ -2,6 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 
+import _debounce from 'lodash/debounce';
+
+import { withLayoutContext } from '../../../../../../utilities/layoutContext';
+
 import styles from './Gallery.module.scss';
 
 const NEXT_TRIGGER = 2;
@@ -30,15 +34,16 @@ class Gallery extends PureComponent {
     };
 
     this.galleryRef = React.createRef();
+    this.debouncedResizeHandler = _debounce(this.handleResize, 300);
   }
 
   componentDidMount() {
     this.handleResize();
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', this.debouncedResizeHandler);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('resize', this.debouncedResizeHandler);
   }
 
   handleResize = () => {
@@ -48,9 +53,10 @@ class Gallery extends PureComponent {
     }
 
     const { wrapperWidth: currentWrapperWidth } = this.state;
+    const { viewportWidth } = this.props;
 
     const galleryRect = gallery.getBoundingClientRect();
-    const wrapperWidth = window.screen.width - galleryRect.left;
+    const wrapperWidth = viewportWidth - galleryRect.left;
 
     if (wrapperWidth !== currentWrapperWidth) {
       this.setState({ wrapperWidth });
@@ -138,4 +144,4 @@ class Gallery extends PureComponent {
   }
 }
 
-export default Gallery;
+export default withLayoutContext(Gallery);
