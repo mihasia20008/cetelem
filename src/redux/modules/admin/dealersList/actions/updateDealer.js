@@ -15,7 +15,24 @@ export default function updateDealer(id, values) {
       dispatch({ type: DEALERS_FETCH_START });
 
       const form = _omitBy(values, value => !value);
-      const { error } = await adminDealersRequests.updateDealer(id, form);
+      const preparedForm = {
+        legal_name: form.legal_name,
+        trade_name: form.trade_name,
+        official_dealer: Boolean(form.official_dealer),
+        used_car_saling: Boolean(form.used_car_saling),
+        code: form.code,
+        contact_infos_attributes: [{ "value_type": "phone", "value": form.phone }],
+        address_attributes: {
+          postcode: form.postcode,
+          country: form.country,
+          region: form.region,
+          city: form.city,
+          street: form.street,
+          building: form.building,
+          location: [form.locationX, form.locationY],
+        },
+      };
+      const { error } = await adminDealersRequests.updateDealer(id, preparedForm);
 
       if (error) {
         dispatch({ type: DEALERS_FETCH_ERROR, data: error });

@@ -102,40 +102,44 @@ function DealersListPage(props) {
     setDealerDelete(null);
   };
 
-  // const renderUserRole = role => {
-  //   switch (role) {
-  //     case ROLES.ADMIN: {
-  //       return 'Администратор';
-  //     }
-  //     case ROLES.DEALER: {
-  //       return 'Дилер';
-  //     }
-  //     default: {
-  //       return 'Пользователь';
-  //     }
-  //   }
-  // };
-  //
-  // const renderUserDealer = (id, user) => {
-  //   if (user.role === ROLES.ADMIN) {
-  //     return '';
-  //   }
-  //
-  //   const dealer = dealers.find(item => item.id === id) || [];
-  //   return dealer.name || 'Не определено';
-  // };
-  //
-  // const renderUserRegistration = (date = new Date()) => {
-  //   const dateInstance = new Date(date);
-  //   const day = dateInstance
-  //     .getDate()
-  //     .toString()
-  //     .padStart(2, '0');
-  //
-  //   const month = (dateInstance.getMonth() + 1).toString().padStart(2, '0');
-  //
-  //   return `${day}.${month}.${date.getFullYear()}`;
-  // };
+  const renderDealerAddress = (info) => {
+    if (!info) {
+      return '';
+    }
+
+    let address = '';
+    if (info.postcode) {
+      address = `${info.postcode}`;
+    }
+    if (info.country) {
+      address = address ? `${address}, ${info.country}` : info.country;
+    }
+    if (info.region) {
+      address = address ? `${address}, ${info.region}` : info.region;
+    }
+    if (info.city) {
+      address = address ? `${address}, ${info.city}` : info.city;
+    }
+    if (info.street) {
+      address = address ? `${address}, ${info.street}` : info.street;
+    }
+    if (info.building) {
+      address = address ? `${address}, ${info.building}` : info.building;
+    }
+    return <span style={{ whiteSpace: 'wrap' }}>{address}</span>;
+  };
+
+  const renderDealerGeo = (_, dealer) => {
+    const location = _get(dealer, 'address.location');
+    if (!location) {
+      return 'Не указано';
+    }
+    return `[${location.x}, ${location.y}]`;
+  };
+
+  const renderDealerPhone = (contacts) => {
+    return _get(contacts, '0.value');
+  };
 
   return (
     <div className={styles.root}>
@@ -151,24 +155,32 @@ function DealersListPage(props) {
                     text: 'ID',
                   },
                   {
-                    id: 'name',
+                    id: 'trade_name',
                     text: 'Название',
                     formatter: text => <Typography variant="body1">{text}</Typography>,
                   },
                   {
                     id: 'address',
                     text: 'Адрес',
-                    // formatter: renderUserRole,
+                    formatter: renderDealerAddress,
                   },
                   {
-                    id: 'phone',
+                    id: 'geo',
+                    text: 'Геометка',
+                    formatter: renderDealerGeo,
+                  },
+                  {
+                    id: 'contact_infos',
                     text: 'Телефон',
-                    // formatter: renderUserDealer,
+                    formatter: renderDealerPhone,
                   },
                   {
-                    id: 'date',
-                    text: 'Дата регистрации',
-                    // formatter: renderUserRegistration,
+                    id: 'created_at',
+                    text: 'Дата создания',
+                  },
+                  {
+                    id: 'updated_at',
+                    text: 'Дата изменения',
                   },
                   {
                     id: ACTIONS_COLUMN_ID,

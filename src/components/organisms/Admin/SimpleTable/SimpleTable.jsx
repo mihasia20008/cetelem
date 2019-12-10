@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import qs from 'qs';
+import cls from 'classnames';
 
 import _isEqual from 'lodash/isEqual';
 
@@ -58,9 +59,9 @@ function SimpleTable(props) {
     setPage(0);
   };
 
-  const handleEditItem = (id) => () => onEdit(id);
+  const handleEditItem = id => () => onEdit(id);
 
-  const handleDeleteItem = (id) => () => onDelete(id);
+  const handleDeleteItem = id => () => onDelete(id);
 
   const getItemsOnPageInfo = ({ from, to, count }) => {
     return ''
@@ -101,9 +102,17 @@ function SimpleTable(props) {
           );
         }
         if (typeof column.formatter === 'function') {
-          return <TableCell key={column.id} className={styles.tableCell}>{column.formatter(item[column.id], item)}</TableCell>;
+          return (
+            <TableCell key={column.id} className={cls(column.id !== 'address' ? styles.tableCell : styles.alterCell)}>
+              {column.formatter(item[column.id], item)}
+            </TableCell>
+          );
         }
-        return <TableCell key={column.id} className={styles.tableCell}>{item[column.id]}</TableCell>;
+        return (
+          <TableCell key={column.id} className={styles.tableCell}>
+            {item[column.id]}
+          </TableCell>
+        );
       })}
     </>
   );

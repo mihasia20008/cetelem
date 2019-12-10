@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import validate from 'validate.js';
-import _get from "lodash/get";
+import _get from 'lodash/get';
 
 import {
   Card,
@@ -12,7 +12,10 @@ import {
   Divider,
   Grid,
   Button,
+  Typography,
   TextField,
+  FormControlLabel,
+  Checkbox,
   CircularProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
@@ -52,9 +55,20 @@ function DealerForm(props) {
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
-      name: dealer.name || '',
-      address: dealer.address || '',
-      phone: dealer.phone || '',
+      trade_name: dealer.trade_name || '',
+      legal_name: dealer.legal_name || '',
+      official_dealer: Boolean(dealer.official_dealer),
+      used_car_saling: Boolean(dealer.used_car_saling),
+      phone: _get(dealer, 'contact_infos.0.value', ''),
+      code: dealer.code || '',
+      postcode: _get(dealer, 'address.postcode', ''),
+      country: _get(dealer, 'address.country', ''),
+      region: _get(dealer, 'address.region', ''),
+      city: _get(dealer, 'address.city', ''),
+      street: _get(dealer, 'address.street', ''),
+      building: _get(dealer, 'address.building', ''),
+      locationX: _get(dealer, 'address.location.0', ''),
+      locationY: _get(dealer, 'address.location.1', ''),
     },
     touched: {},
     errors: {},
@@ -104,30 +118,33 @@ function DealerForm(props) {
         <CardContent>
           <Grid container spacing={3}>
             <Grid item xs={12}>
+              <Typography variant="subtitle1">Общая информация</Typography>
+            </Grid>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
-                error={hasError('name')}
-                helperText={hasError('name') ? formState.errors.name[0] : null}
-                label="Название"
+                error={hasError('legal_name')}
+                helperText={hasError('legal_name') ? formState.errors.legal_name[0] : null}
+                label="Юридическое название ДЦ"
                 margin="dense"
-                name="name"
+                name="legal_name"
                 onChange={handleChange}
                 required
-                value={formState.values.name}
+                value={formState.values.legal_name}
                 variant="outlined"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                error={hasError('address')}
-                helperText={hasError('address') ? formState.errors.address[0] : null}
-                label="Адрес"
+                error={hasError('trade_name')}
+                helperText={hasError('trade_name') ? formState.errors.trade_name[0] : null}
+                label="Торговое название ДЦ"
                 margin="dense"
-                name="address"
+                name="trade_name"
                 onChange={handleChange}
                 required
-                value={formState.values.address}
+                value={formState.values.trade_name}
                 variant="outlined"
               />
             </Grid>
@@ -142,6 +159,152 @@ function DealerForm(props) {
                 onChange={handleChange}
                 required
                 value={formState.values.phone}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('code')}
+                helperText={hasError('code') ? formState.errors.code[0] : null}
+                label="Код ДЦ"
+                margin="dense"
+                name="code"
+                onChange={handleChange}
+                value={formState.values.code}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox color="primary" />}
+                label="Официальный дилер"
+                name="official_dealer"
+                checked={formState.values.official_dealer}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox color="primary" />}
+                label="Продажа б/у"
+                name="used_car_saling"
+                checked={formState.values.used_car_saling}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="subtitle1">Фактический адрес</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('postcode')}
+                helperText={hasError('postcode') ? formState.errors.postcode[0] : null}
+                label="Почтовый индекс"
+                margin="dense"
+                name="postcode"
+                onChange={handleChange}
+                value={formState.values.postcode}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('country')}
+                helperText={hasError('country') ? formState.errors.country[0] : null}
+                label="Страна"
+                margin="dense"
+                name="country"
+                onChange={handleChange}
+                value={formState.values.country}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('region')}
+                helperText={hasError('region') ? formState.errors.region[0] : null}
+                label="Регион"
+                margin="dense"
+                name="region"
+                onChange={handleChange}
+                value={formState.values.region}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('city')}
+                helperText={hasError('city') ? formState.errors.city[0] : null}
+                label="Город"
+                margin="dense"
+                name="city"
+                onChange={handleChange}
+                required
+                value={formState.values.city}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('street')}
+                helperText={hasError('street') ? formState.errors.street[0] : null}
+                label="Улица"
+                margin="dense"
+                name="street"
+                onChange={handleChange}
+                required
+                value={formState.values.street}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('building')}
+                helperText={hasError('building') ? formState.errors.building[0] : null}
+                label="Номер дома"
+                margin="dense"
+                name="building"
+                onChange={handleChange}
+                required
+                value={formState.values.building}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="subtitle1">Координаты</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('locationX')}
+                helperText={hasError('locationX') ? formState.errors.locationX[0] : null}
+                label="Широта"
+                margin="dense"
+                name="locationX"
+                onChange={handleChange}
+                required
+                value={formState.values.locationX}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('locationY')}
+                helperText={hasError('locationY') ? formState.errors.locationY[0] : null}
+                label="Долгота"
+                margin="dense"
+                name="locationY"
+                onChange={handleChange}
+                required
+                value={formState.values.locationY}
                 variant="outlined"
               />
             </Grid>
@@ -171,7 +334,7 @@ function DealerForm(props) {
         onClose={onCloseError}
         position={{
           vertical: 'top',
-          horizontal: 'right'
+          horizontal: 'right',
         }}
       />
     </Card>

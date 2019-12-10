@@ -1,14 +1,8 @@
 export const dealerSchema = {
-  name: {
+  trade_name: {
     presence: { allowEmpty: false, message: '^Название - обязательное поле!' },
     length: {
       maximum: 64,
-    },
-  },
-  address: {
-    presence: { allowEmpty: false, message: '^Адрес - обязательное поле!' },
-    length: {
-      maximum: 256,
     },
   },
   phone: {
@@ -21,5 +15,50 @@ export const dealerSchema = {
       is: 11,
       wrongLength: '^Введен некорректный номер телефона!'
     },
+  },
+  code: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 10,
+      wrongLength: '^Введено недопустимое количество символов'
+    },
+  },
+  postcode: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 10,
+      wrongLength: '^Введено недопустимое количество символов'
+    },
+  },
+  country: {
+    presence: { allowEmpty: true },
+  },
+  region: {
+    presence: { allowEmpty: true },
+  },
+  city: {
+    presence: { allowEmpty: false, message: '^Город - обязательное поле!' },
+    length: {
+      maximum: 64,
+    },
+  },
+  street: {
+    presence: { allowEmpty: false, message: '^Улица - обязательное поле!' },
+    length: {
+      maximum: 64,
+    },
+  },
+  building: {
+    presence: { allowEmpty: false, message: '^Номер дома - обязательное поле!' },
+    length: {
+      maximum: 10,
+      wrongLength: '^Введено недопустимое количество символов'
+    },
+  },
+  locationX: {
+    presence: { allowEmpty: false, message: '^Широта - обязательное поле!' },
+  },
+  locationY: {
+    presence: { allowEmpty: false, message: '^Долгота - обязательное поле!' },
   },
 };
