@@ -10,11 +10,12 @@ export const SIZE_TYPES = {
 };
 
 function Button(props) {
-  const { className, size, inverse, text, onClick } = props;
+  const { className, size, inverse, text, type, onClick } = props;
 
   return (
+    // eslint-disable-next-line react/button-has-type
     <button
-      type="button"
+      type={type}
       className={cls(
         styles.Button,
         size && styles[size],
@@ -30,6 +31,7 @@ function Button(props) {
 
 Button.propTypes = {
   className: PropTypes.string,
+  type: PropTypes.string,
   text: PropTypes.string.isRequired,
   inverse: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(SIZE_TYPES)),
@@ -38,6 +40,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   className: undefined,
+  type: 'button',
   size: SIZE_TYPES.DEFAULT,
   inverse: false,
 };

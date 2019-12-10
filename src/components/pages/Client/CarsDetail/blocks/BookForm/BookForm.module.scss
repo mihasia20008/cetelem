@@ -1,18 +1,75 @@
 .BookForm {
+  position: relative;
   background-color: #22b25c;
   border-radius: 12px;
 
   @media (min-width: 768px) {
+    width: 630px;
+    padding: 30px 40px;
+  }
+
+  &.successForm {
+    @media (min-width: 768px) {
+      padding: 55px 65px 90px;
+    }
+  }
+}
+
+.loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  border-radius: 12px;
+  background-color: rgba(#000, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bookSuccess {
+  margin: 40px 0 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.5;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.subtitle {
+  margin: 0 0 15px;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.wrapper {
+  @media (min-width: 768px) {
     display: flex;
     align-items: flex-start;
-    width: 840px;
-    padding: 77px 40px;
   }
 }
 
 .carInfo {
   position: relative;
-  flex-basis: 260px;
+  flex-basis: 258px;
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid #239b53;
@@ -69,29 +126,15 @@
   user-select: none;
 }
 
-.bookImportant {
-  text-decoration: underline;
-}
-
-.bookText {
-  margin: 40px 0 0;
-  font-size: 14px;
-  line-height: 22px;
-  color: #fff;
-  user-select: none;
-}
-
 .form {
-  display: flex;
-  align-items: center;
-  margin-top: 60px;
 }
 
 .inputWrap {
   position: relative;
-  flex-basis: 238px;
-  flex-shrink: 0;
-  margin-right: 20px;
+
+  & + .inputWrap {
+    margin-top: 15px;
+  }
 }
 
 .inputIcon {
@@ -103,7 +146,7 @@
 
 .inputPlaceholder {
   position: absolute;
-  left: 50px;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 16px;
@@ -115,7 +158,8 @@
 }
 
 .input {
-  padding: 16px 16px 16px 48px;
+  padding: 16px 16px 16px 18px;
+  width: 100%;
   font-family: TTNorms, Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -130,6 +174,10 @@
   }
 }
 
+.phone {
+  width: 200px;
+}
+
 .inputError {
   margin-top: 8px;
   font-size: 14px;
@@ -141,6 +189,14 @@
 }
 
 .bookButton {
-  max-width: 160px;
+  margin-top: 20px;
+  max-width: 200px;
   text-transform: initial;
+}
+
+.acceptRules {
+  margin: 40px 0 0;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #ffffff;
 }

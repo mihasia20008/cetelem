@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import cls from 'classnames';
 import validate from 'validate.js';
 
 import Button, { SIZE_TYPES } from '../../../../../base/Button';
+import PageLoading from '../../../../../../routes/PageLoading';
 
-import PhoneIcon from '../../../../../icons/PhoneIcon';
 import LockIcon from '../../../../../icons/LockIcon';
+
+import { CLIENT_NAME_KEY } from '../../../../../../constants';
 
 import { schema } from './schema';
 
 import styles from './BookForm.module.scss';
 
-function getErrorText(text) {
-  if (text.search('поле') !== -1) {
-    return 'Текстовое поле обязательно для заполенения!';
-  }
-  return 'Номер телефона должен содержать 11 символов!';
-}
-
-function BookForm() {
+function BookForm(props) {
+  const { bookInfo, carName, modification, onSubmitForm } = props;
   const [formState, setFormState] = useState({
     isValid: false,
-    values: {},
+    values: {
+      phone: '',
+      firstName: localStorage.getItem(CLIENT_NAME_KEY) || '',
+      lastName: '',
+      secondName: '',
+    },
     touched: {},
     errors: {},
     active: {},
@@ -45,7 +47,7 @@ function BookForm() {
       ...oldFormState,
       values: {
         ...oldFormState.values,
-        [name]: value.replace(/\D/, ''),
+        [name]: name === 'phone' ? value.replace(/\D/, '') : value,
       },
       touched: {
         ...oldFormState.touched,
@@ -54,7 +56,7 @@ function BookForm() {
     }));
   };
 
-  const handleFocus = (event) => {
+  const handleFocus = event => {
     event.persist();
 
     setFormState(oldFormState => ({
@@ -66,7 +68,7 @@ function BookForm() {
     }));
   };
 
-  const handleBlur = (event) => {
+  const handleBlur = event => {
     event.persist();
 
     setFormState(oldFormState => ({
@@ -81,21 +83,24 @@ function BookForm() {
   const hasError = field =>
     Boolean(formState.touched[field] && !formState.active[field] && formState.errors[field]);
 
+  const handleSubmitForm = event => {
+    event.preventDefault();
+    if (!formState.isValid) {
+      return;
+    }
+    onSubmitForm(formState.values);
+  };
+
   const renderCarInfo = () => {
     return (
       <div className={styles.carInfo}>
         <div className={styles.imageWrap}>
-          <img
-            className={styles.image}
-            src="/images/book-auto.jpg"
-            alt="Land Rover Range Rover IV Рест."
-          />
+          <img className={styles.image} src="/images/book-auto.jpg" alt={carName} />
         </div>
         <div className={styles.contentWrap}>
-          <h3 className={styles.carName}>Land Rover Range Rover IV Рест.</h3>
-          <p className={styles.carDescription}>5.0 AT (525 л.с.) 4WD Autobiography</p>
+          <h3 className={styles.carName}>{carName}</h3>
+          <p className={styles.carDescription}>{modification}</p>
         </div>
-        <LockIcon className={styles.presentationIcon} />
       </div>
     );
   };
@@ -103,29 +108,54 @@ function BookForm() {
   const renderForm = () => {
     return (
       <div className={styles.formContent}>
-        <p className={styles.bookInfo}>
-          Вы хотите забронировать{' '}
-          <span className={styles.bookImportant}>Land Rover Discovery V</span>
-          <br/>
-          у дилера{' '}
-          <span className={styles.bookImportant}>Major Land Rover</span>
-        </p>
-        <p className={styles.bookText}>
-          Мы отправим вам СМС для подтверждения бронирования.
-          <br />
-          Выбор машины не обязывает вас к покупке.
-        </p>
-        <div className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmitForm}>
           <div className={styles.inputWrap}>
-            <PhoneIcon className={styles.inputIcon} />
+            {!formState.values.lastName && <span className={styles.inputPlaceholder}>Фамилия</span>}
+            <input
+              className={styles.input}
+              name="lastName"
+              type="text"
+              value={formState.values.lastName}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          </div>
+          <div className={styles.inputWrap}>
+            {!formState.values.firstName && <span className={styles.inputPlaceholder}>Имя</span>}
+            <input
+              className={styles.input}
+              name="firstName"
+              type="text"
+              value={formState.values.firstName}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          </div>
+          <div className={styles.inputWrap}>
+            {!formState.values.secondName && (
+              <span className={styles.inputPlaceholder}>Отчество</span>
+            )}
+            <input
+              className={styles.input}
+              name="secondName"
+              type="text"
+              value={formState.values.secondName}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          </div>
+          <div className={styles.inputWrap}>
             {!formState.values.phone && (
               <span className={styles.inputPlaceholder}>8 800 500 55 03</span>
             )}
             <input
-              className={styles.input}
+              className={cls(styles.input, styles.phone)}
               name="phone"
               type="text"
-              value={formState.values.phone || ''}
+              value={formState.values.phone}
               onChange={handleChange}
               onFocus={handleFocus}
               onBlur={handleBlur}
@@ -133,23 +163,62 @@ function BookForm() {
           </div>
           <Button
             className={styles.bookButton}
+            type="submit"
             inverse
             size={SIZE_TYPES.BIG}
             text="Забронировать"
             onClick={() => {}}
           />
-        </div>
-        {hasError('phone') ? (
-          <div className={styles.inputError}>{getErrorText(formState.errors.phone[0])}</div>
-        ) : <div className={styles.emptyError} />}
+        </form>
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {hasError('phone') ||
+        hasError('firstName') ||
+        hasError('lastName') ||
+        hasError('secondName') ? (
+          <div className={styles.inputError}>Ошибка заполнения формы</div>
+        ) : bookInfo.error ? (
+          <div className={styles.inputError}>Error {JSON.stringify(bookInfo.error)}</div>
+        ) : (
+          <div className={styles.emptyError} />
+        )}
       </div>
     );
   };
 
+  if (bookInfo.success) {
+    return (
+      <div className={cls(styles.BookForm, styles.successForm)}>
+        <div className={styles.iconWrap}>
+          <LockIcon />
+        </div>
+        <p className={styles.bookSuccess}>
+          Спасибо, автомобиль забронирован!
+          <br />
+          Менеджер дилера позвонит вам
+          <br />и согласует все детали.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.BookForm}>
-      {renderCarInfo()}
-      {renderForm()}
+      <h2 className={styles.title}>Бронирование автомобиля</h2>
+      <p className={styles.subtitle}>Укажите ваши контактные данные</p>
+      <div className={styles.wrapper}>
+        {renderCarInfo()}
+        {renderForm()}
+      </div>
+      <p className={styles.acceptRules}>
+        Указывая свои данные в настоящей электронной анкете я соглашаюсь на обработку моих
+        персональных данных в соответствии с федеральным законом российской Федерации от 27 июля
+        2006 г. № 152-ФЗ
+      </p>
+      {bookInfo.loading && (
+        <div className={styles.loader}>
+          <PageLoading />
+        </div>
+      )}
     </div>
   );
 }

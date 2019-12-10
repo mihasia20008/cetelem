@@ -1,0 +1,6 @@
+{
+  "name": "book-reducer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./book.js"
+}

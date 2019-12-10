@@ -13,6 +13,7 @@ import Modal from '../../../organisms/Modal';
 import PinIcon from '../../../icons/PinIcon';
 
 import { loadCarDetail, carsInfoLoaded } from '../../../../redux/modules/car/actions';
+import { bookCar, resetToInitial } from '../../../../redux/modules/book/actions';
 import { getDealerInfo } from '../../../../redux/modules/dealer/info/actions';
 
 import formatNumber from '../../../../utilities/formatNumber';
@@ -56,7 +57,24 @@ class CarsDetail extends PureComponent {
 
   handleOpenBookForm = () => this.setState({ openBookModal: true });
 
-  handleCloseBookForm = () => this.setState({ openBookModal: false });
+  handleCloseBookForm = () => {
+    const { book, dispatch } = this.props;
+    this.setState({ openBookModal: false });
+    if (!book.initial) {
+      dispatch(resetToInitial());
+    }
+  };
+
+  handleSubmitBookForm = values => {
+    const { dealer, car, dispatch } = this.props;
+    dispatch(
+      bookCar(dealer.id, {
+        ...values,
+        vin: car.vin,
+        car: car.id,
+      })
+    );
+  };
 
   getEngineInfo = car => {
     let engine = '';
@@ -101,6 +119,7 @@ class CarsDetail extends PureComponent {
       address = address ? `${address}, ${info.postcode}` : info.postcode;
     }
 
+    // eslint-disable-next-line react/no-danger
     return <span dangerouslySetInnerHTML={{ __html: address }} />;
   };
 
@@ -309,7 +328,7 @@ class CarsDetail extends PureComponent {
 
   render() {
     const { openBookModal } = this.state;
-    const { car, carStatuses, dealer } = this.props;
+    const { car, carStatuses, dealer, book } = this.props;
 
     if (carStatuses.error) {
       return <div>Error {JSON.stringify(carStatuses.error)}</div>;
@@ -345,7 +364,12 @@ class CarsDetail extends PureComponent {
           </div>
         </Container>
         <Modal id="book-modal" open={openBookModal} onClose={this.handleCloseBookForm}>
-          <BookForm />
+          <BookForm
+            bookInfo={book}
+            carName={`${car.mark} ${car.model}`}
+            modification={car.modification}
+            onSubmitForm={this.handleSubmitBookForm}
+          />
         </Modal>
       </div>
     );
@@ -360,6 +384,7 @@ const mapStateToProps = state => {
       success: state.car.success,
     },
     dealer: state.dealer.info.data,
+    book: state.book,
   };
 };
 
