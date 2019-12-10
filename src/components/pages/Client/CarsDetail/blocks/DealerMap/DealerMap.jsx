@@ -6,7 +6,8 @@ import RatingIcon from "../../../../../icons/RatingIcon";
 
 import styles from './DealerMap.module.scss';
 
-function DealerMap() {
+function DealerMap(props) {
+  const { name } = props;
   return (
     <div className={styles.DealerMap}>
       <YMaps>
@@ -35,7 +36,7 @@ function DealerMap() {
           <PinIcon />
         </div>
         <div className={styles.content}>
-          <h3 className={styles.name}>Major Land Rover Новорижский</h3>
+          <h3 className={styles.name}>{name}</h3>
           <div className={styles.rating}>
             {Array.from(Array(5).keys()).map(index => (
               <RatingIcon key={index} className={styles.ratingIcon} active={index < 4} />

@@ -2,7 +2,7 @@ import { carsRequests } from '../../../api';
 
 import * as T from './types';
 
-export function loadCars(query) {
+export function loadCarsList(query) {
   return async dispatch => {
     try {
       dispatch({ type: T.CARS_FETCH_START});

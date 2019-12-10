@@ -1,1 +1,1 @@
-export { default as getInfo } from './getInfo';
+export { default as getDealerInfo } from './getInfo';

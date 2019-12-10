@@ -6,7 +6,7 @@ function PersonalPage(props) {
   const { dispatch } = props;
 
   useEffect(() => {
-    dispatch(dealerInfoActions.getInfo());
+    dispatch(dealerInfoActions.getDealerInfo());
   }, [dispatch]);
 
   return <div>Personal</div>;

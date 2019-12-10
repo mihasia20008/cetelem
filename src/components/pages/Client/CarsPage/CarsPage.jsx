@@ -12,7 +12,7 @@ import TopFilter from './blocks/TopFilter';
 import SideFilter from './blocks/SideFilter';
 import Pagination from './blocks/Pagination';
 
-import { loadCars } from '../../../../redux/modules/cars/actions';
+import { loadCarsList } from '../../../../redux/modules/cars/actions';
 
 import { FILTER_TYPES, FILTER_NAMES, FILTERS_SORT } from '../../../../constants';
 
@@ -221,7 +221,7 @@ class CarsPage extends PureComponent {
       location: { query },
       dispatch,
     } = this.props;
-    dispatch(loadCars(query));
+    dispatch(loadCarsList(query));
   }
 
   componentDidUpdate(prevProps) {
@@ -234,7 +234,7 @@ class CarsPage extends PureComponent {
     } = this.props;
 
     if (!_isEqual(prevQuery, query)) {
-      dispatch(loadCars(query));
+      dispatch(loadCarsList(query));
     }
   }
 

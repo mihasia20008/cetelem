@@ -1,0 +1,6 @@
+{
+  "name": "car-reducer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./car.js"
+}

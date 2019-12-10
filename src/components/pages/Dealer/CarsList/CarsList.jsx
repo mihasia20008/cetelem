@@ -142,7 +142,7 @@ function CarsListPage(props) {
         />
       </Drawer>
       <ErrorShower
-        open={Boolean(statuses.error)}
+        open={Boolean(statuses.error) && !openImportForm}
         message={_get(statuses, 'error.message')}
         onClose={handleCloseError}
       />

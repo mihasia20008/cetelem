@@ -9,12 +9,12 @@ import { dealerInfoRequests } from '../../../../../api';
 
 import { DEALER_ID_KEY } from '../../../../../constants';
 
-export default function getReservations() {
+export default function getDealerInfo(dealer) {
   return async dispatch => {
     try {
       dispatch({ type: DEALER_INFO_FETCH_START });
 
-      const id = localStorage.getItem(DEALER_ID_KEY);
+      const id = dealer || localStorage.getItem(DEALER_ID_KEY);
       const { error, data } = await dealerInfoRequests.getInfo(id);
 
       if (error) {

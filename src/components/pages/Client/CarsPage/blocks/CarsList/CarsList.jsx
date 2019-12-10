@@ -26,8 +26,8 @@ class CarsList extends PureComponent {
   };
 
   createDetailLink = (id, name) => {
-    const slug = speakingurl(`${name} ${id}`, { separator: '-' }).toLowerCase();
-    return `/cars/${slug}`;
+    const slug = speakingurl(name, { separator: '-' }).toLowerCase();
+    return `/cars/${slug}?car_id=${id}`;
   };
 
   render() {
