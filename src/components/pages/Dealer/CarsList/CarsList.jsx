@@ -69,7 +69,9 @@ function CarsListPage(props) {
   };
 
   const handleSubmitForm = files => {
-    dispatch(carsListActions.uploadFile(files[0]));
+    const formData = new FormData();
+    formData.append('xml', files[0]);
+    dispatch(carsListActions.uploadFile(formData));
   };
 
   const renderFormattedPrice = text => `${formatNumber(text)} ₽`;

@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-async function uploadFile(id, file) {
+async function uploadFile(id, formData) {
   try {
     const { data } = await axios({
       method: 'POST',
-      url: `/api/v1/dealers/upload_xml?id=${id}`,
-      data: { xml: file },
+      url: `/api/v1/dealers/${id}/upload_xml`,
+      data: formData,
       headers: {
         'Content-Type': 'multipart/form-data'
       }
