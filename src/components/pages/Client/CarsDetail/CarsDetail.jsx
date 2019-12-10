@@ -150,8 +150,8 @@ class CarsDetail extends PureComponent {
         )}
         {car.engine_type && (
           <div className={styles.shortItem}>
-            <span className={styles.shortName}>Топливо</span>
-            <span className={styles.engine_type}>DE</span>
+            <span className={styles.shortName}>Тип двигателя</span>
+            <span className={styles.engine_type}>{car.engine_type}</span>
           </div>
         )}
       </div>
