@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import cls from 'classnames';
 
 import Container from '../../base/Container';
 import LocationSelector from '../LocationSelector';
@@ -8,9 +7,9 @@ import LocationSelector from '../LocationSelector';
 import FooterButton from './blocks/FooterButton';
 
 import MailIcon from './icons/MainIcon';
-import FacebookIcon from './icons/FacebookIcon';
-import VkIcon from './icons/VkIcon';
-import OkIcon from './icons/OkIcon';
+// import FacebookIcon from './icons/FacebookIcon';
+// import VkIcon from './icons/VkIcon';
+// import OkIcon from './icons/OkIcon';
 
 import styles from './Footer.module.scss';
 
@@ -22,19 +21,23 @@ class Footer extends PureComponent {
           <div className={styles.content}>
             <div className={styles.top}>
               <div className={styles.main}>
-                <Link to="/" className={styles.logo}>
-                  <img src="/images/footerLogo.svg" alt="Сетелем" />
-                </Link>
-                <div className={styles.location}>
-                  Выберите город:
-                  <LocationSelector primaryLink />
+                <div>
+                  <Link to="/" className={styles.logo}>
+                    <img src="/images/footerLogo.svg" alt="Сетелем" />
+                  </Link>
+                  <div className={styles.location}>
+                    Выберите город:
+                    <LocationSelector primaryLink />
+                  </div>
                 </div>
               </div>
               <div className={styles.phone}>
-                <a className={styles.phoneLink} href="tel: 88005005502">
-                  8 (800) 500-55-02
-                </a>
-                <div className={styles.phoneText}>Для звонков по России</div>
+                <div>
+                  <a className={styles.phoneLink} href="tel: 88005005502">
+                    8 (800) 500-55-02
+                  </a>
+                  <div className={styles.phoneText}>Для звонков по России</div>
+                </div>
               </div>
               <div className={styles.contactUs}>
                 <FooterButton to="mailto:some@gmail.com" className={styles.mailTo}>
@@ -42,29 +45,33 @@ class Footer extends PureComponent {
                   Напишите нам
                 </FooterButton>
               </div>
-              <div className={styles.social}>
-                <FooterButton
-                  to="https://facebook.com"
-                  className={cls(styles.socialItem, styles.facebookIcon)}
-                  target="_blank"
-                >
-                  <FacebookIcon />
-                </FooterButton>
-                <FooterButton
-                  to="https://vk.com"
-                  className={cls(styles.socialItem, styles.vkIcon)}
-                  target="_blank"
-                >
-                  <VkIcon />
-                </FooterButton>
-                <FooterButton
-                  to="https://ok.ru"
-                  className={cls(styles.socialItem, styles.okIcon)}
-                  target="_blank"
-                >
-                  <OkIcon />
-                </FooterButton>
+              <div className={styles.download}>
+                <img className={styles.downloadLogo} src="/images/app-store.svg" alt="AppStore logo" />
+                <img className={styles.downloadLogo} src="/images/google-play.svg" alt="GooglePlay logo" />
               </div>
+              {/* <div className={styles.social}> */}
+              {/*  <FooterButton */}
+              {/*    to="https://facebook.com" */}
+              {/*    className={cls(styles.socialItem, styles.facebookIcon)} */}
+              {/*    target="_blank" */}
+              {/*  > */}
+              {/*    <FacebookIcon /> */}
+              {/*  </FooterButton> */}
+              {/*  <FooterButton */}
+              {/*    to="https://vk.com" */}
+              {/*    className={cls(styles.socialItem, styles.vkIcon)} */}
+              {/*    target="_blank" */}
+              {/*  > */}
+              {/*    <VkIcon /> */}
+              {/*  </FooterButton> */}
+              {/*  <FooterButton */}
+              {/*    to="https://ok.ru" */}
+              {/*    className={cls(styles.socialItem, styles.okIcon)} */}
+              {/*    target="_blank" */}
+              {/*  > */}
+              {/*    <OkIcon /> */}
+              {/*  </FooterButton> */}
+              {/* </div> */}
             </div>
             <div className={styles.bottom}>
               <div className={styles.copyright}>
@@ -84,10 +91,6 @@ class Footer extends PureComponent {
                   системно значимыми кредитными организациями Банка России.107016, г. Москва, ул.
                   Неглинная, 12, тел.: 8 (495) 771-91-00, www.cbr.ru
                 </p>
-              </div>
-              <div className={styles.download}>
-                <img className={styles.downloadLogo} src="/images/AppStore.png" alt="AppStore logo" />
-                <img className={styles.downloadLogo} src="/images/GooglePlay.png" alt="GooglePlay logo" />
               </div>
             </div>
           </div>

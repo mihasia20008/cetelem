@@ -28,9 +28,6 @@
   & > div {
     flex-basis: 100%;
     @media (min-width: 768px) {
-      flex-basis: 50%;
-    }
-    @media (min-width: 1200px) {
       flex-basis: auto;
       flex-grow: 1;
     }
@@ -38,7 +35,12 @@
 }
 
 .main {
+  display: flex;
+  justify-content: center;
   margin-bottom: 30px;
+  @media (min-width: 768px) {
+    display: block;
+  }
   @media (min-width: 1200px) {
     margin-bottom: 0;
   }
@@ -59,7 +61,8 @@
   display: none;
   margin-bottom: 30px;
   @media (min-width: 768px) {
-    display: block;
+    display: flex;
+    justify-content: center;
   }
   @media (min-width: 1200px) {
     margin-bottom: 0;
@@ -88,8 +91,10 @@
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
-  @media (min-width: 768px) {
-    display: block;
+  @media (min-width: 768px) and (max-width: 1199px) {
+    justify-content: flex-end;
+  }
+  @media (min-width: 1200px) {
     margin-bottom: 0;
   }
 }
@@ -165,11 +170,15 @@
 .download {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px;
+  justify-content: center;
 
-  @media (min-width: 768px) {
-    display: block;
-    margin-bottom: 0;
+  @media (min-width: 768px) and (max-width: 1199px) {
+    flex-grow: 3 !important;
+    flex-basis: 100% !important;
+  }
+  @media (min-width: 1200px) {
+    justify-content: flex-end;
+    margin-bottom: 30px;
   }
 }
 
@@ -179,11 +188,5 @@
 
   &:not(:last-child) {
     margin-right: 20px;
-
-    @media (min-width: 768px) {
-      flex-grow: 1;
-      margin-right: 0;
-      margin-bottom: 15px;
-    }
   }
 }
