@@ -14,7 +14,6 @@ export function bookCar(id, form) {
         client_id: client,
         name: `${form.lastName} ${form.firstName}${form.secondName ? ` ${form.secondName}` : ''}`,
         phone: form.phone,
-        car_id: form.car,
         car_vin: form.vin,
       };
       const { error, data } = await carsRequests.bookCar(id, preparedForm);

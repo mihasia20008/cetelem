@@ -66,12 +66,11 @@ class CarsDetail extends PureComponent {
   };
 
   handleSubmitBookForm = values => {
-    const { dealer, car, dispatch } = this.props;
+    const { car, dispatch } = this.props;
     dispatch(
-      bookCar(dealer.id, {
+      bookCar(car.id, {
         ...values,
         vin: car.vin,
-        car: car.id,
       })
     );
   };
