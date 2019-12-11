@@ -249,7 +249,7 @@ const mapStateToProps = state => {
   return {
     users: state.admin.users,
     dealers,
-    dealersLoaded: _get(state, 'filters.success'),
+    dealersLoaded: _get(state, 'filters.dealer.success'),
   };
 };
 

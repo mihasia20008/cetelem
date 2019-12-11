@@ -38,9 +38,12 @@ class SideFilter extends PureComponent {
     filters: {},
   };
 
-  renderSelect = (name, filter) => {
+  handlerChangeFilter = (type) => (name, value) => {
     const { onFilter } = this.props;
+    onFilter(name, value, type);
+  };
 
+  renderSelect = (name, filter) => {
     return (
       <div key={name} className={styles.selector}>
         <Dropdown
@@ -49,20 +52,18 @@ class SideFilter extends PureComponent {
           initialText={filter.text}
           selected={filter.active}
           options={filter.options}
-          onSelect={onFilter}
+          onSelect={this.handlerChangeFilter(FILTER_TYPES.SELECT)}
         />
       </div>
     )
   };
 
   renderCheckbox = (name, filter) => {
-    const { onFilter } = this.props;
-
     return (
       <Checkbox
         key={name}
         name={name}
-        onSelect={onFilter}
+        onSelect={this.handlerChangeFilter(FILTER_TYPES.CHECKBOX)}
         active={filter.active}
         options={filter.options}
       />
@@ -70,7 +71,6 @@ class SideFilter extends PureComponent {
   };
 
   renderRange = (name, filter) => {
-    const { onFilter } = this.props;
     const { min, max, text, ...current } = filter;
 
     return (
@@ -81,7 +81,7 @@ class SideFilter extends PureComponent {
           min={min}
           max={max}
           current={current}
-          onChange={onFilter}
+          onChange={this.handlerChangeFilter(FILTER_TYPES.RANGE)}
         />
       </div>
     );

@@ -33,6 +33,14 @@ class CarsList extends PureComponent {
   render() {
     const { list } = this.props;
 
+    if (!list.length) {
+      return (
+        <div className={styles.CarsList}>
+          <p className={styles.emptyList}>Ничего не найдено</p>
+        </div>
+      );
+    }
+
     return (
       <div className={styles.CarsList}>
         {list.map(item => {

@@ -3,10 +3,11 @@ import { carsRequests } from '../../../api';
 import * as T from './types';
 
 export function loadCarsList(query) {
-  return async dispatch => {
+  return async (dispatch, getStore) => {
     try {
       dispatch({ type: T.CARS_FETCH_START});
-      const { error, data } = await carsRequests.loadCarsList(query);
+      const filters = getStore().filters.data;
+      const { error, data } = await carsRequests.loadCarsList(query, filters);
 
       if (error) {
         dispatch({ type: T.CARS_FETCH_ERROR, data: error });

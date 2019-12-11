@@ -1,40 +1,141 @@
 import * as T from './types';
 
+import { FILTER_TYPES } from "../../../constants";
+
 const initialState = {
-  initial: true,
-  loading: false,
-  error: false,
-  success: false,
+  dealer: {
+    initial: true,
+    loading: false,
+    error: false,
+    success: false,
+  },
+  base: {
+    initial: true,
+    loading: false,
+    error: false,
+    success: false,
+  },
   data: {},
 };
 
 export default function filtersReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case T.FILTERS_FETCH_START: {
+    case T.FILTERS_DEALER_FETCH_START: {
       return {
         ...state,
-        initial: false,
-        loading: true,
+        dealer: {
+          ...state.dealer,
+          initial: false,
+          loading: true,
+        },
       }
     }
-    case T.FILTERS_FETCH_END: {
+    case T.FILTERS_DEALER_FETCH_END: {
       return {
         ...state,
-        loading: false,
-      };
+        dealer: {
+          ...state.dealer,
+          loading: false,
+        },
+      }
     }
-    case T.FILTERS_FETCH_ERROR: {
+    case T.FILTERS_DEALER_FETCH_ERROR: {
       return {
         ...state,
-        error: action.data,
-      };
+        dealer: {
+          ...state.dealer,
+          error: action.data,
+        },
+      }
     }
-    case T.FILTERS_SUCCESS_LOADED: {
+    case T.FILTERS_DEALER_SUCCESS_LOADED: {
+      return {
+        ...state,
+        dealer: {
+          ...state.dealer,
+          success: true,
+        },
+        data: {
+          ...state.data,
+          ...action.data,
+        },
+      }
+    }
+    case T.FILTERS_BASE_FETCH_START: {
+      return {
+        ...state,
+        base: {
+          ...state.base,
+          initial: false,
+          loading: true,
+        },
+      }
+    }
+    case T.FILTERS_BASE_FETCH_END: {
+      return {
+        ...state,
+        base: {
+          ...state.base,
+          loading: false,
+        },
+      }
+    }
+    case T.FILTERS_BASE_FETCH_ERROR: {
+      return {
+        ...state,
+        base: {
+          ...state.base,
+          error: action.data,
+        },
+      }
+    }
+    case T.FILTERS_BASE_SUCCESS_LOADED: {
+      return {
+        ...state,
+        base: {
+          ...state.base,
+          success: true,
+        },
+        data: {
+          ...state.data,
+          ...action.data,
+        },
+      }
+    }
+    case T.FILTERS_CHANGE: {
+      const filter = state.data[action.name];
+      let updatedFilter = {};
+      switch (true) {
+        case filter.type === FILTER_TYPES.RANGE: {
+            if (filter.values === undefined) {
+              updatedFilter = {
+                ...filter,
+                value: action.value,
+              };
+            } else {
+              updatedFilter = {
+                ...filter,
+                values: [action.value.min, action.value.max],
+              };
+            }
+            break;
+        }
+        case [FILTER_TYPES.SELECT, FILTER_TYPES.CHECKBOX].includes(filter.type): {
+          updatedFilter = {
+            ...filter,
+            active: action.value,
+          };
+          break;
+        }
+        default: {
+          break;
+        }
+      }
       return {
         ...state,
         data: {
           ...state.data,
-          ...action.data,
+          [`${action.name}`]: updatedFilter,
         },
       };
     }

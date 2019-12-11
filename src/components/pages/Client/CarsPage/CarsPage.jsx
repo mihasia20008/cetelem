@@ -13,6 +13,7 @@ import SideFilter from './blocks/SideFilter';
 import Pagination from './blocks/Pagination';
 
 import { loadCarsList } from '../../../../redux/modules/cars/actions';
+import * as filtersActions from '../../../../redux/modules/filters/actions';
 
 import { FILTER_TYPES, FILTER_NAMES, FILTERS_SORT } from '../../../../constants';
 
@@ -86,7 +87,7 @@ class CarsPage extends PureComponent {
             },
           ],
         },
-        [`${FILTER_NAMES.TYPE}`]: {
+        [`${FILTER_NAMES.NEW}`]: {
           type: FILTER_TYPES.CHECKBOX,
           active: 0,
           options: [
@@ -169,49 +170,49 @@ class CarsPage extends PureComponent {
             },
           ],
         },
-        [`${FILTER_NAMES.GENERATION}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: -1,
-          text: 'Поколение',
-          options: [],
-        },
+        // [`${FILTER_NAMES.GENERATION}`]: {
+        //   type: FILTER_TYPES.SELECT,
+        //   active: -1,
+        //   text: 'Поколение',
+        //   options: [],
+        // },
         [`${FILTER_NAMES.YEAR}`]: {
           type: FILTER_TYPES.SELECT,
           active: -1,
           text: 'Год',
           options: [],
         },
-        [`${FILTER_NAMES.GEAR}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: -1,
-          text: 'Привод',
-          options: [],
-        },
-        [`${FILTER_NAMES.BODY}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: -1,
-          text: 'Кузов',
-          options: [],
-        },
+        // [`${FILTER_NAMES.GEAR}`]: {
+        //   type: FILTER_TYPES.SELECT,
+        //   active: -1,
+        //   text: 'Привод',
+        //   options: [],
+        // },
+        // [`${FILTER_NAMES.BODY}`]: {
+        //   type: FILTER_TYPES.SELECT,
+        //   active: -1,
+        //   text: 'Кузов',
+        //   options: [],
+        // },
         [`${FILTER_NAMES.COLOR}`]: {
           type: FILTER_TYPES.SELECT,
           active: -1,
           text: 'Цвет',
           options: [],
         },
-        [`${FILTER_NAMES.TRANSMISSION}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: -1,
-          text: 'Коробка',
-          options: [],
-        },
-        [`${FILTER_NAMES.LIMIT}`]: {
-          type: FILTER_TYPES.RANGE,
-          text: 'Размер кредита',
-          min: 0,
-          max: 5000000,
-          value: 1400000,
-        },
+        // [`${FILTER_NAMES.TRANSMISSION}`]: {
+        //   type: FILTER_TYPES.SELECT,
+        //   active: -1,
+        //   text: 'Коробка',
+        //   options: [],
+        // },
+        // [`${FILTER_NAMES.LIMIT}`]: {
+        //   type: FILTER_TYPES.RANGE,
+        //   text: 'Размер кредита',
+        //   min: 0,
+        //   max: 5000000,
+        //   value: 1400000,
+        // },
       },
     };
   }
@@ -221,7 +222,10 @@ class CarsPage extends PureComponent {
       location: { query },
       dispatch,
     } = this.props;
+
     dispatch(loadCarsList(query));
+    dispatch(filtersActions.getDealers());
+    dispatch(filtersActions.getBase());
   }
 
   componentDidUpdate(prevProps) {
@@ -233,7 +237,7 @@ class CarsPage extends PureComponent {
       dispatch,
     } = this.props;
 
-    if (!_isEqual(prevQuery, query)) {
+    if (!_isEqual(query, prevQuery)) {
       dispatch(loadCarsList(query));
     }
   }
@@ -245,59 +249,58 @@ class CarsPage extends PureComponent {
   };
 
   handleFilterChange = (name, value) => {
-    const { filters } = this.state;
-    const filter = filters[name];
+    const { dispatch } = this.props;
+    dispatch(filtersActions.changeFilter(name, value));
 
-    switch (true) {
-      case filter.type === FILTER_TYPES.RANGE: {
-        let updatedFilter;
-        if (filter.values === undefined) {
-          updatedFilter = {
-            ...filter,
-            value,
-          };
-        } else {
-          updatedFilter = {
-            ...filter,
-            values: [value.min, value.max],
-          };
-        }
-
-        this.setState({
-          filters: {
-            ...filters,
-            [`${name}`]: updatedFilter,
-          },
-        });
-        break;
-      }
-      case [FILTER_TYPES.SELECT, FILTER_TYPES.CHECKBOX].includes(filter.type): {
-        const updatedFilter = {
-          ...filter,
-          active: value,
-        };
-
-        this.setState({
-          filters: {
-            ...filters,
-            [`${name}`]: updatedFilter,
-          },
-        });
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-
-    if (FILTERS_SORT.HEAD.includes(name)) {
-      this.handleFilterApply();
-    }
+    // if (FILTERS_SORT.HEAD.includes(name)) {
+    //   this.handleFilterApply();
+    // }
   };
 
   handleFilterApply = () => {
-    // eslint-disable-next-line no-console
-    console.log('apply');
+    const {
+      location,
+      dispatch,
+      filters: { data: filters },
+    } = this.props;
+
+    const params = Object.keys(filters).reduce((acc, key) => {
+      switch (filters[key].type) {
+        case FILTER_TYPES.CHECKBOX: {
+          const { active } = filters[key];
+          acc[key] = active;
+          break;
+        }
+        case FILTER_TYPES.SELECT: {
+          const { active } = filters[key];
+          if (active) {
+            acc[key] = active;
+          }
+          break;
+        }
+        default: {
+          if (filters[key].values === undefined) {
+            acc[key] = filters[key].value;
+          } else {
+            const { values } = filters[key];
+            if (
+              (values[0] && filters[key].min !== values[0]) ||
+              (values[1] && filters[key].max !== values[1])
+            ) {
+              acc[key] = values;
+            }
+          }
+          break;
+        }
+      }
+      return acc;
+    }, {});
+
+    const query = { ...location.query, ...params };
+    console.log(query);
+    dispatch(loadCarsList(query));
+    window.scrollTo(0, 0);
+    // history.push(`${location.pathname}?${qs.stringify(query)}`);
   };
 
   handleGoToPage = page => {
@@ -308,9 +311,15 @@ class CarsPage extends PureComponent {
   };
 
   renderSideFilter() {
-    const { filters } = this.state;
+    const { filters } = this.props;
 
-    const sideFilters = this.getFiltersByNames(filters, [
+    if (!filters.base.success) {
+      return (
+        <div className={styles.sideFilter} />
+      );
+    }
+
+    const sideFilters = this.getFiltersByNames(filters.data, [
       ...FILTERS_SORT.SIDE.TOP,
       ...FILTERS_SORT.SIDE.BOTTOM,
     ]);
@@ -342,7 +351,7 @@ class CarsPage extends PureComponent {
   }
 
   renderContent() {
-    const { initial, loading, error, meta, list } = this.props;
+    const { initial, loading, success, error, meta, list } = this.props;
 
     if (initial || loading) {
       return <PageLoading />;
@@ -354,7 +363,7 @@ class CarsPage extends PureComponent {
 
     return (
       <>
-        <CarsList list={list} />
+        <CarsList success={success} list={list} />
         {meta.pagesCount > 1 && (
           <Pagination
             current={meta.page}
@@ -394,6 +403,7 @@ const mapStateToProps = state => {
     error: state.cars.error,
     list: state.cars.list,
     meta: state.cars.meta,
+    filters: state.filters,
   };
 };
 

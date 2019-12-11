@@ -26,6 +26,9 @@ function Range(props) {
       };
 
   const getFormatLabel = (value) => {
+    if (name !== 'price') {
+      return value;
+    }
     if (isSingleRange) {
       return `${formatNumber(value)} ₽`
     }
