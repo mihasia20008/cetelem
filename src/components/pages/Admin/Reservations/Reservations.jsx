@@ -1,18 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import { makeStyles } from '@material-ui/styles';
-import { Card } from '@material-ui/core';
+import {Card} from '@material-ui/core';
 
 import _get from 'lodash/get';
 
-import { getReservations, clearError } from '../../../../redux/modules/admin/reservations/actions';
+import * as reservationsActions from '../../../../redux/modules/admin/reservations/actions';
 
 import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 
 import ReservationsToolbar from './blocks/ReservationsToolbar';
+import ConfirmDialog from "../../../organisms/Admin/ConfirmDialog";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,12 +34,23 @@ function ReservationsPage(props) {
   const styles = useStyles();
   const { reservations: { data, ...statuses }, dispatch } = props;
 
+  const [deletingReservationId, setReservationDelete] = useState(null);
+
   useEffect(() => {
-    dispatch(getReservations());
+    dispatch(reservationsActions.getReservations());
   }, [dispatch]);
 
   const handleCloseError = () => {
-    dispatch(clearError());
+    dispatch(reservationsActions.clearError());
+  };
+
+  // const handleDeleteReservation = id => setReservationDelete(id);
+
+  const handleCancelDelete = () => setReservationDelete(null);
+
+  const handleConfirmDelete = () => {
+    // dispatch(reservationsActions.deleteUser(deletingReservationId));
+    setReservationDelete(null);
   };
 
   return (
@@ -55,20 +67,28 @@ function ReservationsPage(props) {
                     text: 'ID',
                   },
                   {
-                    id: 'client',
+                    id: 'name',
                     text: 'Клиент',
+                  },
+                  {
+                    id: 'phone',
+                    text: 'Номер телефона',
                   },
                   {
                     id: 'dealer',
                     text: 'Дилер',
                   },
                   {
-                    id: 'car',
+                    id: 'dealer_car_id',
                     text: 'Автомобиль'
                   },
                   {
-                    id: 'date',
-                    text: 'Дата бронирования',
+                    id: 'created_at',
+                    text: 'Дата создания',
+                  },
+                  {
+                    id: 'updated_at',
+                    text: 'Дата изменения',
                   },
                   {
                     id: ACTIONS_COLUMN_ID,
@@ -77,11 +97,30 @@ function ReservationsPage(props) {
                 ]}
                 list={data}
                 statuses={statuses}
+                // onDelete={handleDeleteReservation}
               />
             </div>
           </PerfectScrollbar>
         </Card>
       </div>
+
+      <ConfirmDialog
+        open={Boolean(deletingReservationId)}
+        texts={{
+          title: 'Удаление записи',
+          body: (
+            <>
+              Вы собираетесь удалить данную запись.
+              <br />
+              <b>Данное действие невозможно отменить.</b> Хотите продолжить?
+            </>
+          ),
+          cancel: 'Отмена',
+          confirm: 'Удалить',
+        }}
+        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+      />
       <ErrorShower
         open={Boolean(statuses.error)}
         message={_get(statuses, 'error.message')}

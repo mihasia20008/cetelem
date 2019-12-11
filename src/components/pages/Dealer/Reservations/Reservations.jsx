@@ -55,17 +55,25 @@ function ReservationsPage(props) {
                     text: 'ID',
                   },
                   {
-                    id: 'client',
+                    id: 'name',
                     text: 'Клиент',
                   },
                   {
-                    id: 'car',
+                    id: 'phone',
+                    text: 'Номер телефона',
+                  },
+                  {
+                    id: 'dealer_car_id',
                     text: 'Автомобиль'
                   },
                   {
-                    id: 'date',
-                    text: 'Дата бронирования',
-                  }
+                    id: 'created_at',
+                    text: 'Дата создания',
+                  },
+                  {
+                    id: 'updated_at',
+                    text: 'Дата изменения',
+                  },
                 ]}
                 list={data}
                 statuses={statuses}
