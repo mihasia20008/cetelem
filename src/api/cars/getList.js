@@ -60,7 +60,6 @@ export async function carListRequest(params, filters) {
       }
       return acc;
     }, {});
-    console.log(preparedFilters);
 
     const baseQuery = _pick(params, availableParams);
     const { headers, data } = await axios({

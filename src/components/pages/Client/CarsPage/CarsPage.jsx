@@ -297,7 +297,6 @@ class CarsPage extends PureComponent {
     }, {});
 
     const query = { ...location.query, ...params };
-    console.log(query);
     dispatch(loadCarsList(query));
     window.scrollTo(0, 0);
     // history.push(`${location.pathname}?${qs.stringify(query)}`);
