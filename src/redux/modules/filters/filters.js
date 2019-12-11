@@ -1,6 +1,6 @@
 import * as T from './types';
 
-import { FILTER_TYPES } from "../../../constants";
+import { FILTER_TYPES } from '../../../constants';
 
 const initialState = {
   dealer: {
@@ -15,7 +15,62 @@ const initialState = {
     error: false,
     success: false,
   },
-  data: {},
+  data: {
+    mark_id: {
+      type: FILTER_TYPES.SELECT,
+      active: -1,
+      text: 'Марка',
+      options: [
+        {
+          id: 0,
+          name: 'Все марки',
+        },
+        {
+          id: 1,
+          name: 'Audi',
+        },
+        {
+          id: 2,
+          name: 'BMW',
+        },
+        {
+          id: 97,
+          name: 'Nissan',
+        },
+        {
+          id: 3,
+          name: 'Mercedes',
+        },
+        {
+          id: 4,
+          name: 'Kia',
+        },
+        {
+          id: 5,
+          name: 'Ford',
+        },
+      ],
+    },
+    model_id: {
+      type: FILTER_TYPES.SELECT,
+      active: -1,
+      text: 'Модель',
+      options: [
+        {
+          id: 0,
+          name: 'Все модели',
+        },
+        {
+          id: 2196,
+          name: 'Juke, I Рестайлинг',
+        },
+        {
+          id: 2003,
+          name: 'Qashqai+2, I Рестайлинг',
+        },
+      ],
+    },
+  },
 };
 
 export default function filtersReducer(state = initialState, action = {}) {
@@ -28,7 +83,7 @@ export default function filtersReducer(state = initialState, action = {}) {
           initial: false,
           loading: true,
         },
-      }
+      };
     }
     case T.FILTERS_DEALER_FETCH_END: {
       return {
@@ -37,7 +92,7 @@ export default function filtersReducer(state = initialState, action = {}) {
           ...state.dealer,
           loading: false,
         },
-      }
+      };
     }
     case T.FILTERS_DEALER_FETCH_ERROR: {
       return {
@@ -46,7 +101,7 @@ export default function filtersReducer(state = initialState, action = {}) {
           ...state.dealer,
           error: action.data,
         },
-      }
+      };
     }
     case T.FILTERS_DEALER_SUCCESS_LOADED: {
       return {
@@ -59,7 +114,7 @@ export default function filtersReducer(state = initialState, action = {}) {
           ...state.data,
           ...action.data,
         },
-      }
+      };
     }
     case T.FILTERS_BASE_FETCH_START: {
       return {
@@ -69,7 +124,7 @@ export default function filtersReducer(state = initialState, action = {}) {
           initial: false,
           loading: true,
         },
-      }
+      };
     }
     case T.FILTERS_BASE_FETCH_END: {
       return {
@@ -78,7 +133,7 @@ export default function filtersReducer(state = initialState, action = {}) {
           ...state.base,
           loading: false,
         },
-      }
+      };
     }
     case T.FILTERS_BASE_FETCH_ERROR: {
       return {
@@ -87,7 +142,7 @@ export default function filtersReducer(state = initialState, action = {}) {
           ...state.base,
           error: action.data,
         },
-      }
+      };
     }
     case T.FILTERS_BASE_SUCCESS_LOADED: {
       return {
@@ -100,25 +155,25 @@ export default function filtersReducer(state = initialState, action = {}) {
           ...state.data,
           ...action.data,
         },
-      }
+      };
     }
     case T.FILTERS_CHANGE: {
       const filter = state.data[action.name];
       let updatedFilter = {};
       switch (true) {
         case filter.type === FILTER_TYPES.RANGE: {
-            if (filter.values === undefined) {
-              updatedFilter = {
-                ...filter,
-                value: action.value,
-              };
-            } else {
-              updatedFilter = {
-                ...filter,
-                values: [action.value.min, action.value.max],
-              };
-            }
-            break;
+          if (filter.values === undefined) {
+            updatedFilter = {
+              ...filter,
+              value: action.value,
+            };
+          } else {
+            updatedFilter = {
+              ...filter,
+              values: [action.value.min, action.value.max],
+            };
+          }
+          break;
         }
         case [FILTER_TYPES.SELECT, FILTER_TYPES.CHECKBOX].includes(filter.type): {
           updatedFilter = {

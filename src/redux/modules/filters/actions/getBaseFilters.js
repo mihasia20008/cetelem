@@ -54,9 +54,9 @@ function prepareFilters(filters) {
           name,
         }));
         acc[key] = {
-          text: filters[key].text,
+          text: key === FILTER_NAMES.BODY_TYPE ? 'Кузов' : filters[key].text,
           type: filters[key].type,
-          active: 0,
+          active: -1,
           options: [
             {
               id: 0,

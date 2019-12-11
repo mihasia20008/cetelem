@@ -70,8 +70,8 @@ export const FILTER_NAMES = {
   //
   NEW: 'new',
   PRICE: 'price',
-  MARK: 'mark',
-  MODEL: 'model',
+  MARK: 'mark_id',
+  MODEL: 'model_id',
   // GENERATION: 'GENERATION',
   YEAR: 'year',
   BODY_TYPE: 'body_type',
@@ -95,8 +95,8 @@ export const FILTERS_SORT = {
     TOP: [FILTER_NAMES.NEW],
     BOTTOM: [
       FILTER_NAMES.PRICE,
-      // FILTER_NAMES.MARK,
-      // FILTER_NAMES.MODEL,
+      FILTER_NAMES.MARK,
+      FILTER_NAMES.MODEL,
       // FILTER_NAMES.GENERATION,
       FILTER_NAMES.YEAR,
       FILTER_NAMES.RUN,

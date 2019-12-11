@@ -39,11 +39,17 @@ export async function carListRequest(params, filters) {
           break;
         }
         case FILTER_TYPES.SELECT: {
-          const option = filter.options.find(
-            item => item.id.toString() === filtersQuery[key].toString()
-          );
-          if (option) {
-            acc[key] = option.name;
+          if (key.search('_id') !== -1) {
+            if (filtersQuery[key] > 0) {
+              acc[key] = filtersQuery[key];
+            }
+          } else {
+            const option = filter.options.find(
+              item => item.id.toString() === filtersQuery[key].toString()
+            );
+            if (option) {
+              acc[key] = option.name;
+            }
           }
           break;
         }
