@@ -149,7 +149,7 @@ function BookForm(props) {
           </div>
           <div className={styles.inputWrap}>
             {!formState.values.phone && (
-              <span className={styles.inputPlaceholder}>8 800 500 55 03</span>
+              <span className={styles.inputPlaceholder}>Телефон</span>
             )}
             <input
               className={cls(styles.input, styles.phone)}
