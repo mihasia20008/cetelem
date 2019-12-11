@@ -29,12 +29,12 @@ class Header extends PureComponent {
         <NavLink to="/cars" className={styles.link} activeClassName={styles.activeLink}>
           Подбор автомобиля
         </NavLink>
-        <NavLink to="/dealers" className={styles.link} activeClassName={styles.activeLink}>
-          Поиск дилера
-        </NavLink>
-        <NavLink to="/about" className={styles.link} activeClassName={styles.activeLink}>
-          О сетелем
-        </NavLink>
+        {/* <NavLink to="/dealers" className={styles.link} activeClassName={styles.activeLink}> */}
+        {/*  Поиск дилера */}
+        {/* </NavLink> */}
+        {/* <NavLink to="/about" className={styles.link} activeClassName={styles.activeLink}> */}
+        {/*  О сетелем */}
+        {/* </NavLink> */}
       </>
     );
   }
