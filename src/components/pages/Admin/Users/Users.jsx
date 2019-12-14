@@ -245,7 +245,7 @@ function UsersPage(props) {
 }
 
 const mapStateToProps = state => {
-  const dealers = _get(state, 'filters.data.dealers.options', []).filter(item => item.id !== 0);
+  const dealers = _get(state, 'filters.data.dealer_id.options', []).filter(item => item.id !== 0);
   return {
     users: state.admin.users,
     dealers,

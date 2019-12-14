@@ -8,12 +8,15 @@ import { Card, Typography } from '@material-ui/core';
 import _get from 'lodash/get';
 
 import * as dealerCarsActions from '../../../../redux/modules/admin/dealerCars/actions';
+import { getDealers } from '../../../../redux/modules/filters/actions';
 
 import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
 import ConfirmDialog from '../../../organisms/Admin/ConfirmDialog';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 
 import formatNumber from '../../../../utilities/formatNumber';
+
+import DealerCarsToolbar from './blocks/DealerCarsToolbar';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,14 +36,18 @@ const useStyles = makeStyles(theme => ({
 function DealerCars(props) {
   const styles = useStyles();
   const {
+    dealers,
+    dealersLoaded,
     dealerCars: { data, ...statuses },
     dispatch,
   } = props;
 
   const [deletingCarId, setCarDelete] = useState(null);
+  const [selectedDealer, setDealerFilter] = useState(0);
 
   useEffect(() => {
     dispatch(dealerCarsActions.getDealerCars());
+    dispatch(getDealers());
   }, [dispatch]);
 
   const handleCloseError = () => {
@@ -56,10 +63,24 @@ function DealerCars(props) {
     setCarDelete(null);
   };
 
+  const handleSelect = event => {
+    const { value } = event.target;
+    setDealerFilter(value);
+  };
+
   const renderFormattedPrice = text => `${formatNumber(text)} ₽`;
+
+  const filteredList =
+    selectedDealer > 0 ? data.filter(car => car.dealer_id === selectedDealer) : data;
 
   return (
     <div className={styles.root}>
+      <DealerCarsToolbar
+        selected={selectedDealer}
+        dealers={dealers}
+        dealersLoaded={dealersLoaded}
+        onSelect={handleSelect}
+      />
       <div className={styles.content}>
         <Card className={styles.wrapper}>
           <PerfectScrollbar>
@@ -106,7 +127,7 @@ function DealerCars(props) {
                     text: '',
                   },
                 ]}
-                list={data}
+                list={filteredList}
                 statuses={statuses}
                 onDelete={handleDeleteCar}
               />
@@ -141,8 +162,11 @@ function DealerCars(props) {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     dealerCars: state.admin.dealerCars,
+    dealers: _get(state, 'filters.data.dealer_id.options', []),
+    dealersLoaded: _get(state, 'filters.dealer.success'),
   };
 };
 
