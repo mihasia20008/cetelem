@@ -282,7 +282,7 @@ class CarsDetail extends PureComponent {
 
   renderPriceSidebar() {
     const { car } = this.props;
-    const salePrice = car.credit_discount ? car.price - car.credit_discount : car.price;
+    const salePrice = car.tradein_discount ? car.price - car.tradein_discount : car.price;
 
     return (
       <div className={styles.priceSidebar}>
@@ -298,18 +298,18 @@ class CarsDetail extends PureComponent {
           ) : null}
         </div>
         <div className={styles.salesBlock}>
-          {car.credit_discount && (
-            <div className={styles.saleItem}>
-              <span className={styles.saleName}>При покупке в кредит</span>
-              <span className={styles.saleValue}>- {formatNumber(car.credit_discount)} ₽</span>
-            </div>
-          )}
-          {car.insurance_discount && (
-            <div className={styles.saleItem}>
-              <span className={styles.saleName}>При покупке страховки</span>
-              <span className={styles.saleValue}>- {formatNumber(car.insurance_discount)} ₽</span>
-            </div>
-          )}
+          {/* {car.credit_discount && ( */}
+          {/*  <div className={styles.saleItem}> */}
+          {/*    <span className={styles.saleName}>При покупке в кредит</span> */}
+          {/*    <span className={styles.saleValue}>- {formatNumber(car.credit_discount)} ₽</span> */}
+          {/*  </div> */}
+          {/* )} */}
+          {/* {car.insurance_discount && ( */}
+          {/*  <div className={styles.saleItem}> */}
+          {/*    <span className={styles.saleName}>При покупке страховки</span> */}
+          {/*    <span className={styles.saleValue}>- {formatNumber(car.insurance_discount)} ₽</span> */}
+          {/*  </div> */}
+          {/* )} */}
           {car.tradein_discount && (
             <div className={styles.saleItem}>
               <span className={styles.saleName}>Trade-In</span>
