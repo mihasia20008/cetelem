@@ -2,12 +2,12 @@ import React from 'react';
 import { Map, Placemark, YMaps } from 'react-yandex-maps';
 
 import PinIcon from '../../../../../icons/PinIcon';
-import RatingIcon from '../../../../../icons/RatingIcon';
+// import RatingIcon from '../../../../../icons/RatingIcon';
 
 import styles from './DealerMap.module.scss';
 
 function DealerMap(props) {
-  const { name, address, rating, location, phone } = props;
+  const { name, address, /* rating, */ location, phone } = props;
 
   const formatPhone = text => {
     try {
@@ -48,11 +48,11 @@ function DealerMap(props) {
         </div>
         <div className={styles.content}>
           <h3 className={styles.name}>{name}</h3>
-          <div className={styles.rating}>
-            {Array.from(Array(5).keys()).map(index => (
-              <RatingIcon key={index} className={styles.ratingIcon} active={index < rating} />
-            ))}
-          </div>
+          {/* <div className={styles.rating}> */}
+          {/*  {Array.from(Array(5).keys()).map(index => ( */}
+          {/*    <RatingIcon key={index} className={styles.ratingIcon} active={index < rating} /> */}
+          {/*  ))} */}
+          {/* </div> */}
           <p className={styles.address}>{address}</p>
           {phone && (
             <a href={`tel: ${phone}`} className={styles.phone}>
