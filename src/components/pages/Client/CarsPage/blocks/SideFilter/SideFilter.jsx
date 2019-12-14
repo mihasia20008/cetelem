@@ -6,7 +6,7 @@ import Dropdown from '../../../../../organisms/Dropdown';
 import Checkbox from './blocks/Checkbox';
 import Range from './blocks/Range';
 
-import { FILTER_TYPES } from "../../../../../../constants";
+import { FILTER_NAMES, FILTER_TYPES } from '../../../../../../constants';
 
 import styles from './SideFilter.module.scss';
 
@@ -38,7 +38,7 @@ class SideFilter extends PureComponent {
     filters: {},
   };
 
-  handlerChangeFilter = (type) => (name, value) => {
+  handlerChangeFilter = type => (name, value) => {
     const { onFilter } = this.props;
     onFilter(name, value, type);
   };
@@ -55,7 +55,7 @@ class SideFilter extends PureComponent {
           onSelect={this.handlerChangeFilter(FILTER_TYPES.SELECT)}
         />
       </div>
-    )
+    );
   };
 
   renderCheckbox = (name, filter) => {
@@ -108,15 +108,19 @@ class SideFilter extends PureComponent {
   }
 
   render() {
-    const { sort, onApply } = this.props;
+    const { sort, filters, onApply } = this.props;
+
+    const isSelectNew = filters[FILTER_NAMES.NEW].active === 1;
+    const bottomFilters = isSelectNew
+      ? sort.BOTTOM.filter(key => ![FILTER_NAMES.STATE, FILTER_NAMES.RUN].includes(key))
+      : sort.BOTTOM;
+
     return (
       <div className={styles.SideFilter}>
-        <div className={styles.top}>
-          {sort.TOP.map(name => this.renderFilter(name))}
-        </div>
+        <div className={styles.top}>{sort.TOP.map(name => this.renderFilter(name))}</div>
         <div className={styles.divider} />
         <div className={styles.bottom}>
-          {sort.BOTTOM.map(name => this.renderFilter(name))}
+          {bottomFilters.map(name => this.renderFilter(name))}
           <Button text="Показать" onClick={onApply} />
         </div>
       </div>
