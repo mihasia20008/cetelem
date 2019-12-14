@@ -25,53 +25,57 @@ function Range(props) {
         max: current.values[1],
       };
 
-  const getFormatLabel = (value) => {
-    if (name !== 'price') {
+  const getFormattedValue = (value) => {
+    if (name === 'price') {
+      return `${formatNumber(value)} ₽`;
+    }
+    if (name === 'year') {
       return value;
     }
-    if (isSingleRange) {
-      return `${formatNumber(value)} ₽`
-    }
-    if (value === min) {
-      return `от ${formatNumber(value)} ₽`;
-    }
-    if (value === max) {
-      return `до ${formatNumber(value)} ₽`;
-    }
-    return `${formatNumber(value)} ₽`;
+    return formatNumber(value);
   };
 
   return (
-    <div className={cls(styles.wrap, isSingleRange && styles.singleWrap)}>
-      <InputRange
-        classNames={{
-          inputRange: cls(
-            classNames.inputRange,
-            styles.Range,
-            isSingleRange ? styles.singleRange : styles.doubleRange
-          ),
-          disabledInputRange: cls(classNames.disabledInputRange),
-          slider: cls(classNames.slider, styles.slider),
-          sliderContainer: cls(classNames.sliderContainer, styles.sliderContainer),
-          track: cls(classNames.track, styles.track),
-          activeTrack: cls(classNames.activeTrack, styles.activeTrack),
-          labelContainer: cls(classNames.labelContainer, styles.labelContainer),
-          maxLabel: cls(classNames.maxLabel, styles.label, styles.labelMax),
-          minLabel: cls(classNames.minLabel, styles.label, styles.labelMin),
-          valueLabel: cls(classNames.valueLabel, styles.valueLabel),
-        }}
-        formatLabel={getFormatLabel}
-        maxValue={max}
-        minValue={min}
-        value={range}
-        onChange={handleChange}
-      />
-      {isSingleRange && (
+    <>
+      <div className={cls(styles.wrap, isSingleRange && styles.singleWrap)}>
+        <InputRange
+          classNames={{
+            inputRange: cls(
+              classNames.inputRange,
+              styles.Range,
+              isSingleRange ? styles.singleRange : styles.doubleRange
+            ),
+            disabledInputRange: cls(classNames.disabledInputRange),
+            slider: cls(classNames.slider, styles.slider),
+            sliderContainer: cls(classNames.sliderContainer, styles.sliderContainer),
+            track: cls(classNames.track, styles.track),
+            activeTrack: cls(classNames.activeTrack, styles.activeTrack),
+            labelContainer: cls(classNames.labelContainer),
+            maxLabel: cls(classNames.maxLabel, styles.label),
+            minLabel: cls(classNames.minLabel, styles.label),
+            valueLabel: cls(classNames.valueLabel, styles.valueLabel),
+          }}
+          maxValue={max}
+          minValue={min}
+          value={range}
+          onChange={handleChange}
+        />
+      </div>
+      {isSingleRange ? (
         <div className={styles.value}>
-          {`${formatNumber(range)} ₽`}
+          {getFormattedValue(current.value)}
+        </div>
+      ) : (
+        <div className={styles.values}>
+          <div className={styles.minValue}>
+            {getFormattedValue(current.values[0])}
+          </div>
+          <div className={styles.maxValue}>
+            {getFormattedValue(current.values[1])}
+          </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

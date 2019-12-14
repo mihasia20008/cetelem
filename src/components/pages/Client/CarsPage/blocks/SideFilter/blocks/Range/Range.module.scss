@@ -13,16 +13,9 @@
     width: 7px;
     background-color: #22b25c;
   }
-
-  .label,
-  .valueLabel {
-    display: none;
-  }
 }
 
 .doubleRange {
-  margin-bottom: 62px;
-
   .track::before {
     content: '';
     position: absolute;
@@ -32,10 +25,6 @@
     right: 100%;
     width: 7px;
     background-color: #e4e4e4;
-  }
-
-  .valueLabel {
-    display: none;
   }
 }
 
@@ -78,24 +67,24 @@
   border: 2px solid #fff;
 }
 
-.label {
-  bottom: -32px;
+.label,
+.valueLabel {
+  display: none;
+}
+
+.values {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.minValue,
+.maxValue {
   font-size: 12px;
   font-weight: 500;
   color: #000;
   font-family: TTNorms, Arial, sans-serif;
-
-  .labelContainer {
-    position: static;
-  }
-}
-
-.labelMin {
-  margin-left: -7px;
-}
-
-.labelMax {
-  margin-right: -12px;
 }
 
 .value {
