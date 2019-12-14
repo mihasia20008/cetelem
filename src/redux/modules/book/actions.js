@@ -12,7 +12,7 @@ export function bookCar(id, form) {
       const client = localStorage.getItem(CLIENT_ID_KEY);
       const preparedForm = {
         client_id: client,
-        name: `${form.lastName} ${form.firstName}${form.secondName ? ` ${form.secondName}` : ''}`,
+        name: form.name,
         phone: form.phone,
         car_vin: form.vin,
       };

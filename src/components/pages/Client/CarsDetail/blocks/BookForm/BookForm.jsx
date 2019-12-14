@@ -19,9 +19,7 @@ function BookForm(props) {
     isValid: false,
     values: {
       phone: '',
-      firstName: localStorage.getItem(CLIENT_NAME_KEY) || '',
-      lastName: '',
-      secondName: '',
+      name: localStorage.getItem(CLIENT_NAME_KEY) || '',
     },
     touched: {},
     errors: {},
@@ -110,49 +108,21 @@ function BookForm(props) {
       <div className={styles.formContent}>
         <form className={styles.form} onSubmit={handleSubmitForm}>
           <div className={styles.inputWrap}>
-            {!formState.values.lastName && <span className={styles.inputPlaceholder}>Фамилия</span>}
+            {!formState.values.name && <span className={styles.inputPlaceholder}>Имя</span>}
             <input
               className={styles.input}
-              name="lastName"
+              name="name"
               type="text"
-              value={formState.values.lastName}
+              value={formState.values.name}
               onChange={handleChange}
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
           </div>
           <div className={styles.inputWrap}>
-            {!formState.values.firstName && <span className={styles.inputPlaceholder}>Имя</span>}
+            {!formState.values.phone && <span className={styles.inputPlaceholder}>Телефон</span>}
             <input
               className={styles.input}
-              name="firstName"
-              type="text"
-              value={formState.values.firstName}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-          </div>
-          <div className={styles.inputWrap}>
-            {!formState.values.secondName && (
-              <span className={styles.inputPlaceholder}>Отчество</span>
-            )}
-            <input
-              className={styles.input}
-              name="secondName"
-              type="text"
-              value={formState.values.secondName}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-          </div>
-          <div className={styles.inputWrap}>
-            {!formState.values.phone && (
-              <span className={styles.inputPlaceholder}>Телефон</span>
-            )}
-            <input
-              className={cls(styles.input, styles.phone)}
               name="phone"
               type="text"
               value={formState.values.phone}
@@ -171,10 +141,7 @@ function BookForm(props) {
           />
         </form>
         {/* eslint-disable-next-line no-nested-ternary */}
-        {hasError('phone') ||
-        hasError('firstName') ||
-        hasError('lastName') ||
-        hasError('secondName') ? (
+        {hasError('phone') || hasError('name') ? (
           <div className={styles.inputError}>Ошибка заполнения формы</div>
         ) : bookInfo.error ? (
           <div className={styles.inputError}>Error {JSON.stringify(bookInfo.error)}</div>

@@ -1,20 +1,6 @@
 export const schema = {
-  firstName: {
+  name: {
     presence: { allowEmpty: false, message: '^Имя - обязательное поле!' },
-    length: {
-      maximum: 64,
-      wrongLength: "^Превышен лимит длины ввода",
-    },
-  },
-  lastName: {
-    presence: { allowEmpty: false, message: '^Фамилия - обязательное поле!' },
-    length: {
-      maximum: 64,
-      wrongLength: "^Превышен лимит длины ввода",
-    },
-  },
-  secondName: {
-    presence: { allowEmpty: true },
     length: {
       maximum: 64,
       wrongLength: "^Превышен лимит длины ввода",
