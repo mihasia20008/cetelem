@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import _pick from 'lodash/pick';
+import _get from 'lodash/get';
 
 import { FILTER_TYPES, FILTER_NAMES } from '../../constants';
 
@@ -19,7 +20,7 @@ function prepareCars(list) {
       name: `${item.mark} ${item.model}`,
       description: item.modification,
       price: item.price,
-      image: '/images/Auto.jpg',
+      image: _get(item, 'images.0', '/images/Auto.jpg'),
     };
   });
 }

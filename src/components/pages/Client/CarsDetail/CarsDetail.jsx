@@ -24,11 +24,6 @@ import Gallery from './blocks/Gallery';
 
 import styles from './CarsDetail.module.scss';
 
-const IMAGES_LIST = Array.from(Array(5).keys()).map(index => ({
-  src: `/images/${(index % 3) + 1}.jpg`,
-  id: index,
-}));
-
 class CarsDetail extends PureComponent {
   constructor(props) {
     super(props);
@@ -75,7 +70,7 @@ class CarsDetail extends PureComponent {
     );
   };
 
-  getFormattedVin = (value) => {
+  getFormattedVin = value => {
     if (!value) {
       return '';
     }
@@ -348,13 +343,18 @@ class CarsDetail extends PureComponent {
       return <PageLoading />;
     }
 
+    const images = (car.images || []).map((image, index) => ({
+      src: image,
+      index,
+    }));
+
     return (
       <div className={styles.container}>
         <Container>
           <div className={styles.wrapper}>
             <div className={styles.top}>
               {this.renderHead()}
-              <Gallery images={IMAGES_LIST} />
+              {images.length && <Gallery images={images} />}
               {this.renderShortInfo()}
             </div>
             {car.description && <p className={styles.description}>{car.description}</p>}

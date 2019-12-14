@@ -131,8 +131,8 @@ class Gallery extends PureComponent {
               closeOnBackdropClick={false}
               onClose={this.handleCloseFullScreen}
               styles={{
-                blanket: StyleObj => ({ ...StyleObj, zIndex: 2 }),
-                positioner: StyleObj => ({ ...StyleObj, zIndex: 2 }),
+                blanket: StyleObj => ({ ...StyleObj, zIndex: 3 }),
+                positioner: StyleObj => ({ ...StyleObj, zIndex: 3 }),
               }}
             >
               <Carousel

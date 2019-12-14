@@ -10,10 +10,12 @@
   bottom: 0;
   left: 0;
   overflow: hidden;
+  height: 100%;
 }
 
 .track {
   transition: transform 500ms ease;
+  height: 100%;
 }
 
 .item {
@@ -22,8 +24,15 @@
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
+  max-width: 500px;
+  max-height: 100%;
 
   &:not(:last-child) {
     margin-right: 20px;
   }
+}
+
+.image {
+  width: 100%;
+  height: auto;
 }
