@@ -69,8 +69,8 @@ function PersonalPage(props) {
     <div className={styles.root}>
       <PersonalForm
         texts={{
-          title: 'Редактирование информации',
-          submit: 'Изменить',
+          title: 'Личная информация',
+          submit: 'Хочу изменить',
         }}
         dealer={data}
         statuses={statuses}

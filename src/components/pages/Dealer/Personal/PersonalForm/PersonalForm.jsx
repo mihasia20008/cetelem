@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function PersonalForm(props) {
-  const { texts, dealer, statuses, onSubmit, onCloseError } = props;
+  const { texts, dealer, statuses, /* onSubmit, */ onCloseError } = props;
   const styles = useStyles();
   const [formState, setFormState] = useState({
     isValid: false,
@@ -118,17 +118,17 @@ function PersonalForm(props) {
 
   const hasError = field => Boolean(formState.touched[field] && formState.errors[field]);
 
-  const handleSubmitForm = event => {
-    event.preventDefault();
-    if (!formState.isValid) {
-      return;
-    }
-    onSubmit(formState.values);
-  };
+  // const handleSubmitForm = event => {
+  //   event.preventDefault();
+  //   if (!formState.isValid) {
+  //     return;
+  //   }
+  //   onSubmit(formState.values);
+  // };
 
   return (
     <Card className={styles.root}>
-      <form autoComplete="off" noValidate onSubmit={handleSubmitForm}>
+      <form autoComplete="off" noValidate>
         <CardHeader subheader={texts.subtitle} title={texts.title} />
         <Divider />
         <CardContent>
@@ -148,6 +148,7 @@ function PersonalForm(props) {
                 required
                 value={formState.values.legal_name}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -162,6 +163,7 @@ function PersonalForm(props) {
                 required
                 value={formState.values.trade_name}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -176,6 +178,7 @@ function PersonalForm(props) {
                 required
                 value={formState.values.phone}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -189,6 +192,7 @@ function PersonalForm(props) {
                 onChange={handleChange}
                 value={formState.values.code}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -198,6 +202,7 @@ function PersonalForm(props) {
                 name="official_dealer"
                 checked={formState.values.official_dealer}
                 onChange={handleChange}
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -207,6 +212,7 @@ function PersonalForm(props) {
                 name="used_car_saling"
                 checked={formState.values.used_car_saling}
                 onChange={handleChange}
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -227,6 +233,7 @@ function PersonalForm(props) {
                 onChange={handleChange}
                 value={formState.values.postcode}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -240,6 +247,7 @@ function PersonalForm(props) {
                 onChange={handleChange}
                 value={formState.values.country}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -253,6 +261,7 @@ function PersonalForm(props) {
                 onChange={handleChange}
                 value={formState.values.region}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -267,6 +276,7 @@ function PersonalForm(props) {
                 required
                 value={formState.values.city}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -281,6 +291,7 @@ function PersonalForm(props) {
                 required
                 value={formState.values.street}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -295,6 +306,7 @@ function PersonalForm(props) {
                 required
                 value={formState.values.building}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -312,6 +324,7 @@ function PersonalForm(props) {
                 required
                 value={formState.values.locationX}
                 variant="outlined"
+                disabled
               />
             </Grid>
             <Grid item xs={12}>
@@ -326,6 +339,7 @@ function PersonalForm(props) {
                 required
                 value={formState.values.locationY}
                 variant="outlined"
+                disabled
               />
             </Grid>
           </Grid>
@@ -336,8 +350,8 @@ function PersonalForm(props) {
             <Button
               color="primary"
               variant="contained"
-              type="submit"
-              disabled={!formState.isValid || statuses.loading}
+              href="mailto:driveclick@cetelem.ru"
+              // disabled={!formState.isValid || statuses.loading}
             >
               {texts.submit}
             </Button>
@@ -367,7 +381,7 @@ PersonalForm.propTypes = {
   dealer: PropTypes.shape({
     id: PropTypes.number,
   }),
-  onSubmit: PropTypes.func.isRequired,
+  // onSubmit: PropTypes.func.isRequired,
   onCloseError: PropTypes.func.isRequired,
 };
 
