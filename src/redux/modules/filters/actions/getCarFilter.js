@@ -11,7 +11,6 @@ const TYPES = {
 };
 
 export default function getCarFilters({ markId, modelId, loadMarks, loadModels }) {
-  console.log(markId, modelId, loadMarks, loadModels);
   return async dispatch => {
     try {
       dispatch({ type: T.FILTERS_CAR_FETCH_START });

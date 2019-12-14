@@ -288,6 +288,8 @@ export default function filtersReducer(state = initialState, action = {}) {
     case T.FILTERS_CHANGE: {
       const filter = state.data[action.name];
       let updatedFilter = {};
+      const effectedFilters = {};
+
       switch (true) {
         case filter.type === FILTER_TYPES.RANGE: {
           if (filter.values === undefined) {
@@ -308,6 +310,25 @@ export default function filtersReducer(state = initialState, action = {}) {
             ...filter,
             active: action.value,
           };
+          if (action.name === FILTER_NAMES.MARK) {
+            effectedFilters[FILTER_NAMES.MODEL] = {
+              ...state.data[FILTER_NAMES.MODEL],
+              options: [],
+              active: -1,
+            };
+          }
+          if (action.name === FILTER_NAMES.MARK || action.name === FILTER_NAMES.MODEL) {
+            effectedFilters[FILTER_NAMES.MODIFICATION] = {
+              ...state.data[FILTER_NAMES.MODIFICATION],
+              options: [],
+              active: -1,
+            };
+            effectedFilters[FILTER_NAMES.COMPLECTATION] = {
+              ...state.data[FILTER_NAMES.COMPLECTATION],
+              options: [],
+              active: -1,
+            };
+          }
           break;
         }
         default: {
@@ -318,6 +339,7 @@ export default function filtersReducer(state = initialState, action = {}) {
         ...state,
         data: {
           ...state.data,
+          ...effectedFilters,
           [`${action.name}`]: updatedFilter,
         },
       };

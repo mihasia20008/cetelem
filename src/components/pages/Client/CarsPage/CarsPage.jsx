@@ -198,7 +198,9 @@ class CarsPage extends PureComponent {
       return acc;
     }, {});
 
-    const query = { ...location.query, ...params };
+    const cleanQuery = _omit(location.query, Object.values(FILTER_NAMES));
+    const query = { ...cleanQuery, ...params };
+
     history.push(`${location.pathname}?${qs.stringify(query)}`);
   };
 
