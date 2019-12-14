@@ -50,6 +50,7 @@ class CarsPage extends PureComponent {
           ],
         },
       },
+      title: 'Подбор автомобиля',
     };
   }
 
@@ -113,6 +114,34 @@ class CarsPage extends PureComponent {
     return names.reduce((acc, name) => {
       return { ...acc, [`${name}`]: filters[name] };
     }, {});
+  };
+
+  getActualTitle = () => {
+    const {
+      filters: { data: filters, car, base },
+    } = this.props;
+
+    let title;
+
+    if (base.success) {
+      if (filters[FILTER_NAMES.NEW].active) {
+        title = 'Новые автомобили';
+      } else {
+        title = 'Подержанные автомобили';
+      }
+    }
+
+    if (car.success) {
+      const { active, options } = filters[FILTER_NAMES.MARK];
+      if (active > 0) {
+        const carName = (options.find(item => item.id === active) || {}).name;
+        if (carName) {
+          title = `${title || 'Автомобили'} ${carName}`;
+        }
+      }
+    }
+
+    return title || 'Подбор автомобиля';
   };
 
   handleFilterChange = (name, value) => {
@@ -202,6 +231,9 @@ class CarsPage extends PureComponent {
     const query = { ...cleanQuery, ...params };
 
     history.push(`${location.pathname}?${qs.stringify(query)}`);
+    this.setState({
+      title: this.getActualTitle(),
+    });
   };
 
   handleGoToPage = page => {
@@ -280,6 +312,8 @@ class CarsPage extends PureComponent {
   }
 
   render() {
+    const { title } = this.state;
+
     return (
       <div className={styles.container}>
         <Container>
@@ -287,7 +321,7 @@ class CarsPage extends PureComponent {
             {this.renderSideFilter()}
             <div className={styles.content}>
               <div className={styles.head}>
-                <h1 className={styles.title}>Подбор автомобиля</h1>
+                <h1 className={styles.title}>{title}</h1>
                 {this.renderTopFilters()}
               </div>
               {this.renderContent()}
