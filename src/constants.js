@@ -63,7 +63,6 @@ export const FILTER_TYPES = {
 };
 
 export const FILTER_NAMES = {
-  //
   CITY: 'CITY',
   DEALER_ID: 'dealer_id',
   SORT: 'SORT',
@@ -75,7 +74,6 @@ export const FILTER_NAMES = {
   MODEL: 'model_id',
   MODIFICATION: 'modification_id',
   COMPLECTATION: 'complectation_id',
-  // GENERATION: 'GENERATION',
   YEAR: 'year',
   BODY_TYPE: 'body_type',
   COLOR: 'color',
