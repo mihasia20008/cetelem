@@ -10,7 +10,7 @@ const pagesCount = 'x-pages-number';
 const perPage = 'x-per-page';
 const total = 'x-total';
 
-const availableParams = ['page', 'per_page'];
+const availableParams = ['page', 'per_page', 'sort', 'order'];
 const filtersParams = Object.values(FILTER_NAMES);
 
 function prepareCars(list) {

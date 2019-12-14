@@ -4,6 +4,8 @@ import cls from 'classnames';
 
 import Dropdown from '../../../../../organisms/Dropdown';
 
+import { FILTER_TYPES } from "../../../../../../constants";
+
 import styles from './TopFilter.module.scss';
 
 function TopFilter({ className, filters, sort, onFilter }) {
@@ -12,7 +14,7 @@ function TopFilter({ className, filters, sort, onFilter }) {
       sort.map(name => {
         const filter = filters[name];
 
-        if (filter.type !== 'select') {
+        if (filter.type !== FILTER_TYPES.SELECT) {
           return null;
         }
 

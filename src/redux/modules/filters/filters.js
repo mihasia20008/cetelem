@@ -1,6 +1,6 @@
 import * as T from './types';
 
-import { FILTER_TYPES } from '../../../constants';
+import { FILTER_NAMES, FILTER_TYPES } from '../../../constants';
 
 const initialState = {
   dealer: {
@@ -67,6 +67,36 @@ const initialState = {
         {
           id: 2003,
           name: 'Qashqai+2, I Рестайлинг',
+        },
+      ],
+    },
+    [`${FILTER_NAMES.SORT}`]: {
+      type: FILTER_TYPES.SELECT,
+      active: 0,
+      options: [
+        {
+          id: 0,
+          sort: 'date',
+          order: 'asc',
+          name: 'По дате',
+        },
+        {
+          id: 1,
+          sort: 'price',
+          order: 'asc',
+          name: 'По убыванию цены',
+        },
+        {
+          id: 2,
+          sort: 'price',
+          order: 'desc',
+          name: 'По возрастанию цены',
+        },
+        {
+          id: 3,
+          sort: 'name',
+          order: 'asc',
+          name: 'По названию',
         },
       ],
     },

@@ -3,6 +3,7 @@ import qs from 'qs';
 import { connect } from 'react-redux';
 
 import _isEqual from 'lodash/isEqual';
+import _omit from 'lodash/omit';
 
 import Container from '../../../base/Container';
 import PageLoading from '../../../../routes/PageLoading';
@@ -24,6 +25,7 @@ class CarsPage extends PureComponent {
     super(props);
 
     this.state = {
+      // eslint-disable-next-line react/no-unused-state
       filters: {
         [`${FILTER_NAMES.CITY}`]: {
           type: FILTER_TYPES.SELECT,
@@ -66,24 +68,6 @@ class CarsPage extends PureComponent {
             {
               id: 3,
               name: 'Салон 3',
-            },
-          ],
-        },
-        [`${FILTER_NAMES.SORT}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: 0,
-          options: [
-            {
-              id: 0,
-              name: 'По дате',
-            },
-            {
-              id: 1,
-              name: 'По цене',
-            },
-            {
-              id: 2,
-              name: 'По названию',
             },
           ],
         },
@@ -252,15 +236,35 @@ class CarsPage extends PureComponent {
     const { dispatch } = this.props;
     dispatch(filtersActions.changeFilter(name, value));
 
-    // if (FILTERS_SORT.HEAD.includes(name)) {
-    //   this.handleFilterApply();
-    // }
+    if (FILTERS_SORT.HEAD.includes(name)) {
+      this.handleApplySingleFilter(name, value);
+    }
+  };
+
+  handleApplySingleFilter = (name, value) => {
+    const {
+      location,
+      history,
+      filters: { data: filters },
+    } = this.props;
+
+    let query;
+    if (name === FILTER_NAMES.SORT) {
+      const option = filters[name].options.find(item => item.id === value);
+      const cleanQuery = _omit(location.query, ['sort', 'order']);
+      query = { ...cleanQuery, sort: option.sort, order: option.order };
+    } else {
+      const cleanQuery = _omit(location.query, name);
+      query = { ...cleanQuery, [`${name}`]: value };
+    }
+
+    history.push(`${location.pathname}?${qs.stringify(query)}`);
   };
 
   handleFilterApply = () => {
     const {
       location,
-      dispatch,
+      history,
       filters: { data: filters },
     } = this.props;
 
@@ -297,9 +301,7 @@ class CarsPage extends PureComponent {
     }, {});
 
     const query = { ...location.query, ...params };
-    dispatch(loadCarsList(query));
-    window.scrollTo(0, 0);
-    // history.push(`${location.pathname}?${qs.stringify(query)}`);
+    history.push(`${location.pathname}?${qs.stringify(query)}`);
   };
 
   handleGoToPage = page => {
@@ -313,9 +315,7 @@ class CarsPage extends PureComponent {
     const { filters } = this.props;
 
     if (!filters.base.success) {
-      return (
-        <div className={styles.sideFilter} />
-      );
+      return <div className={styles.sideFilter} />;
     }
 
     const sideFilters = this.getFiltersByNames(filters.data, [
@@ -336,8 +336,8 @@ class CarsPage extends PureComponent {
   }
 
   renderTopFilters() {
-    const { filters } = this.state;
-    const topFilters = this.getFiltersByNames(filters, FILTERS_SORT.HEAD);
+    const { filters } = this.props;
+    const topFilters = this.getFiltersByNames(filters.data, FILTERS_SORT.HEAD);
 
     return (
       <TopFilter
