@@ -29,6 +29,11 @@ export async function carListRequest(params, filters) {
   try {
     const filtersQuery = _pick(params, filtersParams);
     const preparedFilters = Object.keys(filtersQuery).reduce((acc, key) => {
+      if (key.search('_id') !== -1 && filtersQuery[key] > 0) {
+        acc[key] = filtersQuery[key];
+        return acc;
+      }
+
       const filter = filters[key];
       if (!filter) {
         return acc;
@@ -40,17 +45,11 @@ export async function carListRequest(params, filters) {
           break;
         }
         case FILTER_TYPES.SELECT: {
-          if (key.search('_id') !== -1) {
-            if (filtersQuery[key] > 0) {
-              acc[key] = filtersQuery[key];
-            }
-          } else {
-            const option = filter.options.find(
-              item => item.id.toString() === filtersQuery[key].toString()
-            );
-            if (option) {
-              acc[key] = option.name;
-            }
+          const option = filter.options.find(
+            item => item.id.toString() === filtersQuery[key].toString()
+          );
+          if (option) {
+            acc[key] = option.name;
           }
           break;
         }
@@ -67,6 +66,10 @@ export async function carListRequest(params, filters) {
       }
       return acc;
     }, {});
+
+    if (!(FILTER_NAMES.NEW in preparedFilters)) {
+      preparedFilters[FILTER_NAMES.NEW] = 1;
+    }
 
     const baseQuery = _pick(params, availableParams);
     const { headers, data } = await axios({

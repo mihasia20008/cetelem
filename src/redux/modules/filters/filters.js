@@ -70,6 +70,25 @@ const initialState = {
         },
       ],
     },
+    [`${FILTER_NAMES.AVAILABLE}`]: {
+      type: FILTER_TYPES.SELECT,
+      active: -1,
+      text: 'Наличие у дилера',
+      options: [
+        {
+          id: 0,
+          name: 'Все',
+        },
+        {
+          id: 1,
+          name: 'В наличии',
+        },
+        {
+          id: 2,
+          name: 'Под заказ',
+        },
+      ],
+    },
     [`${FILTER_NAMES.SORT}`]: {
       type: FILTER_TYPES.SELECT,
       active: 0,
@@ -184,6 +203,15 @@ export default function filtersReducer(state = initialState, action = {}) {
         data: {
           ...state.data,
           ...action.data,
+        },
+      };
+    }
+    case T.SET_INITIAL_FILTERS: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...action.filters,
         },
       };
     }

@@ -13,7 +13,10 @@ export default function getDealers() {
         return;
       }
 
-      dispatch({ type: T.FILTERS_DEALER_SUCCESS_LOADED, data: { dealers: data.mark } });
+      dispatch({
+        type: T.FILTERS_DEALER_SUCCESS_LOADED,
+        data: { dealer_id: { ...data.mark, active: 0 } },
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

@@ -49,49 +49,6 @@ class CarsPage extends PureComponent {
             },
           ],
         },
-        [`${FILTER_NAMES.SALON}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: 0,
-          options: [
-            {
-              id: 0,
-              name: 'Все салоны',
-            },
-            {
-              id: 1,
-              name: 'Салон 1',
-            },
-            {
-              id: 2,
-              name: 'Салон 2',
-            },
-            {
-              id: 3,
-              name: 'Салон 3',
-            },
-          ],
-        },
-        [`${FILTER_NAMES.NEW}`]: {
-          type: FILTER_TYPES.CHECKBOX,
-          active: 0,
-          options: [
-            {
-              id: 0,
-              name: 'Новые',
-            },
-            {
-              id: 1,
-              name: 'БУ',
-            },
-          ],
-        },
-        [`${FILTER_NAMES.PRICE}`]: {
-          type: FILTER_TYPES.RANGE,
-          text: 'Цена, от-до',
-          min: 10000,
-          max: 1210000,
-          values: [10000, 500000],
-        },
         [`${FILTER_NAMES.MARK}`]: {
           type: FILTER_TYPES.SELECT,
           active: -1,
@@ -160,12 +117,6 @@ class CarsPage extends PureComponent {
         //   text: 'Поколение',
         //   options: [],
         // },
-        [`${FILTER_NAMES.YEAR}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: -1,
-          text: 'Год',
-          options: [],
-        },
         // [`${FILTER_NAMES.GEAR}`]: {
         //   type: FILTER_TYPES.SELECT,
         //   active: -1,
@@ -178,12 +129,6 @@ class CarsPage extends PureComponent {
         //   text: 'Кузов',
         //   options: [],
         // },
-        [`${FILTER_NAMES.COLOR}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: -1,
-          text: 'Цвет',
-          options: [],
-        },
         // [`${FILTER_NAMES.TRANSMISSION}`]: {
         //   type: FILTER_TYPES.SELECT,
         //   active: -1,
@@ -207,19 +152,35 @@ class CarsPage extends PureComponent {
       dispatch,
     } = this.props;
 
-    dispatch(loadCarsList(query));
-    dispatch(filtersActions.getDealers());
-    dispatch(filtersActions.getBase());
+    Promise.allSettled([
+      dispatch(filtersActions.getDealers()),
+      dispatch(filtersActions.getBase()),
+    ]).then(() => {
+      dispatch(loadCarsList(query));
+    });
   }
 
   componentDidUpdate(prevProps) {
     const {
       location: { query: prevQuery },
+      filters: prevFilters,
     } = prevProps;
     const {
       location: { query },
+      filters: currentFilters,
       dispatch,
     } = this.props;
+
+    if (currentFilters.base.success && !prevFilters.base.success) {
+      dispatch(
+        filtersActions.setInitialFilters({ type: 'base', filters: currentFilters.data, query })
+      );
+    }
+    if (currentFilters.dealer.success && !prevFilters.dealer.success) {
+      dispatch(
+        filtersActions.setInitialFilters({ type: 'dealer', filters: currentFilters.data, query })
+      );
+    }
 
     if (!_isEqual(query, prevQuery)) {
       dispatch(loadCarsList(query));
@@ -277,7 +238,7 @@ class CarsPage extends PureComponent {
         }
         case FILTER_TYPES.SELECT: {
           const { active } = filters[key];
-          if (active) {
+          if (active > 0) {
             acc[key] = active;
           }
           break;
@@ -337,6 +298,13 @@ class CarsPage extends PureComponent {
 
   renderTopFilters() {
     const { filters } = this.props;
+
+    console.log(filters);
+
+    if (!filters.dealer.success) {
+      return <div className={styles.topFilters} />;
+    }
+
     const topFilters = this.getFiltersByNames(filters.data, FILTERS_SORT.HEAD);
 
     return (

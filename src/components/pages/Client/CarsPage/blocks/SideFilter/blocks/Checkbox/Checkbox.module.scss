@@ -2,10 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+
+  & + div {
+    margin-top: 30px;
+  }
 }
 
 .itemWrap {
-  width: 65px;
+  flex-basis: 50%;
   text-align: center;
 }
 
@@ -17,6 +21,7 @@
   color: #b6b6b6;
   font-size: 20px;
   font-weight: 700;
+  white-space: nowrap;
 
   &:hover {
     cursor: pointer;

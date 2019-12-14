@@ -65,10 +65,11 @@ export const FILTER_TYPES = {
 export const FILTER_NAMES = {
   //
   CITY: 'CITY',
-  SALON: 'SALON',
+  DEALER_ID: 'dealer_id',
   SORT: 'SORT',
   //
   NEW: 'new',
+  AVAILABLE: 'availability',
   PRICE: 'price',
   MARK: 'mark_id',
   MODEL: 'model_id',
@@ -92,11 +93,13 @@ export const FILTER_NAMES = {
 export const FILTERS_SORT = {
   HEAD: [
     // FILTER_NAMES.CITY,
-    // FILTER_NAMES.SALON,
+    FILTER_NAMES.DEALER_ID,
     FILTER_NAMES.SORT
   ],
   SIDE: {
-    TOP: [FILTER_NAMES.NEW],
+    TOP: [
+      FILTER_NAMES.NEW,
+    ],
     BOTTOM: [
       FILTER_NAMES.PRICE,
       FILTER_NAMES.MARK,
@@ -110,6 +113,7 @@ export const FILTERS_SORT = {
       FILTER_NAMES.ENGINE_HP,
       FILTER_NAMES.WHEEL,
       FILTER_NAMES.COLOR,
+      FILTER_NAMES.AVAILABLE,
       FILTER_NAMES.STATE,
 
       // FILTER_NAMES.GEAR,
