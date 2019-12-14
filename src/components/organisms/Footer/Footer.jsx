@@ -40,7 +40,7 @@ class Footer extends PureComponent {
                 </div>
               </div>
               <div className={styles.contactUs}>
-                <FooterButton to="mailto:some@gmail.com" className={styles.mailTo}>
+                <FooterButton to="mailto:driveclick@cetelem.ru" className={styles.mailTo}>
                   <MailIcon className={styles.mailToIcon} />
                   Напишите нам
                 </FooterButton>
