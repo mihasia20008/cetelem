@@ -75,6 +75,17 @@ class CarsDetail extends PureComponent {
     );
   };
 
+  getFormattedVin = (value) => {
+    if (!value) {
+      return '';
+    }
+
+    const visiblePath = value.substring(0, 4);
+    const hiddenPath = value.substring(4);
+
+    return `${visiblePath}${hiddenPath.replace(/./g, '*')}`;
+  };
+
   getEngineInfo = car => {
     let engine = '';
     if (car.engine_volume) {
@@ -135,7 +146,7 @@ class CarsDetail extends PureComponent {
             <h1 className={styles.title}>{carName}</h1>
             <div className={styles.contentInfo}>
               <span className={styles.stock}>{car.availability}</span>
-              <span className={styles.vin}>VIN: {car.vin}</span>
+              <span className={styles.vin}>VIN: {this.getFormattedVin(car.vin)}</span>
             </div>
           </div>
         </div>
