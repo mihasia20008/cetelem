@@ -73,6 +73,8 @@ export const FILTER_NAMES = {
   PRICE: 'price',
   MARK: 'mark_id',
   MODEL: 'model_id',
+  MODIFICATION: 'modification_id',
+  COMPLECTATION: 'complectation_id',
   // GENERATION: 'GENERATION',
   YEAR: 'year',
   BODY_TYPE: 'body_type',
@@ -83,11 +85,6 @@ export const FILTER_NAMES = {
   RUN: 'run',
   STATE: 'state',
   WHEEL: 'wheel',
-  // GEAR: 'GEAR',
-  // BODY: 'BODY',
-  // COLOR: 'COLOR',
-  // TRANSMISSION: 'TRANSMISSION',
-  // LIMIT: 'LIMIT',
 };
 
 export const FILTERS_SORT = {
@@ -104,7 +101,8 @@ export const FILTERS_SORT = {
       FILTER_NAMES.PRICE,
       FILTER_NAMES.MARK,
       FILTER_NAMES.MODEL,
-      // FILTER_NAMES.GENERATION,
+      FILTER_NAMES.MODIFICATION,
+      FILTER_NAMES.COMPLECTATION,
       FILTER_NAMES.YEAR,
       FILTER_NAMES.RUN,
       FILTER_NAMES.BODY_TYPE,
@@ -115,12 +113,6 @@ export const FILTERS_SORT = {
       FILTER_NAMES.COLOR,
       FILTER_NAMES.AVAILABLE,
       FILTER_NAMES.STATE,
-
-      // FILTER_NAMES.GEAR,
-      // FILTER_NAMES.BODY,
-      // FILTER_NAMES.COLOR,
-      // FILTER_NAMES.TRANSMISSION,
-      // FILTER_NAMES.LIMIT,
     ],
   },
 };

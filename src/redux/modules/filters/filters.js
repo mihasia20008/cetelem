@@ -15,60 +15,36 @@ const initialState = {
     error: false,
     success: false,
   },
+  car: {
+    initial: true,
+    loading: false,
+    error: false,
+    success: false,
+  },
   data: {
-    mark_id: {
+    [`${FILTER_NAMES.MARK}`]: {
       type: FILTER_TYPES.SELECT,
       active: -1,
       text: 'Марка',
-      options: [
-        {
-          id: 0,
-          name: 'Все марки',
-        },
-        {
-          id: 1,
-          name: 'Audi',
-        },
-        {
-          id: 2,
-          name: 'BMW',
-        },
-        {
-          id: 97,
-          name: 'Nissan',
-        },
-        {
-          id: 3,
-          name: 'Mercedes',
-        },
-        {
-          id: 4,
-          name: 'Kia',
-        },
-        {
-          id: 5,
-          name: 'Ford',
-        },
-      ],
+      options: [],
     },
-    model_id: {
+    [`${FILTER_NAMES.MODEL}`]: {
       type: FILTER_TYPES.SELECT,
       active: -1,
       text: 'Модель',
-      options: [
-        {
-          id: 0,
-          name: 'Все модели',
-        },
-        {
-          id: 2196,
-          name: 'Juke, I Рестайлинг',
-        },
-        {
-          id: 2003,
-          name: 'Qashqai+2, I Рестайлинг',
-        },
-      ],
+      options: [],
+    },
+    [`${FILTER_NAMES.MODIFICATION}`]: {
+      type: FILTER_TYPES.SELECT,
+      active: -1,
+      text: 'Модификация',
+      options: [],
+    },
+    [`${FILTER_NAMES.COMPLECTATION}`]: {
+      type: FILTER_TYPES.SELECT,
+      active: -1,
+      text: 'Комплектация',
+      options: [],
     },
     [`${FILTER_NAMES.AVAILABLE}`]: {
       type: FILTER_TYPES.SELECT,
@@ -203,6 +179,100 @@ export default function filtersReducer(state = initialState, action = {}) {
         data: {
           ...state.data,
           ...action.data,
+        },
+      };
+    }
+    case T.FILTERS_CAR_FETCH_START: {
+      return {
+        ...state,
+        car: {
+          ...state.car,
+          initial: false,
+          loading: true,
+        },
+      };
+    }
+    case T.FILTERS_CAR_FETCH_END: {
+      return {
+        ...state,
+        car: {
+          ...state.car,
+          loading: false,
+        },
+      };
+    }
+    case T.FILTERS_CAR_FETCH_ERROR: {
+      return {
+        ...state,
+        car: {
+          ...state.car,
+          error: action.data,
+        },
+      };
+    }
+    case T.FILTERS_CAR_SUCCESS_LOADED: {
+      const updatedData = {};
+
+      if (action.key === FILTER_NAMES.MARK) {
+        updatedData[FILTER_NAMES.MARK] = {
+          ...state.data[FILTER_NAMES.MARK],
+          options: action.data,
+        };
+
+        updatedData[FILTER_NAMES.MODEL] = {
+          ...state.data[FILTER_NAMES.MODEL],
+          options: [],
+          active: -1,
+        };
+      }
+
+      if (action.key === FILTER_NAMES.MODEL) {
+        updatedData[FILTER_NAMES.MODEL] = {
+          ...state.data[FILTER_NAMES.MODEL],
+          options: action.data,
+        };
+
+        updatedData[FILTER_NAMES.MODIFICATION] = {
+          ...state.data[FILTER_NAMES.MODIFICATION],
+          options: [],
+          active: -1,
+        };
+
+        updatedData[FILTER_NAMES.COMPLECTATION] = {
+          ...state.data[FILTER_NAMES.COMPLECTATION],
+          options: [],
+          active: -1,
+        };
+      }
+
+      if (action.key === FILTER_NAMES.MODIFICATION) {
+        updatedData[FILTER_NAMES.MODIFICATION] = {
+          ...state.data[FILTER_NAMES.MODIFICATION],
+          options: action.data,
+        };
+      }
+
+      if (action.key === FILTER_NAMES.COMPLECTATION) {
+        updatedData[FILTER_NAMES.COMPLECTATION] = {
+          ...state.data[FILTER_NAMES.COMPLECTATION],
+          options: action.data,
+        };
+      }
+
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...updatedData,
+        },
+      };
+    }
+    case T.FILTERS_CAR_ALL_LOADED: {
+      return {
+        ...state,
+        car: {
+          ...state.car,
+          success: true,
         },
       };
     }

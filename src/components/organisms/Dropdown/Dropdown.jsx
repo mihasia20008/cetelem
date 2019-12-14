@@ -51,7 +51,9 @@ function Dropdown(props) {
     setOpen(false);
   };
 
+  console.log(name, selected, options);
   const selectedText = (options.find(option => option.id === selected) || {}).name;
+  console.log(name, selectedText);
 
   const text = selectedText || initialText;
 

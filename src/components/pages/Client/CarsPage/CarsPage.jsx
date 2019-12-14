@@ -49,99 +49,6 @@ class CarsPage extends PureComponent {
             },
           ],
         },
-        [`${FILTER_NAMES.MARK}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: -1,
-          text: 'Марка',
-          options: [
-            {
-              id: 0,
-              name: 'Все марки',
-            },
-            {
-              id: 1,
-              name: 'Audi',
-            },
-            {
-              id: 2,
-              name: 'BMW',
-            },
-            {
-              id: 3,
-              name: 'Mercedes',
-            },
-            {
-              id: 4,
-              name: 'Kia',
-            },
-            {
-              id: 5,
-              name: 'Ford',
-            },
-          ],
-        },
-        [`${FILTER_NAMES.MODEL}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: -1,
-          text: 'Модель',
-          options: [
-            {
-              id: 0,
-              name: 'Все модели',
-            },
-            {
-              id: 1,
-              name: 'A8',
-            },
-            {
-              id: 2,
-              name: 'A7',
-            },
-            {
-              id: 3,
-              name: 'S class',
-            },
-            {
-              id: 4,
-              name: 'Rio',
-            },
-            {
-              id: 5,
-              name: 'Focus',
-            },
-          ],
-        },
-        // [`${FILTER_NAMES.GENERATION}`]: {
-        //   type: FILTER_TYPES.SELECT,
-        //   active: -1,
-        //   text: 'Поколение',
-        //   options: [],
-        // },
-        // [`${FILTER_NAMES.GEAR}`]: {
-        //   type: FILTER_TYPES.SELECT,
-        //   active: -1,
-        //   text: 'Привод',
-        //   options: [],
-        // },
-        // [`${FILTER_NAMES.BODY}`]: {
-        //   type: FILTER_TYPES.SELECT,
-        //   active: -1,
-        //   text: 'Кузов',
-        //   options: [],
-        // },
-        // [`${FILTER_NAMES.TRANSMISSION}`]: {
-        //   type: FILTER_TYPES.SELECT,
-        //   active: -1,
-        //   text: 'Коробка',
-        //   options: [],
-        // },
-        // [`${FILTER_NAMES.LIMIT}`]: {
-        //   type: FILTER_TYPES.RANGE,
-        //   text: 'Размер кредита',
-        //   min: 0,
-        //   max: 5000000,
-        //   value: 1400000,
-        // },
       },
     };
   }
@@ -152,9 +59,19 @@ class CarsPage extends PureComponent {
       dispatch,
     } = this.props;
 
+    const { mark_id: markId, model_id: modelId } = query;
+
     Promise.allSettled([
       dispatch(filtersActions.getDealers()),
       dispatch(filtersActions.getBase()),
+      dispatch(
+        filtersActions.getCarFilter({
+          markId,
+          loadMarks: true,
+          modelId,
+          loadModels: Boolean(modelId),
+        })
+      ),
     ]).then(() => {
       dispatch(loadCarsList(query));
     });
@@ -181,6 +98,11 @@ class CarsPage extends PureComponent {
         filtersActions.setInitialFilters({ type: 'dealer', filters: currentFilters.data, query })
       );
     }
+    if (currentFilters.car.success && !prevFilters.car.success) {
+      dispatch(
+        filtersActions.setInitialFilters({ type: 'car', filters: currentFilters.data, query })
+      );
+    }
 
     if (!_isEqual(query, prevQuery)) {
       dispatch(loadCarsList(query));
@@ -194,8 +116,23 @@ class CarsPage extends PureComponent {
   };
 
   handleFilterChange = (name, value) => {
-    const { dispatch } = this.props;
+    const {
+      filters: { data: filters },
+      dispatch,
+    } = this.props;
     dispatch(filtersActions.changeFilter(name, value));
+
+    if (name === FILTER_NAMES.MARK) {
+      dispatch(filtersActions.getCarFilter({ markId: value, loadMarks: false, loadModels: true }));
+    }
+
+    if (name === FILTER_NAMES.MODEL) {
+      const { active, options } = filters[FILTER_NAMES.MARK];
+      const markId = options[active].id;
+      dispatch(
+        filtersActions.getCarFilter({ markId, modelId: value, loadMarks: false, loadModels: false })
+      );
+    }
 
     if (FILTERS_SORT.HEAD.includes(name)) {
       this.handleApplySingleFilter(name, value);
@@ -298,8 +235,6 @@ class CarsPage extends PureComponent {
 
   renderTopFilters() {
     const { filters } = this.props;
-
-    console.log(filters);
 
     if (!filters.dealer.success) {
       return <div className={styles.topFilters} />;

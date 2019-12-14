@@ -112,7 +112,9 @@ class SideFilter extends PureComponent {
 
     const isSelectNew = filters[FILTER_NAMES.NEW].active === 1;
     const bottomFilters = isSelectNew
-      ? sort.BOTTOM.filter(key => ![FILTER_NAMES.STATE, FILTER_NAMES.RUN].includes(key))
+      ? sort.BOTTOM.filter(
+          key => ![FILTER_NAMES.STATE, FILTER_NAMES.RUN, FILTER_NAMES.MODIFICATION].includes(key)
+        )
       : sort.BOTTOM;
 
     return (
