@@ -1,9 +1,8 @@
-import allSettled from 'promise.allsettled';
-
 import * as T from '../types';
 
 import { filtersRequests } from '../../../../api';
 import { FILTER_NAMES } from '../../../../constants';
+import allSettled from '../../../../utilities/allSettled';
 
 const TYPES = {
   [`${FILTER_NAMES.MARK}`]: 'mark',

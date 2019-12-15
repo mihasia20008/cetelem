@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import qs from 'qs';
 import { connect } from 'react-redux';
-import allSettled from 'promise.allsettled';
 
 import _isEqual from 'lodash/isEqual';
 import _omit from 'lodash/omit';
@@ -18,6 +17,7 @@ import { loadCarsList } from '../../../../redux/modules/cars/actions';
 import * as filtersActions from '../../../../redux/modules/filters/actions';
 
 import { FILTER_TYPES, FILTER_NAMES, FILTERS_SORT } from '../../../../constants';
+import allSettled from '../../../../utilities/allSettled';
 
 import styles from './CarsPage.module.scss';
 
