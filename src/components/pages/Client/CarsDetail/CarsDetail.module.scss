@@ -11,9 +11,13 @@
   background-color: #fbf7f3;
   @media (min-width: 768px) {
     margin: 0 0 60px;
-    padding: 20px 60px 40px;
+    padding: 20px 30px 40px;
     border-top-right-radius: 28px;
     border-top-left-radius: 28px;
+  }
+  @media (min-width: 1200px) {
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 

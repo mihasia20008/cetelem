@@ -8,7 +8,9 @@ import { withLayoutContext } from '../../../../../../utilities/layoutContext';
 
 import styles from './Gallery.module.scss';
 
-const NEXT_TRIGGER = 2;
+const WIDE_DESKTOP_IMAGE_WIDTH = 500;
+const DESKTOP_IMAGE_WIDTH = 400;
+const TABLET_IMAGE_WIDTH = 300;
 
 class Gallery extends PureComponent {
   static propsTypes = {
@@ -31,8 +33,23 @@ class Gallery extends PureComponent {
       wrapperWidth: '100%',
       currentImage: 0,
       fullScreenImage: 0,
+      nextTrigger: 2,
+      imageWidth: (() => {
+        switch (true) {
+          case props.viewportWidth > 1299: {
+            return WIDE_DESKTOP_IMAGE_WIDTH;
+          }
+          case props.viewportWidth > 999 && props.viewportWidth < 1300: {
+            return DESKTOP_IMAGE_WIDTH;
+          }
+          default: {
+            return TABLET_IMAGE_WIDTH;
+          }
+        }
+      })(),
     };
 
+    this.carouselRef = React.createRef();
     this.galleryRef = React.createRef();
     this.debouncedResizeHandler = _debounce(this.handleResize, 300);
   }
@@ -47,13 +64,13 @@ class Gallery extends PureComponent {
   }
 
   handleResize = () => {
+    const { viewportWidth, layout } = this.props;
     const gallery = this.galleryRef.current;
-    if (window === undefined || !gallery) {
+    if (window === undefined || !gallery || layout.isMobile) {
       return;
     }
 
-    const { wrapperWidth: currentWrapperWidth } = this.state;
-    const { viewportWidth } = this.props;
+    const { wrapperWidth: currentWrapperWidth, imageWidth } = this.state;
 
     const galleryRect = gallery.getBoundingClientRect();
     const wrapperWidth = viewportWidth - galleryRect.left;
@@ -61,78 +78,129 @@ class Gallery extends PureComponent {
     if (wrapperWidth !== currentWrapperWidth) {
       this.setState({ wrapperWidth });
     }
+
+    if (viewportWidth > 1299 && imageWidth !== WIDE_DESKTOP_IMAGE_WIDTH) {
+      this.setState({ imageWidth: WIDE_DESKTOP_IMAGE_WIDTH });
+    }
+    if (viewportWidth > 999 && viewportWidth < 1300 && imageWidth !== DESKTOP_IMAGE_WIDTH) {
+      this.setState({ imageWidth: DESKTOP_IMAGE_WIDTH });
+    }
+    if (!layout.isMobile && viewportWidth < 1000 && imageWidth !== TABLET_IMAGE_WIDTH) {
+      this.setState({ imageWidth: TABLET_IMAGE_WIDTH });
+    }
   };
 
-  handleOpenFullScreen = index =>
+  handleOpenFullScreen = (event, index) => {
+    event.preventDefault();
+
+    const { layout } = this.props;
+    let currentIndex = index;
+
+    if (layout.isMobile) {
+     const carouselRef = this.carouselRef.current;
+     currentIndex = carouselRef.state.currentIndex;
+    }
+
     this.setState({
       fullScreenOpen: true,
-      fullScreenImage: index,
+      fullScreenImage: currentIndex,
     });
+  };
 
   handleCloseFullScreen = () => this.setState({ fullScreenOpen: false });
 
-  handleImageClick = index => () => {
-    const { currentImage } = this.state;
+  handleImageClick = index => (event) => {
+    const { currentImage, nextTrigger } = this.state;
     const { images } = this.props;
 
-    if (currentImage + NEXT_TRIGGER === index) {
+    if (currentImage + nextTrigger === index) {
       this.setState({ currentImage: currentImage + 1 });
       return;
     }
 
-    if (!index && currentImage + NEXT_TRIGGER === images.length) {
+    if (!index && currentImage + nextTrigger === images.length) {
       this.setState({ currentImage: index });
       return;
     }
 
-    this.handleOpenFullScreen(index);
+    this.handleOpenFullScreen(event, index);
   };
 
-  render() {
+  renderMobileCarousel() {
     const { images } = this.props;
-    const { wrapperWidth, currentImage, fullScreenOpen, fullScreenImage } = this.state;
+
+    return (
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+      <div className={styles.mobileWrapper} onClick={this.handleOpenFullScreen}>
+        <Carousel
+          ref={this.carouselRef}
+          currentIndex={0}
+          styles={{
+            footer: () => ({
+              display: 'none',
+            }),
+          }}
+          views={images}
+          frameProps={{ autoSize: 'height' }}
+        />
+      </div>
+    );
+  }
+
+  renderDesktopCarousel() {
+    const { images } = this.props;
+    const { wrapperWidth, currentImage, nextTrigger, imageWidth } = this.state;
     const imageCount = images.length;
-    const widthFactor = imageCount > NEXT_TRIGGER ? imageCount + 1 : imageCount;
+    const widthFactor = imageCount > nextTrigger ? imageCount + 1 : imageCount;
+
+    return (
+      <div
+        className={styles.wrapper}
+        style={{
+          width: wrapperWidth,
+        }}
+      >
+        <div
+          className={styles.track}
+          style={{
+            width: widthFactor * (imageWidth + 20) - 20,
+            transform: `translate3d(${-(imageWidth + 20) * currentImage}px, 0px, 0px)`,
+          }}
+        >
+          {images.map((image, index) => {
+            return (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+              <div key={image.index} className={styles.item} onClick={this.handleImageClick(index)}>
+                <img className={styles.image} src={image.src} alt="" />
+              </div>
+            );
+          })}
+          {widthFactor > nextTrigger && (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+            <div key={images.length} className={styles.item} onClick={this.handleImageClick(0)}>
+              <img className={styles.image} src={images[0].src} alt="" />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    const { images, layout } = this.props;
+    const { fullScreenOpen, fullScreenImage } = this.state;
 
     return (
       <div className={styles.Gallery} ref={this.galleryRef}>
-        <div
-          className={styles.wrapper}
-          style={{
-            width: wrapperWidth,
-          }}
-        >
-          <div
-            className={styles.track}
-            style={{
-              width: widthFactor * 520 - 20,
-              transform: `translate3d(${-520 * currentImage}px, 0px, 0px)`,
-            }}
-          >
-            {images.map((image, index) => {
-              return (
-                // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                <div key={image.id} className={styles.item} onClick={this.handleImageClick(index)}>
-                  <img className={styles.image} src={image.src} alt="" />
-                </div>
-              );
-            })}
-            {widthFactor > NEXT_TRIGGER && (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-              <div key={images.length} className={styles.item} onClick={this.handleImageClick(0)}>
-                <img className={styles.image} src={images[0].src} alt="" />
-              </div>
-            )}
-          </div>
-        </div>
+        {layout.isMobile ? this.renderMobileCarousel() : this.renderDesktopCarousel()}
         <ModalGateway>
           {fullScreenOpen ? (
             <Modal
               closeOnBackdropClick={false}
               onClose={this.handleCloseFullScreen}
               styles={{
-                blanket: StyleObj => ({ ...StyleObj, zIndex: 5 }),
-                positioner: StyleObj => ({ ...StyleObj, zIndex: 5 }),
+                blanket: StyleObj => ({ ...StyleObj, zIndex: 5, touchAction: 'none' }),
+                positioner: StyleObj => ({ ...StyleObj, zIndex: 5, touchAction: 'none' }),
               }}
             >
               <Carousel
