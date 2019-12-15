@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -33,17 +33,40 @@ function ReservationsPage(props) {
   const styles = useStyles();
   const { reservations: { data, ...statuses }, dispatch } = props;
 
+  const [searchText, onChangeSearchText] = useState('');
+
   useEffect(() => {
     dispatch(getReservations());
   }, [dispatch]);
+
+  const handleSearch = event => {
+    event.persist();
+    onChangeSearchText(event.target.value);
+  };
 
   const handleCloseError = () => {
     dispatch(clearError());
   };
 
+  const filteredList = searchText
+    ? data.filter(item =>
+      Object.values(item).some(value => {
+        if (!value) {
+          return false;
+        }
+        return (
+          value
+            .toString()
+            .toLowerCase()
+            .search(searchText.toLowerCase()) !== -1
+        );
+      })
+    )
+    : data;
+
   return (
     <div className={styles.root}>
-      <ReservationsToolbar />
+      <ReservationsToolbar searchText={searchText} onSearch={handleSearch} />
       <div className={styles.content}>
         <Card className={styles.wrapper}>
           <PerfectScrollbar>
@@ -55,8 +78,12 @@ function ReservationsPage(props) {
                     text: 'ID',
                   },
                   {
+                    id: 'client_id',
+                    text: 'ID клиента',
+                  },
+                  {
                     id: 'name',
-                    text: 'Клиент',
+                    text: 'ФИО',
                   },
                   {
                     id: 'phone',
@@ -70,12 +97,8 @@ function ReservationsPage(props) {
                     id: 'created_at',
                     text: 'Дата создания',
                   },
-                  {
-                    id: 'updated_at',
-                    text: 'Дата изменения',
-                  },
                 ]}
-                list={data}
+                list={filteredList}
                 statuses={statuses}
               />
             </div>

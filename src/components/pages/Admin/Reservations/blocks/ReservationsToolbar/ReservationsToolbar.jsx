@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ReservationsToolbar = props => {
-  const { className, ...rest } = props;
+  const { className, searchText, onSearch, ...rest } = props;
 
   const styles = useStyles();
 
@@ -41,6 +41,8 @@ const ReservationsToolbar = props => {
         <SearchInput
           className={styles.searchInput}
           placeholder="Найти"
+          value={searchText}
+          onChange={onSearch}
         />
       </div>
     </div>

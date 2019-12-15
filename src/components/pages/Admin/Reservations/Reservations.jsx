@@ -34,11 +34,17 @@ function ReservationsPage(props) {
   const styles = useStyles();
   const { reservations: { data, ...statuses }, dispatch } = props;
 
+  const [searchText, onChangeSearchText] = useState('');
   const [deletingReservationId, setReservationDelete] = useState(null);
 
   useEffect(() => {
     dispatch(reservationsActions.getReservations());
   }, [dispatch]);
+
+  const handleSearch = event => {
+    event.persist();
+    onChangeSearchText(event.target.value);
+  };
 
   const handleCloseError = () => {
     dispatch(reservationsActions.clearError());
@@ -53,9 +59,25 @@ function ReservationsPage(props) {
     setReservationDelete(null);
   };
 
+  const filteredList = searchText
+    ? data.filter(item =>
+      Object.values(item).some(value => {
+        if (!value) {
+          return false;
+        }
+        return (
+          value
+            .toString()
+            .toLowerCase()
+            .search(searchText.toLowerCase()) !== -1
+        );
+      })
+    )
+    : data;
+
   return (
     <div className={styles.root}>
-      <ReservationsToolbar />
+      <ReservationsToolbar searchText={searchText} onSearch={handleSearch} />
       <div className={styles.content}>
         <Card className={styles.wrapper}>
           <PerfectScrollbar>
@@ -67,8 +89,12 @@ function ReservationsPage(props) {
                     text: 'ID',
                   },
                   {
+                    id: 'client_id',
+                    text: 'ID клиента',
+                  },
+                  {
                     id: 'name',
-                    text: 'Клиент',
+                    text: 'ФИО',
                   },
                   {
                     id: 'phone',
@@ -87,15 +113,11 @@ function ReservationsPage(props) {
                     text: 'Дата создания',
                   },
                   {
-                    id: 'updated_at',
-                    text: 'Дата изменения',
-                  },
-                  {
                     id: ACTIONS_COLUMN_ID,
                     text: '',
                   },
                 ]}
-                list={data}
+                list={filteredList}
                 statuses={statuses}
                 // onDelete={handleDeleteReservation}
               />
