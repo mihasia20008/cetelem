@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 
+import _get from 'lodash/get';
 import _debounce from 'lodash/debounce';
 
 import { withLayoutContext } from '../../../../../../utilities/layoutContext';
@@ -98,6 +99,12 @@ class Gallery extends PureComponent {
 
     if (layout.isMobile) {
      const carouselRef = this.carouselRef.current;
+
+     const navNode = _get(carouselRef, 'container.childNodes[0].childNodes[1]');
+     if (navNode && navNode.contains(event.target)) {
+       return;
+     }
+
      currentIndex = carouselRef.state.currentIndex;
     }
 
