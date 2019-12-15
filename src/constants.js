@@ -51,6 +51,7 @@ export const DEALER_ROUTES_LIST = [
 
 export const CLIENT_ID_KEY = 'cetelem/client_id';
 export const CLIENT_NAME_KEY = 'cetelem/client_name';
+export const CLIENT_PARAMS_KEY = 'cetelem/client_params';
 export const AUTH_TOKEN_KEY = 'cetelem/authorized';
 export const USER_ID_KEY = 'cetelem/user/id';
 export const DEALER_ID_KEY = 'cetelem/dealer/id';

@@ -6,8 +6,11 @@ import cls from 'classnames';
 import Container from '../../base/Container';
 import MenuIcon from '../../icons/MenuIcon';
 import LocationSelector from '../LocationSelector';
+import Modal from "../Modal";
 
 import { withLayoutContext } from '../../../utilities/layoutContext';
+
+import PersonalInfo from './blocks/PersonalInfo';
 
 import styles from './Header.module.scss';
 
@@ -16,6 +19,18 @@ class Header extends PureComponent {
     filled: PropTypes.bool.isRequired,
     fixed: PropTypes.bool.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      openPersonalModal: false,
+    };
+  }
+
+  handleOpenPersonalModal = () => this.setState({ openPersonalModal: true });
+
+  handleClosePersonalModal = () => this.setState({ openPersonalModal: false });
 
   renderNavigation() {
     const { layout } = this.props;
@@ -52,9 +67,9 @@ class Header extends PureComponent {
         <a className={styles.phone} href="tel: 88005005502">
           8 (800) 500-55-02
         </a>
-        <Link className={styles.personal} to="/personal">
+        <button type="button" className={styles.personal} onClick={this.handleOpenPersonalModal}>
           Личный кабинет
-        </Link>
+        </button>
       </>
     );
   }
@@ -75,6 +90,7 @@ class Header extends PureComponent {
 
   render() {
     const { filled, fixed } = this.props;
+    const { openPersonalModal } = this.state;
 
     return (
       <div className={cls(styles.header, filled && styles.filledHeader, fixed && styles.fixedHeader)}>
@@ -89,6 +105,9 @@ class Header extends PureComponent {
             {this.renderInfo()}
           </div>
         </Container>
+        <Modal id="personal-modal" open={openPersonalModal} onClose={this.handleClosePersonalModal}>
+          <PersonalInfo />
+        </Modal>
       </div>
     );
   }

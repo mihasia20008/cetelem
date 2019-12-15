@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { stringify } from 'qs';
 
-import { RoutesPaths, CLIENT_ID_KEY, CLIENT_NAME_KEY } from '../constants';
+import { RoutesPaths, CLIENT_ID_KEY, CLIENT_NAME_KEY, CLIENT_PARAMS_KEY } from '../constants';
 
 function RenderComponent({ matchProps, component: Component }) {
   const {
@@ -12,13 +12,22 @@ function RenderComponent({ matchProps, component: Component }) {
 
   useEffect(() => {
     const keyFromStorage = localStorage.getItem(CLIENT_ID_KEY);
-    const nameFromStorage = localStorage.getItem(CLIENT_NAME_KEY);
 
     if (query.client_id && keyFromStorage !== query.client_id) {
       localStorage.setItem(CLIENT_ID_KEY, query.client_id);
-    }
-    if (query.name && nameFromStorage !== query.name) {
-      localStorage.setItem(CLIENT_NAME_KEY, query.name);
+
+      if (query.name) {
+        localStorage.setItem(CLIENT_NAME_KEY, query.name);
+      }
+      const params = {
+        type: query.type || 1,
+        brand: query.brand || '',
+        model: query.model || '',
+        price: query.price,
+        rate: query.rate,
+        downpayment: query.downpayment,
+      };
+      localStorage.setItem(CLIENT_PARAMS_KEY, JSON.stringify(params));
     }
 
     if (keyFromStorage && !query.client_id) {

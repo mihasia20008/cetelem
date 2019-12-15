@@ -54,10 +54,13 @@ export async function carListRequest(params, filters) {
           break;
         }
         case FILTER_TYPES.RANGE: {
-          // eslint-disable-next-line prefer-destructuring
-          acc[`${key}[min]`] = filtersQuery[key][0];
-          // eslint-disable-next-line prefer-destructuring
-          acc[`${key}[max]`] = filtersQuery[key][1];
+          if (Array.isArray(filtersQuery[key])) {
+            const [min, max] = filtersQuery[key];
+            acc[`${key}[min]`] = min;
+            acc[`${key}[max]`] = max;
+          } else {
+            acc[`${key}[min]`] = filtersQuery[key];
+          }
           break;
         }
         default: {

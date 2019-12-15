@@ -1,0 +1,33 @@
+.PersonalInfo {
+  position: relative;
+  background-color: #22b25c;
+  border-radius: 12px;
+
+  @media (min-width: 768px) {
+    width: 630px;
+    padding: 55px 65px 90px;
+  }
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text,
+.info {
+  font-size: 24px;
+  line-height: 1.2;
+  text-align: center;
+  color: #ffffff;
+}
+
+.text {
+  margin: 40px 0 0;
+  font-weight: 500;
+}
+
+.info {
+  margin: 20px 0 0;
+}
