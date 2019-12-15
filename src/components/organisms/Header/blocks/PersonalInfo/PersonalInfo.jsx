@@ -12,7 +12,7 @@ import styles from './PersonalInfo.module.scss';
 
 function PersonalInfo() {
   const clientName = localStorage.getItem(CLIENT_NAME_KEY) || 'Пользователь';
-  const clientParams = JSON.parse(localStorage.getItem(CLIENT_PARAMS_KEY) || {});
+  const clientParams = JSON.parse(localStorage.getItem(CLIENT_PARAMS_KEY) || "{}");
 
   // Вам предварительно одобрен кредит на след условиях: на новый/бу + марка + модель + сумма + взнос + ставка
 
