@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import qs from 'qs';
 import { connect } from 'react-redux';
+import allSettled from 'promise.allsettled';
 
 import _isEqual from 'lodash/isEqual';
 import _omit from 'lodash/omit';
@@ -62,7 +63,7 @@ class CarsPage extends PureComponent {
 
     const { mark_id: markId, model_id: modelId, brand, model } = query;
 
-    Promise.allSettled([
+    allSettled([
       dispatch(filtersActions.getDealers()),
       dispatch(filtersActions.getBase()),
       dispatch(

@@ -1,3 +1,5 @@
+import allSettled from 'promise.allsettled';
+
 import * as T from '../types';
 
 import { filtersRequests } from '../../../../api';
@@ -119,7 +121,7 @@ export default function getCarFilters({ markId, modelId, loadMarks, loadModels, 
         requestsTypes.push(FILTER_NAMES.COMPLECTATION);
       }
 
-      const carResponses = await Promise.allSettled(carsRequests);
+      const carResponses = await allSettled(carsRequests);
 
       carResponses.forEach((response, index) => {
         if (response.value.error) {
