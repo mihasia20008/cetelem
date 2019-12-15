@@ -57,7 +57,7 @@ class Header extends PureComponent {
   renderInfo() {
     const { layout } = this.props;
 
-    if (!layout.isDesktop) {
+    if (layout.isMobile) {
       return null;
     }
 
@@ -77,7 +77,7 @@ class Header extends PureComponent {
   renderMenuToggler() {
     const { layout } = this.props;
 
-    if (!layout.isMobile && !layout.isTablet) {
+    if (!layout.isMobile) {
       return null;
     }
 
