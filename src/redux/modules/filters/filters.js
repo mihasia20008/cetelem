@@ -216,6 +216,7 @@ export default function filtersReducer(state = initialState, action = {}) {
       if (action.key === FILTER_NAMES.MARK) {
         updatedData[FILTER_NAMES.MARK] = {
           ...state.data[FILTER_NAMES.MARK],
+          active: action.active || -1,
           options: action.data,
         };
 
@@ -229,6 +230,7 @@ export default function filtersReducer(state = initialState, action = {}) {
       if (action.key === FILTER_NAMES.MODEL) {
         updatedData[FILTER_NAMES.MODEL] = {
           ...state.data[FILTER_NAMES.MODEL],
+          active: action.active || -1,
           options: action.data,
         };
 

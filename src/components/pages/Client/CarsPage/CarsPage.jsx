@@ -60,7 +60,7 @@ class CarsPage extends PureComponent {
       dispatch,
     } = this.props;
 
-    const { mark_id: markId, model_id: modelId } = query;
+    const { mark_id: markId, model_id: modelId, brand, model } = query;
 
     Promise.allSettled([
       dispatch(filtersActions.getDealers()),
@@ -71,6 +71,8 @@ class CarsPage extends PureComponent {
           loadMarks: true,
           modelId,
           loadModels: Boolean(modelId),
+          brand,
+          model,
         })
       ),
     ]).then(() => {
@@ -82,10 +84,12 @@ class CarsPage extends PureComponent {
     const {
       location: { query: prevQuery },
       filters: prevFilters,
+      success: prevCarsLoadSuccess,
     } = prevProps;
     const {
       location: { query },
       filters: currentFilters,
+      success: nowCarsLoadSuccess,
       dispatch,
     } = this.props;
 
@@ -103,6 +107,19 @@ class CarsPage extends PureComponent {
       dispatch(
         filtersActions.setInitialFilters({ type: 'car', filters: currentFilters.data, query })
       );
+    }
+
+    if (
+      nowCarsLoadSuccess &&
+      currentFilters.car.success &&
+      currentFilters.dealer.success &&
+      currentFilters.base.success &&
+      (!prevCarsLoadSuccess ||
+        !prevFilters.car.success ||
+        !prevFilters.dealer.success ||
+        !prevFilters.base.success)
+    ) {
+      this.handleFilterApply();
     }
 
     if (!_isEqual(query, prevQuery)) {
@@ -231,6 +248,7 @@ class CarsPage extends PureComponent {
     const query = { ...cleanQuery, ...params };
 
     history.push(`${location.pathname}?${qs.stringify(query)}`);
+    console.log(this.getActualTitle());
     this.setState({
       title: this.getActualTitle(),
     });
