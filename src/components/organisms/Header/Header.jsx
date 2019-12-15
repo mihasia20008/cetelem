@@ -68,7 +68,7 @@ class Header extends PureComponent {
           8 (800) 500-55-02
         </a>
         <button type="button" className={styles.personal} onClick={this.handleOpenPersonalModal}>
-          Личный кабинет
+          Ваш кредит
         </button>
       </>
     );
