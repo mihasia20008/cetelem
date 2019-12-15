@@ -60,8 +60,7 @@
       "not dead",
       "not op_mini all",
       "not IE 11",
-      "not safari 5.1",
-      "safari 11"
+      "not safari 5.1"
     ],
     "development": [
       "last 1 chrome version",
