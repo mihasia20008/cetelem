@@ -2,6 +2,9 @@
   position: relative;
   background-color: #22b25c;
   border-radius: 12px;
+  padding: 20px 15px 15px;
+  height: 100%;
+  overflow-y: scroll;
 
   @media (min-width: 768px) {
     width: 630px;
@@ -46,11 +49,16 @@
 
 .title {
   margin: 0;
-  font-size: 24px;
-  line-height: 1.5;
+  font-size: 18px;
+  line-height: 1.2;
   font-weight: 500;
   text-transform: uppercase;
   color: #fff;
+
+  @media (min-width: 768px) {
+    font-size: 24px;
+    line-height: 1.5;
+  }
 }
 
 .subtitle {
@@ -73,13 +81,21 @@
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid #239b53;
+
+  @media (min-width: 480px) and (max-width: 767px) {
+    display: flex;
+    align-items: flex-start;
+  }
 }
 
 .imageWrap {
-  width: 260px;
+  width: 100%;
   border-radius: 12px;
   line-height: 0;
   overflow: hidden;
+  @media (min-width: 480px) {
+    max-width: 260px;
+  }
 }
 
 .image {
@@ -106,15 +122,13 @@
   color: #fff;
 }
 
-.presentationIcon {
-  position: absolute;
-  top: -25px;
-  right: -15px;
-}
-
 .formContent {
   flex-grow: 1;
-  padding-left: 30px;
+  margin-top: 20px;
+  @media (min-width: 768px) {
+    margin-top: 0;
+    padding-left: 30px;
+  }
 }
 
 .bookInfo {
@@ -191,8 +205,12 @@
 }
 
 .acceptRules {
-  margin: 40px 0 0;
+  margin: 20px 0 0;
   font-size: 12px;
   line-height: 1.2;
   color: #ffffff;
+
+  @media (min-width: 768px) {
+    margin: 40px 0 0;
+  }
 }

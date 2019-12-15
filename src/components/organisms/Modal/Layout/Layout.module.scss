@@ -9,15 +9,18 @@
 
 .content {
   position: absolute;
-  top: 100px;
   z-index: 11;
+  top: 15px;
   left: 15px;
   right: 15px;
-  overflow-x: hidden;
+  bottom: 15px;
+  overflow: hidden;
 
   @media (min-width: 768px) {
-    right: initial;
+    top: 100px;
     left: 50%;
+    right: initial;
+    bottom: initial;
     transform: translateX(-50%);
   }
 

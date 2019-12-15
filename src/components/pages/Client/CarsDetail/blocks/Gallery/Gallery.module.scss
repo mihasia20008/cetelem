@@ -1,7 +1,12 @@
 .Gallery {
   position: relative;
-  height: 330px;
-  margin-bottom: 40px;
+  margin: 0 -15px 20px;
+  height: 220px;
+
+  @media (min-width: 768px) {
+    margin: 0 0 40px;
+    height: 330px;
+  }
 }
 
 .wrapper {

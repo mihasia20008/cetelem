@@ -17,6 +17,7 @@ import { bookCar, resetToInitial } from '../../../../redux/modules/book/actions'
 import { getDealerInfo } from '../../../../redux/modules/dealer/info/actions';
 
 import formatNumber from '../../../../utilities/formatNumber';
+import { withLayoutContext } from '../../../../utilities/layoutContext';
 
 import BookForm from './blocks/BookForm';
 import DealerMap from './blocks/DealerMap';
@@ -128,8 +129,25 @@ class CarsDetail extends PureComponent {
     return <span dangerouslySetInnerHTML={{ __html: address }} />;
   };
 
+  renderDealerInfo = () => {
+    const { dealer } = this.props;
+    return (
+      <div className={styles.companyHead}>
+        <div className={styles.pinIconWrap}>
+          <PinIcon className={styles.pinIcon} />
+        </div>
+        <div className={styles.dealerContent}>
+          <h3 className={styles.dealerName}>{dealer.trade_name}</h3>
+          <p className={styles.dealerAddress}>
+            {this.renderDealerAddress(dealer.address)}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   renderHead() {
-    const { car, dealer } = this.props;
+    const { car, viewportWidth } = this.props;
     const carName = `${car.mark} ${car.model}`;
     return (
       <div className={styles.head}>
@@ -145,20 +163,7 @@ class CarsDetail extends PureComponent {
             </div>
           </div>
         </div>
-        <div className={styles.companyHead}>
-          <div className={styles.pinIconWrap}>
-            <PinIcon className={styles.pinIcon} />
-          </div>
-          <div className={styles.dealerContent}>
-            <h3 className={styles.dealerName}>{dealer.trade_name}</h3>
-            <p className={styles.dealerAddress}>
-              {this.renderDealerAddress(dealer.address)}
-              {/* Новорижское шоссе, 9-й, Москва, */}
-              {/* <br /> */}
-              {/* Московская обл., 308010 */}
-            </p>
-          </div>
-        </div>
+        {viewportWidth > 1099 && this.renderDealerInfo()}
       </div>
     );
   }
@@ -326,14 +331,14 @@ class CarsDetail extends PureComponent {
         {/*    <div className={styles.paymentValue}>1 500 000 ₽</div> */}
         {/*  </div> */}
         {/* </div> */}
-        <Button text="Бронировать" onClick={this.handleOpenBookForm} />
+        <Button className={styles.bookButton} text="Бронировать" onClick={this.handleOpenBookForm} />
       </div>
     );
   }
 
   render() {
     const { openBookModal } = this.state;
-    const { car, carStatuses, dealer, book } = this.props;
+    const { car, carStatuses, dealer, book, viewportWidth, layout } = this.props;
 
     if (carStatuses.error) {
       return <div>Error {JSON.stringify(carStatuses.error)}</div>;
@@ -356,13 +361,14 @@ class CarsDetail extends PureComponent {
               {this.renderHead()}
               {images.length && <Gallery images={images} />}
               {this.renderShortInfo()}
+              {viewportWidth < 1100 && this.renderDealerInfo()}
             </div>
             {car.description && <p className={styles.description}>{car.description}</p>}
             <div className={styles.info}>
               <h2 className={styles.infoTitle}>Дополнительные характеристики</h2>
               {this.renderMainFeatures()}
               {this.renderAdditionalFeatures()}
-              {this.renderPriceSidebar()}
+              {!layout.isMobile && this.renderPriceSidebar()}
             </div>
             <DealerMap
               name={dealer.trade_name}
@@ -371,6 +377,7 @@ class CarsDetail extends PureComponent {
               location={_get(dealer, 'address.location', { x: 55.751574, y: 37.573856 })}
               phone={_get(dealer, 'contact_infos.0.value', '')}
             />
+            {layout.isMobile && this.renderPriceSidebar()}
           </div>
         </Container>
         <Modal id="book-modal" open={openBookModal} onClose={this.handleCloseBookForm}>
@@ -398,4 +405,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(CarsDetail);
+export default connect(mapStateToProps)(withLayoutContext(CarsDetail));

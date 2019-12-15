@@ -1,14 +1,20 @@
 .container {
-  padding-top: 60px;
   padding-bottom: 60px;
+  @media (min-width: 768px) {
+    padding-top: 60px;
+  }
 }
 
 .top {
-  margin-bottom: 60px;
-  padding: 20px 60px 40px;
+  margin: 0 -15px 20px;
+  padding: 30px 15px 20px;
   background-color: #fbf7f3;
-  border-top-right-radius: 28px;
-  border-top-left-radius: 28px;
+  @media (min-width: 768px) {
+    margin: 0 0 60px;
+    padding: 20px 60px 40px;
+    border-top-right-radius: 28px;
+    border-top-left-radius: 28px;
+  }
 }
 
 .head {
@@ -25,6 +31,7 @@
 
 .imageWrap {
   position: relative;
+  display: none;
   margin-right: 20px;
   width: 50px;
   height: 50px;
@@ -32,6 +39,10 @@
   border-radius: 50%;
   border: 1px solid #e2e2e2;
   overflow: hidden;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
 }
 
 .image {
@@ -78,6 +89,11 @@
   width: 360px;
   border: 1px solid rgba(#b5a779, 20%);
   border-radius: 8px;
+
+  @media (max-width: 1099px) {
+    margin-top: 20px;
+    width: 100%;
+  }
 }
 
 .pinIconWrap {
@@ -106,60 +122,84 @@
   color: #7e7e7e;
 }
 
-.slider {
-  margin-bottom: 40px;
-  height: 330px;
-  background-color: blue;
-}
-
 .shortInfo {
-  display: flex;
-  align-items: flex-start;
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: flex-start;
+  }
 }
 
 .shortItem {
-  position: relative;
-  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 
-  &:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 100%;
-    width: 1px;
-    background-color: #b5a779;
+  & > * {
+    flex-basis: 50%;
+    font-size: 14px;
   }
 
-  &:first-child {
-    padding-left: 0;
-  }
-  &:last-child {
-    padding-right: 0;
+  @media (min-width: 768px) {
+    position: relative;
+    display: block;
+    margin-bottom: 0;
+    padding: 0 20px;
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 100%;
+      width: 1px;
+      background-color: #b5a779;
+    }
+
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
   }
 }
 
 .shortName {
   display: block;
-  margin-bottom: 10px;
   font-size: 14px;
   color: #7e7e7e;
+
+  @media (min-width: 768px) {
+    margin-bottom: 10px;
+  }
 }
 
 .description {
-  margin: 0 60px 60px;
+  margin-bottom: 30px;
+
+  @media (min-width: 768px) {
+    margin: 0 60px 60px;
+  }
 }
 
 .info {
   position: relative;
   z-index: 1;
-  margin: 0 60px 60px;
+  margin-bottom: 30px;
+
+  @media (min-width: 768px) {
+    margin: 0 60px 60px;
+  }
 }
 
 .infoTitle {
-  margin: 0 0 30px;
-  font-size: 22px;
+  margin: 0 0 20px;
+  font-size: 16px;
   font-weight: 500;
+  @media (min-width: 768px) {
+    margin: 0 0 30px;
+    font-size: 22px;
+  }
 }
 
 .mainFeatures {
@@ -168,9 +208,27 @@
 }
 
 .featureItem {
-  flex-basis: 300px;
+  flex-basis: 100%;
   flex-shrink: 0;
-  margin-bottom: 30px;
+
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  & > * {
+    flex-basis: 50%;
+    font-size: 14px;
+  }
+
+  @media (min-width: 768px) {
+    display: block;
+    margin-bottom: 30px;
+  }
+  @media (min-width: 1100px) {
+    flex-basis: 400px;
+  }
+  @media (min-width: 1440px) {
+    flex-basis: 300px;
+  }
 }
 
 .featureName {
@@ -181,8 +239,7 @@
 
 .additionalFeatures {
   position: relative;
-  display: flex;
-  padding-top: 30px;
+  padding-top: 23px;
 
   &::before {
     content: '';
@@ -190,14 +247,23 @@
     top: 0;
     left: 0;
     height: 1px;
-    width: 770px;
+    width: 100%;
+    max-width: 770px;
     background-color: #efece9;
+  }
+
+  @media (min-width: 768px) {
+    display: flex;
+    padding-top: 30px;
   }
 }
 
 .additionalFeaturesColumn {
-  flex-basis: 400px;
+  flex-basis: 50%;
   flex-shrink: 0;
+  @media (min-width: 1100px) {
+    flex-basis: 400px;
+  }
 }
 
 .additionalFeatureItem {
@@ -205,15 +271,26 @@
 }
 
 .priceSidebar {
-  position: absolute;
-  right: 0;
-  top: 0;
-  //transform: translateY(-50%);
-  padding: 20px 30px 30px;
-  width: 360px;
+  margin-top: 22px;
+  padding: 15px;
+  width: 100%;
   border-radius: 22px;
   background: #ffffff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 768px) {
+    position: absolute;
+    right: 0;
+    top: 0;
+    //transform: translateY(-50%);
+    margin: 0;
+    width: 360px;
+    padding: 20px 30px 30px;
+  }
+
+  @media (min-width: 768px) and (max-width: 1099px) {
+    top: 50px;
+  }
 }
 
 .pricesTitle {
@@ -246,9 +323,12 @@
 }
 
 .salesBlock {
-  margin-bottom: 30px;
   background: #fbf7f3;
   border-radius: 8px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 30px;
+  }
 }
 
 .saleItem {
@@ -310,4 +390,15 @@
   font-size: 20px;
   line-height: 24px;
   color: #000000;
+}
+
+.bookButton {
+  @media (max-width: 767px) {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    z-index: 3;
+    width: calc(100% - 30px);
+  }
 }
