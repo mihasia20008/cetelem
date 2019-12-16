@@ -15,6 +15,7 @@ const baseNameMap = {
   [`${FILTER_NAMES.ENGINE_VOLUME}`]: 'Объем двигателя (л), от-до',
   [`${FILTER_NAMES.PRICE}`]: 'Цена, от-до',
   [`${FILTER_NAMES.RUN}`]: 'Пробег (км), от-до',
+  [`${FILTER_NAMES.DRIVE}`]: 'Любой привод',
 };
 
 function prepareFilters(filters) {
@@ -54,7 +55,7 @@ function prepareFilters(filters) {
           name,
         }));
         acc[key] = {
-          text: key === FILTER_NAMES.BODY_TYPE ? 'Кузов' : filters[key].text,
+          text: filters[key].text,
           type: filters[key].type,
           active: -1,
           options: [

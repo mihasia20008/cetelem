@@ -249,7 +249,7 @@ class CarsPage extends PureComponent {
     const query = { ...cleanQuery, ...params };
 
     history.push(`${location.pathname}?${qs.stringify(query)}`);
-    console.log(this.getActualTitle());
+
     this.setState({
       title: this.getActualTitle(),
     });
