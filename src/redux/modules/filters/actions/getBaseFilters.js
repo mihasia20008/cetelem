@@ -16,6 +16,7 @@ const baseNameMap = {
   [`${FILTER_NAMES.PRICE}`]: 'Цена, от-до',
   [`${FILTER_NAMES.RUN}`]: 'Пробег (км), от-до',
   [`${FILTER_NAMES.DRIVE}`]: 'Любой привод',
+  [`${FILTER_NAMES.AVAILABLE}`]: 'Любой статус',
 };
 
 function prepareFilters(filters) {
