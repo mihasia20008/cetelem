@@ -10,6 +10,8 @@ import _get from 'lodash/get';
 import * as usersActions from '../../../../redux/modules/admin/users/actions';
 import { getDealers } from '../../../../redux/modules/filters/actions';
 
+import formatDate from '../../../../utilities/formatDate';
+
 import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 import ConfirmDialog from '../../../organisms/Admin/ConfirmDialog';
@@ -133,18 +135,6 @@ function UsersPage(props) {
     return dealer.name || 'Не определено';
   };
 
-  const renderUserRegistration = (date = new Date()) => {
-    const dateInstance = new Date(date);
-    const day = dateInstance
-      .getDate()
-      .toString()
-      .padStart(2, '0');
-
-    const month = (dateInstance.getMonth() + 1).toString().padStart(2, '0');
-
-    return `${day}.${month}.${date.getFullYear()}`;
-  };
-
   return (
     <div className={styles.root}>
       <UsersToolbar onOpenCreateForm={handleOpenUserForm} />
@@ -174,9 +164,9 @@ function UsersPage(props) {
                     formatter: renderUserDealer,
                   },
                   {
-                    id: 'date',
+                    id: 'created_at',
                     text: 'Дата регистрации',
-                    formatter: renderUserRegistration,
+                    formatter: formatDate,
                   },
                   {
                     id: ACTIONS_COLUMN_ID,

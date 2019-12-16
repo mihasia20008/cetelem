@@ -9,6 +9,8 @@ import _get from 'lodash/get';
 
 import { getReservations, clearError } from '../../../../redux/modules/dealer/reservations/actions';
 
+import formatDate from '../../../../utilities/formatDate';
+
 import SimpleTable from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 
@@ -105,6 +107,7 @@ function ReservationsPage(props) {
                   {
                     id: 'created_at',
                     text: 'Дата создания',
+                    formatter: formatDate,
                   },
                 ]}
                 list={filteredList}

@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/styles';
 
 import { clearError, getCars } from '../../../../redux/modules/admin/cars/actions';
 
+import formatDate from '../../../../utilities/formatDate';
+
 import SimpleTable from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 
@@ -106,10 +108,12 @@ function CarsPage(props) {
                   {
                     id: 'created_at',
                     text: 'Дата создания',
+                    formatter: formatDate,
                   },
                   {
                     id: 'updated_at',
                     text: 'Дата изменения',
+                    formatter: formatDate,
                   },
                 ]}
                 list={filteredList}

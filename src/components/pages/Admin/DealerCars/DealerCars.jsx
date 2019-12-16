@@ -15,6 +15,7 @@ import ConfirmDialog from '../../../organisms/Admin/ConfirmDialog';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 
 import formatNumber from '../../../../utilities/formatNumber';
+import formatDate from '../../../../utilities/formatDate';
 
 import DealerCarsToolbar from './blocks/DealerCarsToolbar';
 
@@ -115,12 +116,9 @@ function DealerCars(props) {
                     formatter: renderFormattedPrice,
                   },
                   {
-                    id: 'created_at',
-                    text: 'Дата создания',
-                  },
-                  {
                     id: 'updated_at',
                     text: 'Дата изменения',
+                    formatter: formatDate,
                   },
                   {
                     id: ACTIONS_COLUMN_ID,

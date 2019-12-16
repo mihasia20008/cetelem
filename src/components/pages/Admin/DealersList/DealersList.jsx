@@ -9,6 +9,8 @@ import _get from 'lodash/get';
 
 import * as dealersActions from '../../../../redux/modules/admin/dealersList/actions';
 
+import formatDate from '../../../../utilities/formatDate';
+
 import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 import ConfirmDialog from '../../../organisms/Admin/ConfirmDialog';
@@ -102,7 +104,7 @@ function DealersListPage(props) {
     setDealerDelete(null);
   };
 
-  const renderDealerAddress = (info) => {
+  const renderDealerAddress = info => {
     if (!info) {
       return '';
     }
@@ -137,7 +139,7 @@ function DealersListPage(props) {
     return `[${location.x}, ${location.y}]`;
   };
 
-  const renderDealerPhone = (contacts) => {
+  const renderDealerPhone = contacts => {
     return _get(contacts, '0.value');
   };
 
@@ -177,10 +179,12 @@ function DealersListPage(props) {
                   {
                     id: 'created_at',
                     text: 'Дата создания',
+                    formatter: formatDate,
                   },
                   {
                     id: 'updated_at',
                     text: 'Дата изменения',
+                    formatter: formatDate,
                   },
                   {
                     id: ACTIONS_COLUMN_ID,
@@ -205,15 +209,19 @@ function DealersListPage(props) {
         onClose={handleCloseDealerForm}
       >
         <DealerForm
-          texts={editingDealer.id ? {
-            title: 'Редактирование дилера',
-            subtitle: 'Заполните все обязательные поля',
-            submit: 'Изменить',
-          } : {
-            title: 'Создание дилера',
-            subtitle: 'Заполните все обязательные поля',
-            submit: 'Создать',
-          }}
+          texts={
+            editingDealer.id
+              ? {
+                  title: 'Редактирование дилера',
+                  subtitle: 'Заполните все обязательные поля',
+                  submit: 'Изменить',
+                }
+              : {
+                  title: 'Создание дилера',
+                  subtitle: 'Заполните все обязательные поля',
+                  submit: 'Создать',
+                }
+          }
           dealer={editingDealer}
           statuses={statuses}
           onCancel={handleCloseDealerForm}

@@ -9,11 +9,13 @@ import _get from 'lodash/get';
 
 import * as reservationsActions from '../../../../redux/modules/admin/reservations/actions';
 
+import formatDate from '../../../../utilities/formatDate';
+
 import SimpleTable, { ACTIONS_COLUMN_ID } from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
+import ConfirmDialog from "../../../organisms/Admin/ConfirmDialog";
 
 import ReservationsToolbar from './blocks/ReservationsToolbar';
-import ConfirmDialog from "../../../organisms/Admin/ConfirmDialog";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -120,6 +122,7 @@ function ReservationsPage(props) {
                   {
                     id: 'created_at',
                     text: 'Дата создания',
+                    formatter: formatDate,
                   },
                   {
                     id: ACTIONS_COLUMN_ID,

@@ -13,6 +13,7 @@ import SimpleTable from '../../../organisms/Admin/SimpleTable';
 import ErrorShower from '../../../organisms/Admin/ErrorShower';
 
 import formatNumber from '../../../../utilities/formatNumber';
+import formatDate from '../../../../utilities/formatDate';
 
 import CarsListToolbar from './blocks/CarsListToolbar';
 import CarsListForm from './blocks/CarsListForm';
@@ -109,12 +110,9 @@ function CarsListPage(props) {
                     formatter: renderFormattedPrice,
                   },
                   {
-                    id: 'created_at',
-                    text: 'Дата создания',
-                  },
-                  {
                     id: 'updated_at',
                     text: 'Дата изменения',
+                    formatter: formatDate
                   },
                 ]}
                 list={data}
