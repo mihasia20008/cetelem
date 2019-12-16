@@ -48,6 +48,10 @@ function ReservationsPage(props) {
     dispatch(clearError());
   };
 
+  const renderCarName = (_, item) => {
+    return `${item.mark} ${item.model}`;
+  };
+
   const filteredList = searchText
     ? data.filter(item =>
       Object.values(item).some(value => {
@@ -91,7 +95,12 @@ function ReservationsPage(props) {
                   },
                   {
                     id: 'dealer_car_id',
-                    text: 'Автомобиль'
+                    text: 'Автомобиль',
+                    formatter: renderCarName,
+                  },
+                  {
+                    id: 'vin',
+                    text: 'VIN',
                   },
                   {
                     id: 'created_at',
