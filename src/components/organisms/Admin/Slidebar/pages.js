@@ -40,7 +40,7 @@ export const adminPages = [
   },
   {
     title: 'Сети',
-    href: RoutesPaths.admin.dealersList,
+    href: RoutesPaths.admin.groups,
     icon: <GroupWorkIcon />
   },
   {

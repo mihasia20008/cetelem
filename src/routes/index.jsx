@@ -59,6 +59,13 @@ export default function Routes({ authorized, userType }) {
       authorized={authorized}
       userType={userType}
     />,
+    <AdminRoute
+      key={RoutesPaths.admin.groups}
+      path={RoutesPaths.admin.groups}
+      component={Pages.AdminGroups}
+      authorized={authorized}
+      userType={userType}
+    />,
     <Route
       key={RoutesPaths.admin.main}
       path={RoutesPaths.admin.main}

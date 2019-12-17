@@ -1,0 +1,6 @@
+{
+  "name": "groups-admin-page",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Groups.jsx"
+}

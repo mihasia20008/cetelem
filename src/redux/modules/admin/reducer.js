@@ -6,6 +6,7 @@ import cars from './cars';
 import filtersDefault from './filtersDefault';
 import dealerCars from './dealerCars';
 import dealersList from './dealersList';
+import dealersGroups from './groups';
 
 export default combineReducers({
   users,
@@ -14,4 +15,5 @@ export default combineReducers({
   filtersDefault,
   dealerCars,
   dealersList,
+  dealersGroups,
 });
