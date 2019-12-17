@@ -16,6 +16,13 @@ export const dealerSchema = {
       wrongLength: '^Введен некорректный номер телефона!'
     },
   },
+  dealer_group_id: {
+    presence: { allowEmpty: true },
+    numericality: {
+      onlyInteger: true,
+      greaterThanOrEqualTo: 0,
+    }
+  },
   code: {
     presence: { allowEmpty: true },
     length: {

@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/styles';
 import _get from 'lodash/get';
 
 import * as dealersActions from '../../../../redux/modules/admin/dealersList/actions';
+import * as dealersGroupsActions from '../../../../redux/modules/admin/groups/actions';
 
 import formatDate from '../../../../utilities/formatDate';
 
@@ -42,6 +43,8 @@ const useStyles = makeStyles(theme => ({
 function DealersListPage(props) {
   const {
     dealers: { data, ...statuses },
+    dealersGroups,
+    groupsLoaded,
     dispatch,
   } = props;
   const styles = useStyles();
@@ -61,6 +64,7 @@ function DealersListPage(props) {
 
   useEffect(() => {
     dispatch(dealersActions.getDealers());
+    dispatch(dealersGroupsActions.getGroups());
   }, [dispatch]);
 
   useEffect(() => {
@@ -143,6 +147,15 @@ function DealersListPage(props) {
     return _get(contacts, '0.value');
   };
 
+  const renderDealerGroup = groupId => {
+    if (!groupId || !groupsLoaded) {
+      return 'Без сети';
+    }
+
+    const group = dealersGroups.find(item => item.id === groupId) || [];
+    return group.name || 'Не определено';
+  };
+
   return (
     <div className={styles.root}>
       <DealersToolbar onOpenCreateForm={handleOpenDealerForm} />
@@ -160,6 +173,11 @@ function DealersListPage(props) {
                     id: 'trade_name',
                     text: 'Название',
                     formatter: text => <Typography variant="body1">{text}</Typography>,
+                  },
+                  {
+                    id: 'dealer_group_id',
+                    text: 'Сеть',
+                    formatter: renderDealerGroup,
                   },
                   {
                     id: 'address',
@@ -223,6 +241,7 @@ function DealersListPage(props) {
                 }
           }
           dealer={editingDealer}
+          groups={dealersGroups}
           statuses={statuses}
           onCancel={handleCloseDealerForm}
           onSubmit={handleSubmitForm}
@@ -256,8 +275,12 @@ function DealersListPage(props) {
 }
 
 const mapStateToProps = state => {
+  const dealersGroups = _get(state, 'admin.dealersGroups.data', []);
+
   return {
     dealers: state.admin.dealersList,
+    dealersGroups,
+    groupsLoaded: _get(state, 'admin.dealersGroups.success'),
   };
 };
 

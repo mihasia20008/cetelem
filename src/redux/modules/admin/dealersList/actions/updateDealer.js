@@ -20,6 +20,7 @@ export default function updateDealer(id, values) {
         trade_name: form.trade_name,
         official_dealer: Boolean(form.official_dealer),
         used_car_saling: Boolean(form.used_car_saling),
+        dealer_group_id: form.dealer_group_id === '0' ? null : form.dealer_group_id,
         code: form.code,
         rate: form.rate,
         contact_infos_attributes: [{ "value_type": "phone", "value": form.phone }],

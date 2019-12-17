@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function DealerForm(props) {
-  const { texts, dealer, statuses, onCancel, onSubmit, onCloseError } = props;
+  const { texts, dealer, groups, statuses, onCancel, onSubmit, onCloseError } = props;
   const styles = useStyles();
   const [formState, setFormState] = useState({
     isValid: false,
@@ -57,6 +57,7 @@ function DealerForm(props) {
       trade_name: dealer.trade_name || '',
       legal_name: dealer.legal_name || '',
       official_dealer: Boolean(dealer.official_dealer),
+      dealer_group_id: (groups.find(group => group.id === dealer.dealer_group_id) || []).id || 0,
       used_car_saling: Boolean(dealer.used_car_saling),
       phone: _get(dealer, 'contact_infos.0.value', ''),
       code: dealer.code || '',
@@ -177,6 +178,31 @@ function DealerForm(props) {
                 value={formState.values.phone}
                 variant="outlined"
               />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Выберите сеть"
+                error={hasError('dealer_group_id')}
+                helperText={hasError('dealer_group_id') ? formState.errors.dealer_group_id[0] : null}
+                margin="dense"
+                name="dealer_group_id"
+                onChange={handleChange}
+                select
+                // eslint-disable-next-line react/jsx-sort-props
+                SelectProps={{ native: true }}
+                value={formState.values.dealer_group_id}
+                variant="outlined"
+              >
+                <option key="0" value={0}>
+                  Не выбрано
+                </option>
+                {groups.map(option => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              </TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
