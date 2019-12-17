@@ -115,7 +115,6 @@ export default function setInitialFilters({ type, filters, query = {} }) {
             break;
           }
         }
-        console.log(updatedFilters);
       }
     });
   }

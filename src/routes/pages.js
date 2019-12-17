@@ -18,6 +18,8 @@ export const AdminDashboard = lazy(() => import('../components/pages/Admin/Dashb
 
 export const AdminCars = lazy(() => import('../components/pages/Admin/Cars'));
 
+export const AdminFilters = lazy(() => import('../components/pages/Admin/DefaultFilter'));
+
 export const AdminDealerCars = lazy(() => import('../components/pages/Admin/DealerCars'));
 
 export const AdminDealersList = lazy(() => import('../components/pages/Admin/DealersList'));

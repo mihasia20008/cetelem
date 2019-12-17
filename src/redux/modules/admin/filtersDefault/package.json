@@ -1,0 +1,6 @@
+{
+  "name": "admin-filter-default-reducer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./filterDefault.js"
+}

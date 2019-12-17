@@ -25,6 +25,13 @@ export default function Routes({ authorized, userType }) {
       userType={userType}
     />,
     <AdminRoute
+      key={RoutesPaths.admin.filters}
+      path={RoutesPaths.admin.filters}
+      component={Pages.AdminFilters}
+      authorized={authorized}
+      userType={userType}
+    />,
+    <AdminRoute
       key={RoutesPaths.admin.dealerCars}
       path={RoutesPaths.admin.dealerCars}
       component={Pages.AdminDealerCars}

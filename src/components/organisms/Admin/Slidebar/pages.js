@@ -7,6 +7,8 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import StorageIcon from '@material-ui/icons/Storage';
 import PersonIcon from '@material-ui/icons/Person';
 import WorkIcon from '@material-ui/icons/Work';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import GroupWorkIcon from '@material-ui/icons/GroupWork';
 
 import { RoutesPaths } from "../../../../constants";
 
@@ -22,6 +24,11 @@ export const adminPages = [
     icon: <DirectionsCarIcon />
   },
   {
+    title: 'Фильтр по умолчанию',
+    href: RoutesPaths.admin.filters,
+    icon: <FilterListIcon />,
+  },
+  {
     title: 'Выгрузки дилеров',
     href: RoutesPaths.admin.dealerCars,
     icon: <StorageIcon />
@@ -30,6 +37,11 @@ export const adminPages = [
     title: 'Бронирования',
     href: RoutesPaths.admin.reservations,
     icon: <ShoppingCartIcon />
+  },
+  {
+    title: 'Сети',
+    href: RoutesPaths.admin.dealersList,
+    icon: <GroupWorkIcon />
   },
   {
     title: 'Дилеры',

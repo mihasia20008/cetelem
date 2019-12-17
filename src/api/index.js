@@ -11,6 +11,7 @@ import * as adminCarsRequests from './admin/cars';
 import * as adminDealerCarsRequests from './admin/dealerCars';
 import * as adminDealersRequests from './admin/dealersList';
 import * as adminReservationsRequests from './admin/reservations';
+import * as adminDefaultFilterRequests from './admin/defaultFilter';
 
 import * as dealerCarsListRequests from './dealer/carsList';
 import * as dealerReservationsRequests from './dealer/reservations';
@@ -44,6 +45,7 @@ export {
   adminDealersRequests,
   adminDealerCarsRequests,
   adminReservationsRequests,
+  adminDefaultFilterRequests,
 
   dealerCarsListRequests,
   dealerReservationsRequests,

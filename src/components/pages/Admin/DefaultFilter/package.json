@@ -1,0 +1,6 @@
+{
+  "name": "default-filter-admin-page",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DefaultFilter.jsx"
+}
