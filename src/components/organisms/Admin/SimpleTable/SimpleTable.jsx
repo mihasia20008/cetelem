@@ -25,7 +25,7 @@ export const ACTIONS_COLUMN_ID = 'actions';
 export const PER_PAGE_VARIANTS = [5, 10, 25];
 
 function SimpleTable(props) {
-  const { location, history, headers, list, statuses, onEdit, onDelete } = props;
+  const { location, history, hidePagination, headers, list, statuses, onEdit, onDelete } = props;
   const { page: queryPage, per_page: queryPerPage } = location.query;
 
   const [page, setPage] = useState(queryPage ? +queryPage - 1 : 0);
@@ -147,13 +147,12 @@ function SimpleTable(props) {
     return null;
   };
 
-  return (
-    <div className={styles.SimpleTable}>
-      <Table>
-        {renderTableHeader()}
-        {renderTableBody()}
-      </Table>
-      {renderNoData()}
+  const renderPagination = () => {
+    if (hidePagination) {
+      return null;
+    }
+
+    return (
       <div className={styles.actionsWrap}>
         <TablePagination
           component="div"
@@ -167,12 +166,24 @@ function SimpleTable(props) {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </div>
+    );
+  };
+
+  return (
+    <div className={styles.SimpleTable}>
+      <Table>
+        {renderTableHeader()}
+        {renderTableBody()}
+      </Table>
+      {renderNoData()}
+      {renderPagination()}
       {renderTableLoader()}
     </div>
   );
 }
 
 SimpleTable.propTypes = {
+  hidePagination: PropTypes.bool,
   headers: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -192,6 +203,7 @@ SimpleTable.propTypes = {
 };
 
 SimpleTable.defaultProps = {
+  hidePagination: false,
   list: [],
   statuses: {},
   onEdit: undefined,

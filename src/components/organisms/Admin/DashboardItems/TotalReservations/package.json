@@ -1,0 +1,6 @@
+{
+  "name": "dashboard-total-reservations",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TotalReservations.jsx"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "statistics-reducer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./statistics.js"
+}

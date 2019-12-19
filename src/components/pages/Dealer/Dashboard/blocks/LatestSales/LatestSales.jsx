@@ -6,8 +6,9 @@ import { Bar } from 'react-chartjs-2';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardHeader, CardContent, CardActions, Divider, Button } from '@material-ui/core';
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+
+import { RoutesPaths } from '../../../../../../constants';
 
 import { data, options } from './chart';
 
@@ -23,20 +24,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 const LatestSales = props => {
-  const { className, ...rest } = props;
+  const { className } = props;
 
   const styles = useStyles();
 
   return (
-    <Card {...rest} className={cls(styles.root, className)}>
-      <CardHeader
-        action={
-          <Button size="small" variant="text">
-            Последние 7 дней <ArrowDropDownIcon />
-          </Button>
-        }
-        title="График продаж"
-      />
+    <Card className={cls(styles.root, className)}>
+      <CardHeader title="График бронирований" />
       <Divider />
       <CardContent>
         <div className={styles.chartContainer}>
@@ -45,8 +39,8 @@ const LatestSales = props => {
       </CardContent>
       <Divider />
       <CardActions className={styles.actions}>
-        <Button color="primary" size="small" variant="text">
-          Смотреть <ArrowRightIcon />
+        <Button color="primary" size="small" variant="text" href={RoutesPaths.dealer.reservations}>
+          Смотреть все <ArrowRightIcon />
         </Button>
       </CardActions>
     </Card>

@@ -5,8 +5,10 @@ import cls from 'classnames';
 import { makeStyles } from '@material-ui/styles';
 import { colors, Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+// import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+
+import formatNumber from '../../../../../utilities/formatNumber';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,13 +44,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TotalUsers = props => {
-  const { className, ...rest } = props;
+const TotalReservations = props => {
+  const { className, bookTotal } = props;
 
   const styles = useStyles();
 
   return (
-    <Card {...rest} className={cls(styles.root, className)}>
+    <Card className={cls(styles.root, className)}>
       <CardContent>
         <Grid container justify="space-between">
           <Grid item>
@@ -58,36 +60,38 @@ const TotalUsers = props => {
               gutterBottom
               variant="body2"
             >
-              ВСЕГО ПОЛЬЗОВАТЕЛЕЙ
+              Совершено бронирований
             </Typography>
-            <Typography variant="h3">1,600</Typography>
+            <Typography variant="h3">{formatNumber(bookTotal)}</Typography>
           </Grid>
           <Grid item>
             <Avatar className={styles.avatar}>
-              <PeopleIcon className={styles.icon} />
+              <ShoppingCartIcon className={styles.icon} />
             </Avatar>
           </Grid>
         </Grid>
-        <div className={styles.difference}>
-          <ArrowUpwardIcon className={styles.differenceIcon} />
-          <Typography className={styles.differenceValue} variant="body2">
-            16%
-          </Typography>
-          <Typography className={styles.caption} variant="caption">
-            С прошлого месяца
-          </Typography>
-        </div>
+        {/* <div className={styles.difference}> */}
+        {/*  <ArrowUpwardIcon className={styles.differenceIcon} /> */}
+        {/*  <Typography className={styles.differenceValue} variant="body2"> */}
+        {/*    16% */}
+        {/*  </Typography> */}
+        {/*  <Typography className={styles.caption} variant="caption"> */}
+        {/*    С прошлого месяца */}
+        {/*  </Typography> */}
+        {/* </div> */}
       </CardContent>
     </Card>
   );
 };
 
-TotalUsers.propTypes = {
+TotalReservations.propTypes = {
   className: PropTypes.string,
+  bookTotal: PropTypes.number,
 };
 
-TotalUsers.defaultProps = {
+TotalReservations.defaultProps = {
   className: undefined,
+  bookTotal: 0,
 };
 
-export default TotalUsers;
+export default TotalReservations;

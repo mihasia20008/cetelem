@@ -17,6 +17,7 @@ import * as adminDealerGroupsRequests from './admin/groups';
 import * as dealerCarsListRequests from './dealer/carsList';
 import * as dealerReservationsRequests from './dealer/reservations';
 import * as dealerInfoRequests from './dealer/info';
+import * as dealerStatisticsRequests from './dealer/statistics';
 
 axios.interceptors.request.use(async config => {
   try {
@@ -52,4 +53,5 @@ export {
   dealerCarsListRequests,
   dealerReservationsRequests,
   dealerInfoRequests,
+  dealerStatisticsRequests,
 };

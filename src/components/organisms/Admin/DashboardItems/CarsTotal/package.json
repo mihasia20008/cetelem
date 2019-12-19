@@ -1,0 +1,6 @@
+{
+  "name": "dashboard-cars-total",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CarsTotal.jsx"
+}

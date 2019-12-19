@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 
-import Budget from './blocks/Budget';
-import TotalUsers from './blocks/TotalUsers';
-import TasksProgress from './blocks/TasksProgress';
-import TotalProfit from './blocks/TotalProfit';
+import _get from 'lodash/get';
+
+import PageLoading from '../../../../routes/PageLoading';
+
+import CarsTotal from '../../../organisms/Admin/DashboardItems/CarsTotal';
+import TotalReservations from '../../../organisms/Admin/DashboardItems/TotalReservations';
 
 import LatestSales from './blocks/LatestSales';
-import UsersByDevice from './blocks/UsersByDevice';
-
-import LatestProducts from './blocks/LatestProducts';
 import LatestOrders from './blocks/LatestOrders';
+
+import { getReservations } from '../../../../redux/modules/dealer/reservations/actions';
+import { getStatistics } from '../../../../redux/modules/dealer/statistics/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,39 +23,59 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Dashboard = () => {
+const Dashboard = props => {
+  const {
+    statistics: { data: statData, ...statStatuses },
+    reservations: { data: reservData, ...reservStatuses },
+    dispatch,
+  } = props;
   const styles = useStyles();
+
+  useEffect(() => {
+    dispatch(getStatistics());
+    dispatch(getReservations());
+  }, [dispatch]);
+
+  if (statStatuses.error || reservStatuses.error) {
+    return <div>Error {JSON.stringify(statStatuses.error || reservStatuses.error)}</div>;
+  }
+
+  if (
+    statStatuses.loading ||
+    statStatuses.initial ||
+    reservStatuses.loading ||
+    reservStatuses.initial
+  ) {
+    return <PageLoading />;
+  }
+
+  const lastFiveBooks = reservData.slice(0, 5);
 
   return (
     <div className={styles.root}>
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6} lg={3} xl={3}>
-          <Budget />
+          <CarsTotal carsCount={statData.cars_total} />
         </Grid>
         <Grid item xs={12} sm={6} lg={3} xl={3}>
-          <TotalUsers />
+          <TotalReservations bookTotal={statData.reservations_total} />
         </Grid>
-        <Grid item xs={12} sm={6} lg={3} xl={3}>
-          <TasksProgress />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={3} xl={3}>
-          <TotalProfit />
-        </Grid>
-        <Grid item xs={12} md={12} lg={8} xl={9}>
+        <Grid item xs={12} md={12} lg={12} xl={12}>
           <LatestSales />
         </Grid>
-        <Grid item xs={12} md={6} lg={4} xl={3}>
-          <UsersByDevice />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4} xl={3}>
-          <LatestProducts />
-        </Grid>
-        <Grid item xs={12} md={12} lg={8} xl={9}>
-          <LatestOrders />
+        <Grid item xs={12} md={12} lg={12} xl={12}>
+          <LatestOrders data={lastFiveBooks} statuses={reservStatuses} />
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+    statistics: _get(state, 'dealer.statistics', {}),
+    reservations: state.dealer.reservations,
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);

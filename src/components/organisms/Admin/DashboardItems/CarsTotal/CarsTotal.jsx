@@ -5,8 +5,8 @@ import cls from 'classnames';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
+// import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,47 +42,49 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Budget = props => {
-  const { className, ...rest } = props;
+const CarsTotal = props => {
+  const { className, carsCount } = props;
 
   const styles = useStyles();
 
   return (
-    <Card {...rest} className={cls(styles.root, className)}>
+    <Card className={cls(styles.root, className)}>
       <CardContent>
         <Grid container justify="space-between">
           <Grid item>
             <Typography className={styles.title} color="textSecondary" gutterBottom variant="body2">
-              БЮДЖЕТ
+              Всего автомобилей выгружено
             </Typography>
-            <Typography variant="h3">$24,000</Typography>
+            <Typography variant="h3">{carsCount} шт.</Typography>
           </Grid>
           <Grid item>
             <Avatar className={styles.avatar}>
-              <MoneyIcon className={styles.icon} />
+              <DirectionsCarIcon className={styles.icon} />
             </Avatar>
           </Grid>
         </Grid>
-        <div className={styles.difference}>
-          <ArrowDownwardIcon className={styles.differenceIcon} />
-          <Typography className={styles.differenceValue} variant="body2">
-            12%
-          </Typography>
-          <Typography className={styles.caption} variant="caption">
-            С прошлого месяца
-          </Typography>
-        </div>
+        {/* <div className={styles.difference}> */}
+        {/*  <ArrowDownwardIcon className={styles.differenceIcon} /> */}
+        {/*  <Typography className={styles.differenceValue} variant="body2"> */}
+        {/*    12% */}
+        {/*  </Typography> */}
+        {/*  <Typography className={styles.caption} variant="caption"> */}
+        {/*    С прошлого месяца */}
+        {/*  </Typography> */}
+        {/* </div> */}
       </CardContent>
     </Card>
   );
 };
 
-Budget.propTypes = {
+CarsTotal.propTypes = {
   className: PropTypes.string,
+  carsCount: PropTypes.number,
 };
 
-Budget.defaultProps = {
+CarsTotal.defaultProps = {
   className: undefined,
+  carsCount: 0,
 };
 
-export default Budget;
+export default CarsTotal;
