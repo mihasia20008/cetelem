@@ -13,6 +13,7 @@ import * as adminDealersRequests from './admin/dealersList';
 import * as adminReservationsRequests from './admin/reservations';
 import * as adminDefaultFilterRequests from './admin/defaultFilter';
 import * as adminDealerGroupsRequests from './admin/groups';
+import * as adminStatisticsRequests from './admin/statistics';
 
 import * as dealerCarsListRequests from './dealer/carsList';
 import * as dealerReservationsRequests from './dealer/reservations';
@@ -49,6 +50,7 @@ export {
   adminReservationsRequests,
   adminDefaultFilterRequests,
   adminDealerGroupsRequests,
+  adminStatisticsRequests,
 
   dealerCarsListRequests,
   dealerReservationsRequests,
