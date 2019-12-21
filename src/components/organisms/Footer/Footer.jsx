@@ -46,8 +46,30 @@ class Footer extends PureComponent {
                 </FooterButton>
               </div>
               <div className={styles.download}>
-                <img className={styles.downloadLogo} src="/images/app-store.svg" alt="AppStore logo" />
-                <img className={styles.downloadLogo} src="/images/google-play.svg" alt="GooglePlay logo" />
+                <a
+                  className={styles.downloadLink}
+                  href="https://apps.apple.com/RU/app/id492224193"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    className={styles.downloadLogo}
+                    src="/images/app-store.svg"
+                    alt="AppStore logo"
+                  />
+                </a>
+                <a
+                  className={styles.downloadLink}
+                  href="https://play.google.com/store/apps/details?id=ru.sberbankmobile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    className={styles.downloadLogo}
+                    src="/images/google-play.svg"
+                    alt="GooglePlay logo"
+                  />
+                </a>
               </div>
               {/* <div className={styles.social}> */}
               {/*  <FooterButton */}
