@@ -154,10 +154,19 @@ class CarsPage extends PureComponent {
     let title;
 
     if (base.success) {
-      if (filters[FILTER_NAMES.NEW].active) {
-        title = 'Новые автомобили';
-      } else {
-        title = 'Подержанные автомобили';
+      switch (filters[FILTER_NAMES.NEW].active) {
+        case 0: {
+          title = 'Подержанные автомобили';
+          break;
+        }
+        case 1: {
+          title = 'Новые автомобили';
+          break;
+        }
+        default: {
+          title = 'Автомобили';
+          break;
+        }
       }
     }
 
@@ -171,7 +180,7 @@ class CarsPage extends PureComponent {
       }
     }
 
-    return title || 'Подбор автомобиля';
+    return !title || title === 'Автомобили' ? 'Подбор автомобиля' : title;
   };
 
   handleFilterChange = (name, value) => {
