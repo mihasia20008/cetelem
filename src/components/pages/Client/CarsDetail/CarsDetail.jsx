@@ -162,7 +162,11 @@ class CarsDetail extends PureComponent {
       <div className={styles.head}>
         <div className={styles.autoHead}>
           <div className={styles.imageWrap}>
-            <img className={styles.image} src={`/logo/${car.mark.toLowerCase()}.png`} alt={carName} />
+            <img
+              className={styles.image}
+              src={`/logo/${car.mark.toLowerCase()}.png`}
+              alt={carName}
+            />
           </div>
           <div className={styles.contentWrap}>
             <h1 className={styles.title}>{carName}</h1>
@@ -394,10 +398,16 @@ class CarsDetail extends PureComponent {
             {layout.isMobile && this.renderPriceSidebar()}
           </div>
         </Container>
-        <Modal id="book-modal" open={openBookModal} onClose={this.handleCloseBookForm}>
+        <Modal
+          id="book-modal"
+          open={openBookModal}
+          onClose={this.handleCloseBookForm}
+          dark={book.success}
+        >
           <BookForm
             bookInfo={book}
             carName={`${car.mark} ${car.model}`}
+            carImage={_get(images, '0.src', '/images/book-auto.jpg')}
             modification={car.modification}
             onSubmitForm={this.handleSubmitBookForm}
           />

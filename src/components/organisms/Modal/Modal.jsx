@@ -5,7 +5,7 @@ import Portal from './Portal';
 import Layout from './Layout';
 
 function Modal(props) {
-  const { id, open, children, onClose } = props;
+  const { id, open, children, dark, onClose } = props;
 
   if (!open) {
     return null;
@@ -13,7 +13,7 @@ function Modal(props) {
 
   return (
     <Portal id={id}>
-      <Layout onClose={onClose}>
+      <Layout onClose={onClose} dark={dark}>
         {children}
       </Layout>
     </Portal>

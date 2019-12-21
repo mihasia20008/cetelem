@@ -14,7 +14,7 @@ import { schema } from './schema';
 import styles from './BookForm.module.scss';
 
 function BookForm(props) {
-  const { bookInfo, carName, modification, onSubmitForm } = props;
+  const { bookInfo, carName, carImage, modification, onSubmitForm } = props;
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
@@ -93,7 +93,7 @@ function BookForm(props) {
     return (
       <div className={styles.carInfo}>
         <div className={styles.imageWrap}>
-          <img className={styles.image} src="/images/book-auto.jpg" alt={carName} />
+          <img className={styles.image} src={carImage} alt={carName} />
         </div>
         <div className={styles.contentWrap}>
           <h3 className={styles.carName}>{carName}</h3>
@@ -108,8 +108,9 @@ function BookForm(props) {
       <div className={styles.formContent}>
         <form className={styles.form} onSubmit={handleSubmitForm}>
           <div className={styles.inputWrap}>
-            {!formState.values.name && <span className={styles.inputPlaceholder}>Имя</span>}
+            {!formState.values.name && <span className={styles.inputPlaceholder}>Фамилия и имя</span>}
             <input
+              autoComplete="off"
               className={styles.input}
               name="name"
               type="text"
@@ -122,6 +123,7 @@ function BookForm(props) {
           <div className={styles.inputWrap}>
             {!formState.values.phone && <span className={styles.inputPlaceholder}>Телефон</span>}
             <input
+              autoComplete="off"
               className={styles.input}
               name="phone"
               type="text"
@@ -134,7 +136,6 @@ function BookForm(props) {
           <Button
             className={styles.bookButton}
             type="submit"
-            inverse
             size={SIZE_TYPES.BIG}
             text="Забронировать"
             onClick={() => {}}

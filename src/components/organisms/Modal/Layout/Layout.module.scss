@@ -42,7 +42,6 @@
   height: 22px;
   border: none;
   border-radius: 50%;
-  background-color: #239b53;
 
   @media (min-width: 768px) {
     width: 44px;
@@ -58,11 +57,27 @@
   }
 }
 
+.darkCloser {
+  background-color: #239b53;
+}
+
+.lightCloser {
+  background-color: #cbcbcb;
+}
+
 .closerIcon {
   @media (max-width: 767px) {
     width: 8px;
     height: 8px;
   }
+}
+
+.darkCloserIcon {
+  fill: #7cf8ae;
+}
+
+.lightCloserIcon {
+  fill: #fff;
 }
 
 .backdrop {

@@ -1,5 +1,6 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import cls from 'classnames';
 
 import CloseIcon from '../../../icons/CloseIcon';
 
@@ -8,7 +9,7 @@ import useCloseOnOutsideEvents from '../../../../utilities/useCloseOnOutsideEven
 import styles from './Layout.module.scss';
 
 function Layout(props) {
-  const { children, onClose } = props;
+  const { children, dark, onClose } = props;
 
   const [mounted, setMount] = useState(false);
   const contentRef = useRef(null);
@@ -31,8 +32,17 @@ function Layout(props) {
       <div className={styles.content} ref={contentRef}>
         {children}
         {onClose && (
-          <button type="button" className={styles.closer} onClick={onClose}>
-            <CloseIcon className={styles.closerIcon} />
+          <button
+            type="button"
+            className={cls(styles.closer, dark ? styles.darkCloser : styles.lightCloser)}
+            onClick={onClose}
+          >
+            <CloseIcon
+              className={cls(
+                styles.closerIcon,
+                dark ? styles.darkCloserIcon : styles.lightCloserIcon
+              )}
+            />
           </button>
         )}
       </div>
@@ -43,10 +53,12 @@ function Layout(props) {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func,
+  dark: PropTypes.bool,
 };
 
 Layout.defaultProps = {
   onClose: undefined,
+  dark: false,
 };
 
 export default Layout;
