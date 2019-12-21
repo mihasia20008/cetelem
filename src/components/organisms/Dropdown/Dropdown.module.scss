@@ -79,9 +79,28 @@
   padding: 8px 12px;
   max-width: 250px;
   min-width: 190px;
-  max-height: 210px;
+  height: 210px;
   background: #fff;
   border-radius: 2px;
   overflow-y: scroll;
   box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.searchWrap {
+  margin-bottom: 16px;
+}
+
+.searchInput {
+  padding: 8px 4px;
+  width: 100%;
+  font-family: TTNorms, Arial, sans-serif;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #7e7e7e;
+  box-shadow: none;
+
+  &:focus {
+    outline: none;
+  }
 }

@@ -10,14 +10,17 @@ import useCloseOnOutsideEvents from '../../../utilities/useCloseOnOutsideEvents'
 
 import styles from './Dropdown.module.scss';
 
+const MAX_OPTIONS_WITHOUT_SEARCH = 15;
+
 function Dropdown(props) {
   const { name, className, filled, selected, initialText, options, disabled, onSelect } = props;
+  const optionsCount = options.length;
 
   const dropdownRef = useRef(null);
-
   const [open, setOpen] = useState(false);
+  const [searchText, changeSearch] = useState('');
 
-  const inactive = disabled || !options.length;
+  const inactive = disabled || !optionsCount;
 
   // нужно в дополнении к handleBlur
   // т к handleBlur не всегда вызывается в safari
@@ -51,6 +54,11 @@ function Dropdown(props) {
     setOpen(false);
   };
 
+  const handleSearch = event => {
+    event.persist();
+    changeSearch(event.target.value);
+  };
+
   const selectedText = (options.find(option => option.id === selected) || {}).name;
   const text = selectedText || initialText;
 
@@ -76,14 +84,36 @@ function Dropdown(props) {
     );
   };
 
+  const renderSearchField = () => {
+    return (
+      <div className={styles.searchWrap}>
+        <input
+          placeholder="Поиск..."
+          className={styles.searchInput}
+          type="text"
+          value={searchText}
+          onChange={handleSearch}
+        />
+      </div>
+    );
+  };
+
   const renderOverlay = () => {
     if (!open) {
       return null;
     }
 
+    const shouldRenderSearch = optionsCount > MAX_OPTIONS_WITHOUT_SEARCH;
+    const preparedSearch = searchText.toLowerCase();
+
+    const filteredOptions = searchText.length
+      ? options.filter(option => option.name.toLowerCase().search(preparedSearch) !== -1)
+      : options;
+
     return (
       <div className={styles.overlay}>
-        {options.map(option => (
+        {shouldRenderSearch && renderSearchField()}
+        {filteredOptions.map(option => (
           <Option
             key={option.id}
             id={option.id}
