@@ -162,7 +162,7 @@ class CarsDetail extends PureComponent {
       <div className={styles.head}>
         <div className={styles.autoHead}>
           <div className={styles.imageWrap}>
-            <img className={styles.image} src="/images/dealer_logo.png" alt={carName} />
+            <img className={styles.image} src={`/logo/${car.mark.toLowerCase()}.png`} alt={carName} />
           </div>
           <div className={styles.contentWrap}>
             <h1 className={styles.title}>{carName}</h1>
