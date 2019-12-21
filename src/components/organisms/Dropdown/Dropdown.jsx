@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cls from 'classnames';
 
 import ArrowDownIcon from '../../icons/ArrowDownIcon';
+import SearchIcon from '../../icons/SearchIcon';
 
 import Option from './blocks/Option';
 
@@ -94,6 +95,7 @@ function Dropdown(props) {
           value={searchText}
           onChange={handleSearch}
         />
+        <SearchIcon className={styles.searchIcon} />
       </div>
     );
   };

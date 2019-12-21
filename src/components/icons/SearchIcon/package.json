@@ -1,0 +1,6 @@
+{
+  "name": "search-icon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SearchIcon.jsx"
+}
