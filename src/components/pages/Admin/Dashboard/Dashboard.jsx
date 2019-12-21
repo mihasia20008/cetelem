@@ -54,16 +54,16 @@ const Dashboard = props => {
   return (
     <div className={styles.root}>
       <Grid container spacing={4}>
-        <Grid item xs={12} sm={6} lg={3} xl={3}>
+        <Grid item xs={12} sm={6}>
           <CarsTotal carsCount={statData.cars_total} />
         </Grid>
-        <Grid item xs={12} sm={6} lg={3} xl={3}>
+        <Grid item xs={12} sm={6}>
           <TotalReservations bookTotal={statData.reservations_total} />
         </Grid>
-        <Grid item xs={12} md={12} lg={12} xl={12}>
+        <Grid item xs={12}>
           <LatestSales />
         </Grid>
-        <Grid item xs={12} md={12} lg={12} xl={12}>
+        <Grid item xs={12}>
           <LatestOrders data={lastFiveBooks} statuses={reservStatuses} />
         </Grid>
       </Grid>
