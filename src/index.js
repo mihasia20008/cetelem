@@ -10,6 +10,14 @@ import store from './redux/configureStore';
 import history from './utilities/history';
 import { LayoutContextProvider } from './utilities/layoutContext';
 
+if (!('scrollBehavior' in document.documentElement.style)) {
+  // safari does not support smooth scroll
+  (async () => {
+    const { default: smoothScroll } = await import(/* webpackMode: "eager" */ 'smoothscroll-polyfill');
+    smoothScroll.polyfill();
+  })();
+}
+
 render(
   <Provider store={store}>
     <LayoutContextProvider>

@@ -114,10 +114,26 @@
 }
 
 .dealerName {
-  margin: 0 0 5px;
+  margin: 0;
   font-size: 14px;
   font-weight: 500;
   color: #000;
+}
+
+.dealerAnchor {
+  margin: 0 0 5px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  font-family: TTNorms, Arial, sans-serif;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .dealerAddress {

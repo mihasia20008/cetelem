@@ -6,7 +6,7 @@ import PinIcon from '../../../../../icons/PinIcon';
 
 import styles from './DealerMap.module.scss';
 
-function DealerMap(props) {
+const DealerMap = React.forwardRef((props, ref) => {
   const { name, address, /* rating, */ location, phone } = props;
 
   const formatPhone = text => {
@@ -20,7 +20,7 @@ function DealerMap(props) {
   };
 
   return (
-    <div className={styles.DealerMap}>
+    <div className={styles.DealerMap} ref={ref}>
       <YMaps>
         <Map
           width="100%"
@@ -63,6 +63,6 @@ function DealerMap(props) {
       </div>
     </div>
   );
-}
+});
 
 export default DealerMap;

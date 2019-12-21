@@ -32,6 +32,8 @@ class CarsDetail extends PureComponent {
     this.state = {
       openBookModal: false,
     };
+
+    this.dealerMapRef = React.createRef();
   }
 
   componentDidMount() {
@@ -69,6 +71,13 @@ class CarsDetail extends PureComponent {
         vin: car.vin,
       })
     );
+  };
+
+  goToMap = () => {
+    const mapRef = this.dealerMapRef.current;
+    if (mapRef) {
+      window.scroll({ top: mapRef.offsetTop - 85, left: 0, behavior: 'smooth' });
+    }
   };
 
   getFormattedVin = value => {
@@ -137,10 +146,10 @@ class CarsDetail extends PureComponent {
           <PinIcon className={styles.pinIcon} />
         </div>
         <div className={styles.dealerContent}>
-          <h3 className={styles.dealerName}>{dealer.trade_name}</h3>
-          <p className={styles.dealerAddress}>
-            {this.renderDealerAddress(dealer.address)}
-          </p>
+          <button type="button" className={styles.dealerAnchor} onClick={this.goToMap}>
+            <h3 className={styles.dealerName}>{dealer.trade_name}</h3>
+          </button>
+          <p className={styles.dealerAddress}>{this.renderDealerAddress(dealer.address)}</p>
         </div>
       </div>
     );
@@ -331,7 +340,11 @@ class CarsDetail extends PureComponent {
         {/*    <div className={styles.paymentValue}>1 500 000 ₽</div> */}
         {/*  </div> */}
         {/* </div> */}
-        <Button className={styles.bookButton} text="Бронировать" onClick={this.handleOpenBookForm} />
+        <Button
+          className={styles.bookButton}
+          text="Бронировать"
+          onClick={this.handleOpenBookForm}
+        />
       </div>
     );
   }
@@ -371,6 +384,7 @@ class CarsDetail extends PureComponent {
               {!layout.isMobile && this.renderPriceSidebar()}
             </div>
             <DealerMap
+              ref={this.dealerMapRef}
               name={dealer.trade_name}
               address={this.renderDealerAddress(dealer.address)}
               rating={_get(dealer, 'rate', 0)}
