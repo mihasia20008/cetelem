@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
-const useCloseOnOutsideEvents = ({ ref, callback, isOpen }) => {
+const useCloseOnOutsideEvents = ({ ref, callback, isOpen, disableBody }) => {
   const { current: domNode } = ref;
 
   const closeOnOutsideClick = useCallback(
@@ -18,7 +18,9 @@ const useCloseOnOutsideEvents = ({ ref, callback, isOpen }) => {
   useEffect(
     () => {
       if (isOpen) {
-        disableBodyScroll(ref);
+        if (disableBody) {
+          disableBodyScroll(ref);
+        }
         document.addEventListener('mousedown', closeOnOutsideClick);
         document.addEventListener('touchstart', closeOnOutsideClick);
       } else {
@@ -26,12 +28,14 @@ const useCloseOnOutsideEvents = ({ ref, callback, isOpen }) => {
         document.removeEventListener('touchstart', closeOnOutsideClick);
       }
       return () => {
-        enableBodyScroll(ref);
+        if (disableBody) {
+          enableBodyScroll(ref);
+        }
         document.removeEventListener('mousedown', closeOnOutsideClick);
         document.removeEventListener('touchstart', closeOnOutsideClick);
       };
     },
-    [closeOnOutsideClick, isOpen, ref]
+    [closeOnOutsideClick, disableBody, isOpen, ref]
   );
 };
 

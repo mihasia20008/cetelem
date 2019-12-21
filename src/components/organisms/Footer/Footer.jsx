@@ -26,8 +26,8 @@ class Footer extends PureComponent {
                     <img src="/images/footerLogo.svg" alt="Сетелем" />
                   </Link>
                   <div className={styles.location}>
-                    Выберите город:
-                    <LocationSelector primaryLink />
+                    <span className={styles.locationSubText}>Выберите город:</span>
+                    <LocationSelector type="footer" className={styles.locationBlock} primaryLink />
                   </div>
                 </div>
               </div>

@@ -6,7 +6,7 @@ import cls from 'classnames';
 import Container from '../../base/Container';
 import MenuIcon from '../../icons/MenuIcon';
 import LocationSelector from '../LocationSelector';
-import Modal from "../Modal";
+import Modal from '../Modal';
 
 import { withLayoutContext } from '../../../utilities/layoutContext';
 
@@ -63,7 +63,7 @@ class Header extends PureComponent {
 
     return (
       <>
-        <LocationSelector showIcon />
+        <LocationSelector type="header" position="right" className={styles.locationText} showIcon />
         <a className={styles.phone} href="tel: 88005005502">
           8 (800) 500-55-02
         </a>
@@ -93,7 +93,9 @@ class Header extends PureComponent {
     const { openPersonalModal } = this.state;
 
     return (
-      <div className={cls(styles.header, filled && styles.filledHeader, fixed && styles.fixedHeader)}>
+      <div
+        className={cls(styles.header, filled && styles.filledHeader, fixed && styles.fixedHeader)}
+      >
         <Container>
           <div className={styles.content}>
             <Link to="/" className={styles.logo}>

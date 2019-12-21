@@ -28,6 +28,7 @@ function Dropdown(props) {
   useCloseOnOutsideEvents({
     ref: dropdownRef,
     callback: useCallback(() => setOpen(false), [setOpen]),
+    isOpen: open,
   });
 
   const handleBlur = useCallback(
@@ -120,6 +121,7 @@ function Dropdown(props) {
             key={option.id}
             id={option.id}
             name={option.name}
+            searchText={searchText}
             selected={option.id == selected} // eslint-disable-line eqeqeq
             onSelect={handleSelect}
             onBlur={handleBlur}

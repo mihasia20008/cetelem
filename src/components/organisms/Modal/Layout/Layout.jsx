@@ -18,6 +18,7 @@ function Layout(props) {
     ref: contentRef,
     callback: useCallback(onClose, [onClose]),
     isOpen: mounted,
+    disableBody: true,
   });
 
   useEffect(() => {

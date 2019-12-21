@@ -1,6 +1,16 @@
 .LocationSelector {
+  position: relative;
+}
+
+.trigger {
   display: flex;
   align-items: center;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  font-family: TTNorms, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.53;
 
   &:hover {
     cursor: pointer;
@@ -13,9 +23,14 @@
       color: #e8f7ef;
     }
   }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .city {
+  text-align: left;
   margin-left: 10px;
   color: #7e7e7e;
   transition: 0.2s ease-in;
@@ -23,4 +38,66 @@
 
 .primaryLink {
   color: #22b25c;
+}
+
+.overlay {
+  position: absolute;
+  top: -16px;
+  z-index: 3;
+  padding: 18px 20px;
+  width: 320px;
+  height: 300px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.leftOverlay {
+  left: 0;
+}
+
+.rightOverlay {
+  right: 0;
+}
+
+.footerOverlay {
+  @media (min-width: 768px) {
+    height: 250px;
+    .optionsWrap {
+      height: 150px;
+    }
+  }
+}
+
+.searchWrap {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.searchInput {
+  padding: 12px 0;
+  width: 100%;
+  font-family: TTNorms, Arial, sans-serif;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #e4e4e4;
+  box-shadow: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.optionsWrap {
+  height: 200px;
+  overflow-y: scroll;
 }

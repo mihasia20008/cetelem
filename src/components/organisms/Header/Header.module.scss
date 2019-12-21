@@ -55,7 +55,6 @@
 
 .activeLink {
   color: #000;
-  //cursor: default;
 }
 
 .spacer {
@@ -64,11 +63,15 @@
 
 .phone,
 .personal {
-  margin-left: 20px;
+  margin-left: 10px;
   font-weight: 500;
   color: #000;
   text-decoration: none;
   transition: 0.2s ease-in;
+
+  @media (min-width: 900px) {
+    margin-left: 20px;
+  }
 
   @media (min-width: 1200px) {
     margin-left: 60px;
@@ -91,6 +94,14 @@
   font-size: 16px;
   border: none;
   background-color: transparent;
+}
+
+.locationText {
+  display: block;
+  max-width: 145px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .menuButton {

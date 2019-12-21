@@ -28,7 +28,7 @@
   & > div {
     flex-basis: 100%;
     @media (min-width: 768px) {
-      flex-basis: auto;
+      flex-basis: 0;
       flex-grow: 1;
     }
   }
@@ -49,12 +49,29 @@
 .logo {
   display: block;
   height: 30px;
+
+  @media (max-width: 767px) {
+    text-align: center;
+  }
 }
 
 .location {
   display: flex;
   margin-top: 8px;
   color: #7e7e7e;
+}
+
+.locationSubText {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.locationBlock {
+  display: block;
+  max-width: 145px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .phone {

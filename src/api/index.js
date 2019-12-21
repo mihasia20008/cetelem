@@ -5,6 +5,7 @@ import { AUTH_TOKEN_KEY } from '../constants';
 import * as userRequests from './user';
 import * as carsRequests from './cars';
 import * as filtersRequests from './filters';
+import * as locationRequests from './location';
 
 import * as adminUsersRequests from './admin/users';
 import * as adminCarsRequests from './admin/cars';
@@ -42,6 +43,7 @@ export {
   userRequests,
   carsRequests,
   filtersRequests,
+  locationRequests,
 
   adminUsersRequests,
   adminCarsRequests,
