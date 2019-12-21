@@ -54,7 +54,7 @@
 
 .activeLink {
   color: #000;
-  cursor: default;
+  //cursor: default;
 }
 
 .spacer {
@@ -74,6 +74,7 @@
   }
 
   &:hover {
+    cursor: pointer;
     color: #7e7e7e;
   }
 
@@ -88,6 +89,7 @@
   font-family: TTNorms, Arial, sans-serif;
   font-size: 16px;
   border: none;
+  background-color: transparent;
 }
 
 .menuButton {
