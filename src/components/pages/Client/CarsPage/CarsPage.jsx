@@ -217,6 +217,9 @@ class CarsPage extends PureComponent {
       switch (filters[key].type) {
         case FILTER_TYPES.CHECKBOX: {
           const { active } = filters[key];
+          if (active === -1) {
+            break;
+          }
           acc[key] = active;
           break;
         }

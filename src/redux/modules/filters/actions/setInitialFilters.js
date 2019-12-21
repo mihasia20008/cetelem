@@ -85,9 +85,10 @@ export default function setInitialFilters({ type, filters, query = {} }) {
             break;
           }
           case FILTER_TYPES.CHECKBOX: {
+            const active = parseInt(baseFiltersFromQuery[key], 10);
             updatedFilters[key] = {
               ...filters[key],
-              active: parseInt(baseFiltersFromQuery[key], 10),
+              active: active !== -1 ? active : filters[key].active,
             };
             break;
           }

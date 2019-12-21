@@ -35,7 +35,7 @@ function prepareFilters(filters) {
       case FILTER_TYPES.CHECKBOX: {
         acc[key] = {
           type: FILTER_TYPES.CHECKBOX,
-          active: 1,
+          active: -1,
           options: [
             {
               id: 1,
