@@ -15,6 +15,13 @@ const initialState = {
     error: false,
     success: false,
   },
+  default: {
+    initial: true,
+    loading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
   car: {
     initial: true,
     loading: false,
@@ -179,6 +186,44 @@ export default function filtersReducer(state = initialState, action = {}) {
         data: {
           ...state.data,
           ...action.data,
+        },
+      };
+    }
+    case T.FILTERS_DEAFULT_FETCH_START: {
+      return {
+        ...state,
+        default: {
+          ...state.default,
+          initial: false,
+          loading: true,
+        },
+      };
+    }
+    case T.FILTERS_DEAFULT_FETCH_END: {
+      return {
+        ...state,
+        default: {
+          ...state.default,
+          loading: false,
+        },
+      };
+    }
+    case T.FILTERS_DEAFULT_FETCH_ERROR: {
+      return {
+        ...state,
+        default: {
+          ...state.default,
+          error: action.data,
+        },
+      };
+    }
+    case T.FILTERS_DEAFULT_SUCCESS_LOADED: {
+      return {
+        ...state,
+        default: {
+          ...state.default,
+          success: true,
+          data: action.data,
         },
       };
     }

@@ -61,24 +61,36 @@ class CarsPage extends PureComponent {
       dispatch,
     } = this.props;
 
-    const { mark_id: markId, model_id: modelId, brand, model } = query;
+    const { mark_id: queryMark, model_id: queryModel, brand, model } = query;
 
-    allSettled([
-      dispatch(filtersActions.getDealers()),
-      dispatch(filtersActions.getBase()),
-      dispatch(
-        filtersActions.getCarFilter({
-          markId,
-          loadMarks: true,
-          modelId,
-          loadModels: Boolean(modelId),
-          brand,
-          model,
-        })
-      ),
-    ]).then(() => {
-      dispatch(loadCarsList(query));
-    });
+    dispatch(filtersActions.getDefault())
+      .then(result => {
+        const { mark_id: defaultMark, model_id: defaultModel } = result;
+        const markId =
+          // eslint-disable-next-line no-nested-ternary
+          queryMark !== undefined ? queryMark : defaultMark !== -1 ? defaultMark : undefined;
+        const modelId =
+          // eslint-disable-next-line no-nested-ternary
+          queryMark !== undefined ? queryModel : defaultModel !== -1 ? defaultModel : undefined;
+
+        return allSettled([
+          dispatch(filtersActions.getDealers()),
+          dispatch(filtersActions.getBase()),
+          dispatch(
+            filtersActions.getCarFilter({
+              markId,
+              loadMarks: true,
+              modelId,
+              loadModels: Boolean(markId),
+              brand,
+              model,
+            })
+          ),
+        ]);
+      })
+      .then(() => {
+        dispatch(loadCarsList(query));
+      });
   }
 
   componentDidUpdate(prevProps) {
