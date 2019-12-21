@@ -110,12 +110,12 @@ class SideFilter extends PureComponent {
   render() {
     const { sort, filters, onApply } = this.props;
 
-    const isSelectNew = filters[FILTER_NAMES.NEW].active === 1;
-    const bottomFilters = isSelectNew
-      ? sort.BOTTOM.filter(
+    const isSelectOld = filters[FILTER_NAMES.NEW].active === 0;
+    const bottomFilters = isSelectOld
+      ? sort.BOTTOM
+      : sort.BOTTOM.filter(
           key => ![FILTER_NAMES.STATE, FILTER_NAMES.RUN, FILTER_NAMES.MODIFICATION].includes(key)
-        )
-      : sort.BOTTOM;
+        );
 
     return (
       <div className={styles.SideFilter}>
