@@ -9,7 +9,9 @@ function CarItem(props) {
   return (
     <div className={styles.CarItem}>
       <div className={styles.imageWrap}>
-        <img className={styles.image} src={image} alt={name} />
+        <Link className={styles.imageLink} to={link}>
+          <img className={styles.image} src={image} alt={name} />
+        </Link>
       </div>
       <Link className={styles.link} to={link}>
         <h3 className={styles.name}>{name}</h3>
