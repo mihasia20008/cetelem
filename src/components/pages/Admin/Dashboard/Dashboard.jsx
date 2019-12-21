@@ -10,12 +10,14 @@ import PageLoading from '../../../../routes/PageLoading';
 
 import CarsTotal from '../../../organisms/Admin/DashboardItems/CarsTotal';
 import TotalReservations from '../../../organisms/Admin/DashboardItems/TotalReservations';
+import LatestReservations from '../../../organisms/Admin/DashboardItems/LatestReservations';
 
-import LatestSales from './blocks/LatestSales';
 import LatestOrders from './blocks/LatestOrders';
 
 import { getReservations } from '../../../../redux/modules/admin/reservations/actions';
 import { getStatistics } from '../../../../redux/modules/admin/statistics/actions';
+
+import { RoutesPaths } from '../../../../constants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,6 +53,8 @@ const Dashboard = props => {
 
   const lastFiveBooks = reservData.slice(0, 5);
 
+  console.log(statData);
+
   return (
     <div className={styles.root}>
       <Grid container spacing={4}>
@@ -60,9 +64,11 @@ const Dashboard = props => {
         <Grid item xs={12} sm={6}>
           <TotalReservations bookTotal={statData.reservations_total} />
         </Grid>
-        <Grid item xs={12}>
-          <LatestSales />
-        </Grid>
+        {Object.keys(statData.statistics || {}).length ? (
+          <Grid item xs={12}>
+            <LatestReservations href={RoutesPaths.admin.reservations} books={statData.statistics} />
+          </Grid>
+        ) : null}
         <Grid item xs={12}>
           <LatestOrders data={lastFiveBooks} statuses={reservStatuses} />
         </Grid>

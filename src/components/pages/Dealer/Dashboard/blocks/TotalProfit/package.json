@@ -1,6 +1,0 @@
-{
-  "name": "dashboard-total-profit",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./TotalProfit.jsx"
-}

@@ -1,0 +1,6 @@
+{
+  "name": "dashboard-latest-reservations",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LatestReservations.jsx"
+}

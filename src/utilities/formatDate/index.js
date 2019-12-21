@@ -1,4 +1,4 @@
-export default function formatDate(dateText) {
+export default function formatDate(dateText, withTime = true) {
   const dateInstance = new Date(dateText);
 
   // eslint-disable-next-line eqeqeq
@@ -12,6 +12,10 @@ export default function formatDate(dateText) {
     .padStart(2, '0');
   const month = (dateInstance.getMonth() + 1).toString().padStart(2, '0');
   const date = `${day}.${month}.${dateInstance.getFullYear()}`;
+
+  if (!withTime) {
+    return date;
+  }
 
   const hours = dateInstance.getHours().toString().padStart(2, '0');
   const minutes = dateInstance.getMinutes().toString().padStart(2, '0');
