@@ -9,6 +9,7 @@ import Container from '../../../base/Container';
 import Button from '../../../base/Button';
 import PageLoading from '../../../../routes/PageLoading';
 import FilterIcon from '../../../icons/FilterIcon';
+import CloseIcon from '../../../icons/CloseIcon';
 import Modal from '../../../organisms/Modal';
 
 import CarsList from './blocks/CarsList';
@@ -21,6 +22,7 @@ import * as filtersActions from '../../../../redux/modules/filters/actions';
 
 import { FILTER_TYPES, FILTER_NAMES, FILTERS_SORT } from '../../../../constants';
 import allSettled from '../../../../utilities/allSettled';
+import formatNumber from '../../../../utilities/formatNumber';
 import { withLayoutContext } from '../../../../utilities/layoutContext';
 
 import styles from './CarsPage.module.scss';
@@ -202,11 +204,11 @@ class CarsPage extends PureComponent {
     } = this.props;
     dispatch(filtersActions.changeFilter(name, value));
 
-    if (name === FILTER_NAMES.MARK) {
+    if (name === FILTER_NAMES.MARK && value > 0) {
       dispatch(filtersActions.getCarFilter({ markId: value, loadMarks: false, loadModels: true }));
     }
 
-    if (name === FILTER_NAMES.MODEL) {
+    if (name === FILTER_NAMES.MODEL && value > 0) {
       const { active, options } = filters[FILTER_NAMES.MARK];
       const markId = options[active].id;
       dispatch(
@@ -306,6 +308,38 @@ class CarsPage extends PureComponent {
 
   handleCloseModal = () => this.setState({ modalOpen: false });
 
+  handleResetFilter = filter => () => {
+    let value;
+    switch (filter.type) {
+      case FILTER_TYPES.CHECKBOX:
+      case FILTER_TYPES.SELECT: {
+        value = -1;
+        break;
+      }
+      case FILTER_TYPES.RANGE: {
+        if (filter.value !== undefined && filter.secondPart !== undefined) {
+          if (filter.side === 'min') {
+            value = { min: filter.value, max: filter.secondPart };
+          }
+          if (filter.side === 'max') {
+            value = { min: filter.secondPart, max: filter.value };
+          }
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+
+    if (!value) {
+      return;
+    }
+
+    this.handleFilterChange(filter.key, value);
+    setTimeout(() => this.handleFilterApply(), 0);
+  };
+
   renderSideFilter = () => {
     const { filters } = this.props;
 
@@ -350,8 +384,88 @@ class CarsPage extends PureComponent {
   }
 
   renderMobileFilters() {
+    const {
+      filters: { data: filters },
+      location,
+    } = this.props;
+
+    const activeFilters = [...FILTERS_SORT.SIDE.TOP, ...FILTERS_SORT.SIDE.BOTTOM].reduce(
+      (acc, key) => {
+        const filter = filters[key];
+        if (!filter || !location.query[key]) {
+          return acc;
+        }
+
+        switch (filter.type) {
+          case FILTER_TYPES.SELECT:
+          case FILTER_TYPES.CHECKBOX: {
+            if (filter.active !== -1) {
+              const activeOption = filter.options.find(option => option.id === filter.active);
+              if (activeOption) {
+                acc.push({
+                  key,
+                  name: activeOption.name,
+                  type: filter.type,
+                });
+              }
+            }
+            break;
+          }
+          case FILTER_TYPES.RANGE: {
+            if (filter.values[0] !== filter.min) {
+              acc.push({
+                key,
+                name: `> ${
+                  key === FILTER_NAMES.YEAR ? filter.values[0] : formatNumber(filter.values[0])
+                }${filter.unit}`,
+                type: filter.type,
+                side: 'min',
+                value: filter.min,
+                secondPart: filter.values[1],
+              });
+            }
+            if (filter.values[1] !== filter.max) {
+              acc.push({
+                key,
+                name: `< ${
+                  key === FILTER_NAMES.YEAR ? filter.values[1] : formatNumber(filter.values[1])
+                }${filter.unit}`,
+                type: filter.type,
+                side: 'max',
+                value: filter.max,
+                secondPart: filter.values[0],
+              });
+            }
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+
+        return acc;
+      },
+      []
+    );
+
     return (
       <div className={styles.mobileFilters}>
+        {activeFilters.length ? (
+          <div className={styles.tagList}>
+            {activeFilters.map(activeFilter => (
+              <div key={`${activeFilter.key}${activeFilter.side || ''}`} className={styles.tagItem}>
+                <span className={styles.tagName}>{activeFilter.name}</span>
+                <button
+                  type="button"
+                  className={styles.tagButton}
+                  onClick={this.handleResetFilter(activeFilter)}
+                >
+                  <CloseIcon className={styles.tagIcon} />
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : null}
         <Button
           className={styles.filterButton}
           text={

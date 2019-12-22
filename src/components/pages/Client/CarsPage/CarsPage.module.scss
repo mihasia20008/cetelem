@@ -87,3 +87,52 @@
 .buttonIcon {
   margin-right: 15px;
 }
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tagItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 12px 20px;
+  min-width: 95px;
+  border-radius: 20px;
+  background-color: #22b25c;
+  color: #fff;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.tagName {
+  margin-right: 10px;
+  user-select: none;
+}
+
+.tagButton {
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.tagIcon {
+  width: 16px;
+  height: 16px;
+}

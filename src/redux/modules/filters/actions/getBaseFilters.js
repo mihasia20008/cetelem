@@ -19,6 +19,14 @@ const baseNameMap = {
   [`${FILTER_NAMES.AVAILABLE}`]: 'Любой статус',
 };
 
+const baseUnitsMap = {
+  [`${FILTER_NAMES.YEAR}`]: '',
+  [`${FILTER_NAMES.ENGINE_HP}`]: ' л/с',
+  [`${FILTER_NAMES.ENGINE_VOLUME}`]: ' л',
+  [`${FILTER_NAMES.PRICE}`]: ' ₽',
+  [`${FILTER_NAMES.RUN}`]: ' км',
+};
+
 function prepareFilters(filters) {
   return Object.keys(filters).reduce((acc, key) => {
     switch (filters[key].type) {
@@ -26,6 +34,7 @@ function prepareFilters(filters) {
         acc[key] = {
           type: FILTER_TYPES.RANGE,
           text: baseNameMap[key] || filters[key].text,
+          unit: baseUnitsMap[key],
           min: filters[key].min,
           max: filters[key].max,
           values: [filters[key].min, filters[key].max],
