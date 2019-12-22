@@ -22,16 +22,59 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './SimpleTable.module.scss';
 
 export const ACTIONS_COLUMN_ID = 'actions';
-export const PER_PAGE_VARIANTS = [5, 10, 25];
+export const PER_PAGE_VARIANTS = [5, 10, 30];
 
 function SimpleTable(props) {
-  const { location, history, hidePagination, headers, list, statuses, onEdit, onDelete } = props;
+  const {
+    paginateOnServer,
+    location,
+    history,
+    hidePagination,
+    headers,
+    list,
+    meta,
+    statuses,
+    onEdit,
+    onDelete,
+  } = props;
   const { page: queryPage, per_page: queryPerPage } = location.query;
 
-  const [page, setPage] = useState(queryPage ? +queryPage - 1 : 0);
-  const [rowsPerPage, setRowsPerPage] = useState(
-    PER_PAGE_VARIANTS.includes(+queryPerPage) ? +queryPerPage : 10
-  );
+  let initialPage;
+  switch (true) {
+    case paginateOnServer && meta.page !== undefined: {
+      initialPage = meta.page - 1;
+      break;
+    }
+    case queryPage !== undefined: {
+      initialPage = +queryPage - 1;
+      break;
+    }
+    default: {
+      initialPage = 0;
+      break;
+    }
+  }
+  const [page, setPage] = useState(initialPage);
+
+  let initialPerPage;
+  switch (true) {
+    case queryPage !== undefined && PER_PAGE_VARIANTS.includes(+queryPerPage): {
+      initialPerPage = +queryPerPage;
+      break;
+    }
+    case paginateOnServer && meta.perPage !== undefined: {
+      initialPerPage = meta.perPage;
+      if (!PER_PAGE_VARIANTS.includes(meta.perPage)) {
+        PER_PAGE_VARIANTS.push(meta.perPage);
+      }
+      break;
+    }
+    default: {
+      initialPerPage = 10;
+      break;
+    }
+  }
+  const [rowsPerPage, setRowsPerPage] = useState(initialPerPage);
 
   useEffect(() => {
     const query = {
@@ -45,10 +88,10 @@ function SimpleTable(props) {
   }, [history, location.pathname, location.query, page, rowsPerPage]);
 
   useEffect(() => {
-    if (statuses.success && page * rowsPerPage >= list.length) {
+    if (!paginateOnServer && statuses.success && page * rowsPerPage >= list.length) {
       setPage(0);
     }
-  }, [list.length, page, rowsPerPage, statuses.success]);
+  }, [list.length, page, paginateOnServer, rowsPerPage, statuses.success]);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -103,7 +146,10 @@ function SimpleTable(props) {
         }
         if (typeof column.formatter === 'function') {
           return (
-            <TableCell key={column.id} className={cls(column.id !== 'address' ? styles.tableCell : styles.alterCell)}>
+            <TableCell
+              key={column.id}
+              className={cls(column.id !== 'address' ? styles.tableCell : styles.alterCell)}
+            >
               {column.formatter(item[column.id], item)}
             </TableCell>
           );
@@ -117,15 +163,20 @@ function SimpleTable(props) {
     </>
   );
 
-  const renderTableBody = () => (
-    <TableBody>
-      {list.slice(page * rowsPerPage, (page + 1) * rowsPerPage).map((item, index) => (
-        <TableRow key={item.id || index} hover>
-          {renderTableItem(item)}
-        </TableRow>
-      ))}
-    </TableBody>
-  );
+  const renderTableBody = () => {
+    const items = paginateOnServer
+      ? list
+      : list.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+    return (
+      <TableBody>
+        {items.map((item, index) => (
+          <TableRow key={item.id || index} hover>
+            {renderTableItem(item)}
+          </TableRow>
+        ))}
+      </TableBody>
+    );
+  };
 
   const renderNoData = () => {
     if (!statuses.initial && !statuses.loading && !list.length) {
@@ -156,14 +207,14 @@ function SimpleTable(props) {
       <div className={styles.actionsWrap}>
         <TablePagination
           component="div"
-          count={list.length}
+          count={paginateOnServer ? meta.total : list.length}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleRowsPerPageChange}
           labelRowsPerPage="Элементов на странице"
           labelDisplayedRows={getItemsOnPageInfo}
           page={statuses.success ? page : 0}
           rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={PER_PAGE_VARIANTS}
         />
       </div>
     );
@@ -183,6 +234,7 @@ function SimpleTable(props) {
 }
 
 SimpleTable.propTypes = {
+  paginateOnServer: PropTypes.bool,
   hidePagination: PropTypes.bool,
   headers: PropTypes.arrayOf(
     PropTypes.shape({
@@ -203,6 +255,7 @@ SimpleTable.propTypes = {
 };
 
 SimpleTable.defaultProps = {
+  paginateOnServer: false,
   hidePagination: false,
   list: [],
   statuses: {},

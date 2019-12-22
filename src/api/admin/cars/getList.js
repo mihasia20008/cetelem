@@ -1,14 +1,28 @@
 import axios from 'axios';
+import qs from 'qs';
 
-async function getList() {
+const page = 'x-page';
+const pagesCount = 'x-pages-number';
+const perPage = 'x-per-page';
+const total = 'x-total';
+
+async function getList(params) {
   try {
-    const { data } = await axios({
+    const { headers, data } = await axios({
       method: 'GET',
-      url: '/api/v1/admin/cars',
+      url: `/api/v1/admin/cars?${qs.stringify(params)}`,
     });
 
     return {
-      data,
+      data: {
+        list: data,
+        meta: {
+          page: +headers[page],
+          total: +headers[total],
+          perPage: +headers[perPage],
+          pagesCount: +headers[pagesCount],
+        },
+      },
       error: null,
     };
   } catch (err) {

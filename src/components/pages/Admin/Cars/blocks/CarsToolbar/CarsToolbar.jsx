@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cls from 'classnames';
 
+import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 import SearchInput from '../../../../../organisms/Admin/SearchInput';
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CarsToolbar = props => {
-  const { className, searchText, onSearch } = props;
+  const { className, searchText, onSearch, onOpenCreateForm } = props;
 
   const styles = useStyles();
 
@@ -41,6 +42,12 @@ const CarsToolbar = props => {
           value={searchText}
           onChange={onSearch}
         />
+      </div>
+      <div className={styles.row}>
+        <span className={styles.spacer} />
+        <Button color="primary" variant="contained" onClick={onOpenCreateForm}>
+          Добавить
+        </Button>
       </div>
     </div>
   );

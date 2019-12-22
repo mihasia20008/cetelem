@@ -5,7 +5,9 @@ const initialState = {
   success: false,
   error: false,
   loading: false,
+  reload: false,
   data: [],
+  meta: {},
 };
 
 export default function reservationsReducer(state = initialState, action = {}) {
@@ -14,6 +16,7 @@ export default function reservationsReducer(state = initialState, action = {}) {
       return {
         ...state,
         initial: false,
+        reload: false,
         loading: true,
       };
     }
@@ -39,7 +42,16 @@ export default function reservationsReducer(state = initialState, action = {}) {
       return {
         ...state,
         success: true,
-        data: action.data,
+        data: action.data.list,
+        meta: action.data.meta,
+      };
+    }
+    case T.CARS_ITEM_CREATED:
+    case T.CARS_ITEM_UPDATED:
+    case T.CARS_ITEM_DELETED: {
+      return {
+        ...state,
+        reload: true,
       };
     }
     default: {

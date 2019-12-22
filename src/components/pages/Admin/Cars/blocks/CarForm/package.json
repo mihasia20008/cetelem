@@ -1,0 +1,6 @@
+{
+  "name": "car-form",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CarForm.jsx"
+}
