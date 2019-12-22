@@ -32,7 +32,7 @@ function Button(props) {
 Button.propTypes = {
   className: PropTypes.string,
   type: PropTypes.string,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.node.isRequired,
   inverse: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(SIZE_TYPES)),
   onClick: PropTypes.func.isRequired,

@@ -6,7 +6,10 @@ import _isEqual from 'lodash/isEqual';
 import _omit from 'lodash/omit';
 
 import Container from '../../../base/Container';
+import Button from '../../../base/Button';
 import PageLoading from '../../../../routes/PageLoading';
+import FilterIcon from '../../../icons/FilterIcon';
+import Modal from '../../../organisms/Modal';
 
 import CarsList from './blocks/CarsList';
 import TopFilter from './blocks/TopFilter';
@@ -18,6 +21,7 @@ import * as filtersActions from '../../../../redux/modules/filters/actions';
 
 import { FILTER_TYPES, FILTER_NAMES, FILTERS_SORT } from '../../../../constants';
 import allSettled from '../../../../utilities/allSettled';
+import { withLayoutContext } from '../../../../utilities/layoutContext';
 
 import styles from './CarsPage.module.scss';
 
@@ -52,6 +56,7 @@ class CarsPage extends PureComponent {
         },
       },
       title: 'Подбор автомобиля',
+      modalOpen: false,
     };
   }
 
@@ -97,14 +102,17 @@ class CarsPage extends PureComponent {
     const {
       location: { query: prevQuery },
       filters: prevFilters,
+      layout: prevLayout,
       success: prevCarsLoadSuccess,
     } = prevProps;
     const {
       location: { query },
       filters: currentFilters,
+      layout: nowLayout,
       success: nowCarsLoadSuccess,
       dispatch,
     } = this.props;
+    const { modalOpen } = this.state;
 
     if (currentFilters.base.success && !prevFilters.base.success) {
       dispatch(
@@ -133,6 +141,10 @@ class CarsPage extends PureComponent {
         !prevFilters.base.success)
     ) {
       this.handleFilterApply();
+    }
+
+    if (prevLayout.isMobile && !nowLayout.isMobile && modalOpen) {
+      this.handleCloseModal();
     }
 
     if (!_isEqual(query, prevQuery)) {
@@ -231,6 +243,7 @@ class CarsPage extends PureComponent {
     const {
       location,
       history,
+      layout,
       filters: { data: filters },
     } = this.props;
 
@@ -277,6 +290,9 @@ class CarsPage extends PureComponent {
     this.setState({
       title: this.getActualTitle(),
     });
+    if (layout.isMobile) {
+      this.handleCloseModal();
+    }
   };
 
   handleGoToPage = page => {
@@ -286,7 +302,11 @@ class CarsPage extends PureComponent {
     history.push(`${location.pathname}?${qs.stringify(query)}`);
   };
 
-  renderSideFilter() {
+  handleOpenModal = () => this.setState({ modalOpen: true });
+
+  handleCloseModal = () => this.setState({ modalOpen: false });
+
+  renderSideFilter = () => {
     const { filters } = this.props;
 
     if (!filters.base.success) {
@@ -308,7 +328,7 @@ class CarsPage extends PureComponent {
         />
       </div>
     );
-  }
+  };
 
   renderTopFilters() {
     const { filters } = this.props;
@@ -326,6 +346,23 @@ class CarsPage extends PureComponent {
         filters={topFilters}
         onFilter={this.handleFilterChange}
       />
+    );
+  }
+
+  renderMobileFilters() {
+    return (
+      <div className={styles.mobileFilters}>
+        <Button
+          className={styles.filterButton}
+          text={
+            <div className={styles.buttonText}>
+              <FilterIcon className={styles.buttonIcon} />
+              Фильтры
+            </div>
+          }
+          onClick={this.handleOpenModal}
+        />
+      </div>
     );
   }
 
@@ -355,22 +392,33 @@ class CarsPage extends PureComponent {
   }
 
   render() {
-    const { title } = this.state;
+    const { title, modalOpen } = this.state;
+    const { layout } = this.props;
 
     return (
       <div className={styles.container}>
         <Container>
           <div className={styles.wrapper}>
-            {this.renderSideFilter()}
+            {!layout.isMobile && this.renderSideFilter()}
             <div className={styles.content}>
               <div className={styles.head}>
                 <h1 className={styles.title}>{title}</h1>
                 {this.renderTopFilters()}
               </div>
+              {layout.isMobile && this.renderMobileFilters()}
               {this.renderContent()}
             </div>
           </div>
         </Container>
+        <Modal
+          id="filters-modal"
+          title="Фильтры"
+          open={modalOpen}
+          isFullScreen
+          onClose={this.handleCloseModal}
+        >
+          {this.renderSideFilter()}
+        </Modal>
       </div>
     );
   }
@@ -388,4 +436,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(CarsPage);
+export default connect(mapStateToProps)(withLayoutContext(CarsPage));

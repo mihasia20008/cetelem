@@ -10,7 +10,7 @@ function CarItem(props) {
     <div className={styles.CarItem}>
       <div className={styles.imageWrap}>
         <Link className={styles.imageLink} to={link}>
-          <img className={styles.image} src={image} alt={name} />
+          <div className={styles.image} style={{backgroundImage: `url(${image})` } }/>
         </Link>
       </div>
       <Link className={styles.link} to={link}>
