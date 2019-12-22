@@ -5,15 +5,18 @@ import { connect } from 'react-redux';
 
 import _get from 'lodash/get';
 
+import SearchIcon from '../../icons/SearchIcon';
+import Option from '../Dropdown/blocks/Option';
+import Modal from '../Modal';
+
 import LocationIcon from './blocks/LocationIcon';
 
 import useCloseOnOutsideEvents from '../../../utilities/useCloseOnOutsideEvents';
+import { withLayoutContext } from '../../../utilities/layoutContext';
 
 import * as locationActions from '../../../redux/modules/location/actions';
 
 import styles from './LocationSelector.module.scss';
-import SearchIcon from '../../icons/SearchIcon';
-import Option from '../Dropdown/blocks/Option';
 
 function LocationSelector(props) {
   const {
@@ -25,6 +28,7 @@ function LocationSelector(props) {
     position,
     selectedText,
     options,
+    layout,
     dispatch,
   } = props;
 
@@ -48,12 +52,22 @@ function LocationSelector(props) {
   // т к handleBlur не всегда вызывается в safari
   useCloseOnOutsideEvents({
     ref: locationRef,
-    callback: useCallback(() => handleCloseOverlay(), [handleCloseOverlay]),
+    callback: useCallback(() => {
+      if (layout.isMobile) {
+        return;
+      }
+
+      handleCloseOverlay()
+    }, [handleCloseOverlay, layout.isMobile]),
     isOpen: open,
   });
 
   const handleBlur = useCallback(
     event => {
+      if (layout.isMobile) {
+        return;
+      }
+
       event.persist();
       const { current: domNode } = locationRef;
       let { relatedTarget } = event;
@@ -68,7 +82,7 @@ function LocationSelector(props) {
         setTimeout(() => handleCloseOverlay(), 0);
       }
     },
-    [locationRef, handleCloseOverlay]
+    [layout.isMobile, handleCloseOverlay]
   );
 
   const handleOpen = () => setOpen(true);
@@ -114,20 +128,9 @@ function LocationSelector(props) {
     );
   };
 
-  const renderOverlay = () => {
-    if (!open) {
-      return null;
-    }
-
+  const renderOverlayContent = () => {
     return (
-      <div
-        className={cls(
-          styles.overlay,
-          position === 'left' && styles.leftOverlay,
-          position === 'right' && styles.rightOverlay,
-          type === 'footer' && styles.footerOverlay,
-        )}
-      >
+      <>
         {renderSearchField()}
         <div className={styles.optionsWrap}>
           {options.map(option => (
@@ -142,6 +145,39 @@ function LocationSelector(props) {
             />
           ))}
         </div>
+      </>
+    );
+  };
+
+  const renderOverlay = () => {
+    if (layout.isMobile) {
+      return (
+        <Modal
+          id="location-modal"
+          title="Выбор местоположения"
+          open={open}
+          isFullScreen
+          onClose={handleCloseOverlay}
+        >
+          {renderOverlayContent()}
+        </Modal>
+      );
+    }
+
+    if (!open) {
+      return null;
+    }
+
+    return (
+      <div
+        className={cls(
+          styles.overlay,
+          position === 'left' && styles.leftOverlay,
+          position === 'right' && styles.rightOverlay,
+          type === 'footer' && styles.footerOverlay
+        )}
+      >
+        {renderOverlayContent()}
       </div>
     );
   };
@@ -186,4 +222,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(LocationSelector);
+export default connect(mapStateToProps)(withLayoutContext(LocationSelector));

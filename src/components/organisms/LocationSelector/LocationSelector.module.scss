@@ -98,6 +98,9 @@
 }
 
 .optionsWrap {
-  height: 200px;
+  height: calc(100vh - 140px);
+  @media (min-width: 768px) {
+    height: 200px;
+  }
   overflow-y: scroll;
 }
