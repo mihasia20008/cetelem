@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import cls from 'classnames';
 
 import Container from '../../base/Container';
-import MenuIcon from '../../icons/MenuIcon';
+// import MenuIcon from '../../icons/MenuIcon';
 import LocationSelector from '../LocationSelector';
 import Modal from '../Modal';
 
@@ -82,14 +82,18 @@ class Header extends PureComponent {
     }
 
     return (
-      <button type="button" className={styles.menuButton}>
-        <MenuIcon />
+      <button
+        type="button"
+        className={cls(styles.personal, styles.mobilePersonal)}
+        onClick={this.handleOpenPersonalModal}
+      >
+        Ваш кредит
       </button>
     );
   }
 
   render() {
-    const { filled, fixed } = this.props;
+    const { filled, fixed, layout } = this.props;
     const { openPersonalModal } = this.state;
 
     return (
@@ -107,7 +111,13 @@ class Header extends PureComponent {
             {this.renderInfo()}
           </div>
         </Container>
-        <Modal id="personal-modal" open={openPersonalModal} onClose={this.handleClosePersonalModal}>
+        <Modal
+          id="personal-modal"
+          title="Ваш кредит"
+          open={openPersonalModal}
+          isFullScreen={layout.isMobile}
+          onClose={this.handleClosePersonalModal}
+        >
           <PersonalInfo />
         </Modal>
       </div>

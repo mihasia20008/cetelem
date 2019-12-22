@@ -1,34 +1,116 @@
 .PersonalInfo {
   position: relative;
-  background-color: #22b25c;
+  background-color: #e7de68;
   border-radius: 12px;
-  padding: 30px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+
+  padding: 25px 20px 35px;
 
   @media (min-width: 768px) {
     width: 630px;
     padding: 55px 65px 90px;
+    box-shadow: none;
   }
 }
 
 .iconWrap {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.icon {
+  fill: #000;
 }
 
 .text,
 .info {
-  font-size: 24px;
+  font-size: 14px;
   line-height: 1.2;
-  text-align: center;
-  color: #ffffff;
+  color: #000;
+
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
 }
 
 .text {
-  margin: 40px 0 0;
+  margin: 0;
   font-weight: 500;
+
+  @media (min-width: 768px) {
+    margin: 40px 0 0;
+    text-align: center;
+  }
 }
 
 .info {
-  margin: 20px 0 0;
+  margin: 0;
+  font-weight: 500;
+  @media (min-width: 768px) {
+    margin: 20px 0 0;
+    font-weight: 400;
+  }
+}
+
+.params {
+  margin-top: 22px;
+}
+
+.paramsItem {
+  position: relative;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #000;
+
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+  }
+
+  & > span {
+    flex-basis: 50%;
+  }
+
+  & + .paramsItem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -20px;
+    right: -20px;
+    height: 1px;
+    background-color: #000;
+
+    @media (min-width: 768px) {
+      right: 0;
+      left: 0;
+    }
+  }
+}
+
+.paramsName,
+.paramsValue {
+  @media (max-width: 767px) {
+    display: block;
+  }
+}
+
+.paramsValue {
+  font-weight: 700;
+  @media (max-width: 767px) {
+    margin-top: 10px;
+  }
+}
+
+.mark {
+  margin: 40px 0 0;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #000;
+  font-style: italic;
 }

@@ -26,6 +26,8 @@ function RenderComponent({ matchProps, component: Component }) {
         price: query.price,
         rate: query.rate,
         downpayment: query.downpayment,
+        monthlypayment: query.monthlypayment,
+        sum: query.sum,
       };
       localStorage.setItem(CLIENT_PARAMS_KEY, JSON.stringify(params));
     }
