@@ -53,8 +53,6 @@ const Dashboard = props => {
 
   const lastFiveBooks = reservData.slice(0, 5);
 
-  console.log(statData);
-
   return (
     <div className={styles.root}>
       <Grid container spacing={4}>

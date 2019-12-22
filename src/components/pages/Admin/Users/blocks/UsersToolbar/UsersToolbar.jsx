@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cls from 'classnames';
 
-import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
-
-// import SearchInput from '../../../../../organisms/Admin/SearchInput';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,12 +36,7 @@ const UsersToolbar = props => {
       {...rest}
       className={cls(styles.root, className)}
     >
-      <div className={styles.row}>
-        {/* <SearchInput */}
-        {/*  className={styles.searchInput} */}
-        {/*  placeholder="Найти" */}
-        {/* /> */}
-      </div>
+      <div className={styles.row} />
       <div className={styles.row}>
         <span className={styles.spacer} />
         <Button
