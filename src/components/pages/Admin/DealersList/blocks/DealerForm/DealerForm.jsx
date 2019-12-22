@@ -24,6 +24,7 @@ import { makeStyles } from '@material-ui/styles';
 import ErrorShower from '../../../../../organisms/Admin/ErrorShower';
 
 import { dealerSchema } from './schema';
+import AutoComplete from './Autocomplete';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -65,7 +66,9 @@ function DealerForm(props) {
       postcode: _get(dealer, 'address.postcode', ''),
       country: _get(dealer, 'address.country', ''),
       region: _get(dealer, 'address.region', ''),
+      regionId: _get(dealer, 'address.region_id', -1),
       city: _get(dealer, 'address.city', ''),
+      cityId: _get(dealer, 'address.city_id', -1),
       street: _get(dealer, 'address.street', ''),
       building: _get(dealer, 'address.building', ''),
       locationX: _get(dealer, 'address.location.x', ''),
@@ -125,6 +128,60 @@ function DealerForm(props) {
       return;
     }
     onSubmit(formState.values);
+  };
+
+  const handleSelect = (type, selected) => {
+    if (!selected) {
+      if (type === 'regions') {
+        setFormState(oldFormState => ({
+          ...oldFormState,
+          values: {
+            ...oldFormState.values,
+            regionId: -1,
+            region: '',
+            cityId: -1,
+            city: '',
+          },
+        }));
+      } else {
+        setFormState(oldFormState => ({
+          ...oldFormState,
+          values: {
+            ...oldFormState.values,
+            cityId: -1,
+            city: '',
+          },
+        }));
+      }
+      return;
+    }
+    if (type === 'regions') {
+      setFormState(oldFormState => ({
+        ...oldFormState,
+        values: {
+          ...oldFormState.values,
+          regionId: selected.id,
+          region: selected.name,
+        },
+        touched: {
+          ...oldFormState.touched,
+          region: true,
+        },
+      }));
+    } else {
+      setFormState(oldFormState => ({
+        ...oldFormState,
+        values: {
+          ...oldFormState.values,
+          cityId: selected.id,
+          city: selected.name,
+        },
+        touched: {
+          ...oldFormState.touched,
+          city: true,
+        },
+      }));
+    }
   };
 
   return (
@@ -269,30 +326,26 @@ function DealerForm(props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
+              <AutoComplete
+                type="regions"
+                label="Регион"
+                id={formState.values.regionId}
+                value={formState.values.region}
                 error={hasError('region')}
                 helperText={hasError('region') ? formState.errors.region[0] : null}
-                label="Регион"
-                margin="dense"
-                name="region"
-                onChange={handleChange}
-                value={formState.values.region}
-                variant="outlined"
+                onSelect={handleSelect}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
+              <AutoComplete
+                type="cities"
+                label="Город"
+                id={formState.values.cityId}
+                value={formState.values.city}
                 error={hasError('city')}
                 helperText={hasError('city') ? formState.errors.city[0] : null}
-                label="Город"
-                margin="dense"
-                name="city"
-                onChange={handleChange}
-                required
-                value={formState.values.city}
-                variant="outlined"
+                onSelect={handleSelect}
+                regionId={formState.values.regionId}
               />
             </Grid>
             <Grid item xs={12}>

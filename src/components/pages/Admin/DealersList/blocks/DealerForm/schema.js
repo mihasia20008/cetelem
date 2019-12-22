@@ -31,17 +31,17 @@ export const dealerSchema = {
     },
   },
   postcode: {
-    presence: { allowEmpty: true },
+    presence: { allowEmpty: false, message: '^Почтовый индекс - обязательное поле!' },
     length: {
       maximum: 10,
       wrongLength: '^Введено недопустимое количество символов'
     },
   },
   country: {
-    presence: { allowEmpty: true },
+    presence: { allowEmpty: false, message: '^Страна - обязательное поле!' },
   },
   region: {
-    presence: { allowEmpty: true },
+    presence: { allowEmpty: false, message: '^Регион - обязательное поле!' },
   },
   city: {
     presence: { allowEmpty: false, message: '^Город - обязательное поле!' },
