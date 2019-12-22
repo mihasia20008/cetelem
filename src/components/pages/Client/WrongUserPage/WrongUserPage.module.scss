@@ -1,20 +1,35 @@
 .WrongUserPage {
   position: relative;
-  height: 475px;
+
+  @media (min-width: 768px) {
+    height: 475px;
+  }
 }
 
 .content {
-  padding-top: 96px;
-  padding-bottom: 104px;
+  position: relative;
+  z-index: 1;
+  padding-top: 50px;
+
+  @media (min-width: 768px) {
+    padding-top: 96px;
+    padding-bottom: 104px;
+  }
+
   @media (min-width: 1440px) {
     padding-left: 60px;
   }
 }
 
 .title {
-  margin: 0 0 42px;
+  margin: 0 0 30px;
+  font-size: 24px;
   font-weight: 700;
-  font-size: 48px;
+
+  @media (min-width: 768px) {
+    margin: 0 0 42px;
+    font-size: 48px;
+  }
 
   @media (min-width: 1440px) {
     font-size: 58px;
@@ -25,7 +40,7 @@
 .button {
   display: block;
   width: 278px;
-  padding: 35px 0;
+  padding: 17px 0;
   font-weight: bold;
   font-size: 22px;
   line-height: 27px;
@@ -34,6 +49,10 @@
   color: #fff;
   background-color: #22b25c;
   transition: 0.2s ease-in;
+
+  @media (min-width: 768px) {
+    padding: 35px 0;
+  }
 
   &:hover,
   &:focus {
@@ -44,7 +63,20 @@
 }
 
 .imageWrap {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  @media (max-width: 767px) {
+    text-align: right;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    width: 40%;
+  }
 }
