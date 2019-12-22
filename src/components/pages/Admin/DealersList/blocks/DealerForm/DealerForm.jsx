@@ -162,6 +162,8 @@ function DealerForm(props) {
           ...oldFormState.values,
           regionId: selected.id,
           region: selected.name,
+          cityId: -1,
+          city: '',
         },
         touched: {
           ...oldFormState.touched,
