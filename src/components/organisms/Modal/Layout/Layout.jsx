@@ -9,7 +9,7 @@ import useCloseOnOutsideEvents from '../../../../utilities/useCloseOnOutsideEven
 import styles from './Layout.module.scss';
 
 function Layout(props) {
-  const { children, dark, onClose } = props;
+  const { children, dark, isFullScreen, title, onClose } = props;
 
   const [mounted, setMount] = useState(false);
   const contentRef = useRef(null);
@@ -27,25 +27,51 @@ function Layout(props) {
     }
   }, []);
 
+  const renderHeader = () => {
+    if (!isFullScreen) {
+      return null;
+    }
+
+    return (
+      <div className={styles.header}>
+        <span className={styles.title}>{title}</span>
+        {onClose && (
+          <button type="button" className={styles.fullCloser} onClick={onClose}>
+            <CloseIcon className={styles.fullCloserIcon} />
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  const renderCloseButton = () => {
+    if (isFullScreen || !onClose) {
+      return null;
+    }
+
+    return (
+      <button
+        type="button"
+        className={cls(styles.closer, dark ? styles.darkCloser : styles.lightCloser)}
+        onClick={onClose}
+      >
+        <CloseIcon
+          className={cls(styles.closerIcon, dark ? styles.darkCloserIcon : styles.lightCloserIcon)}
+        />
+      </button>
+    );
+  };
+
   return (
     <div className={styles.Layout}>
       <div className={styles.backdrop} />
-      <div className={styles.content} ref={contentRef}>
+      <div
+        className={cls(styles.content, isFullScreen && styles.fullScreenContent)}
+        ref={contentRef}
+      >
+        {renderHeader()}
         {children}
-        {onClose && (
-          <button
-            type="button"
-            className={cls(styles.closer, dark ? styles.darkCloser : styles.lightCloser)}
-            onClick={onClose}
-          >
-            <CloseIcon
-              className={cls(
-                styles.closerIcon,
-                dark ? styles.darkCloserIcon : styles.lightCloserIcon
-              )}
-            />
-          </button>
-        )}
+        {renderCloseButton()}
       </div>
     </div>
   );
