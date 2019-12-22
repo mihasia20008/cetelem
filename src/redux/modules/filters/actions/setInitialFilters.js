@@ -22,6 +22,19 @@ export default function setInitialFilters({ type, filters, query = {} }) {
       };
     }
 
+    if (type === 'cities') {
+      const regionId = query[FILTER_NAMES.CITY];
+      if (!regionId) {
+        dispatch({ type: 'do_noting' });
+        return;
+      }
+
+      updatedFilters[FILTER_NAMES.CITY] = {
+        ...filters[FILTER_NAMES.CITY],
+        active: regionId,
+      };
+    }
+
     if (type === 'car') {
       const defaultFilters = _get(getState(), 'filters.default.data');
 

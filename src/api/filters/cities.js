@@ -1,14 +1,10 @@
 import axios from 'axios';
 
-async function getCurrent(location) {
+async function getCitiesList() {
   try {
-    const url = location
-      ? `/api/v1/current_location/${location}`
-      : '/api/v1/current_location';
-
     const { data } = await axios({
       method: 'GET',
-      url,
+      url: '/api/v1/filters/dealers/regions',
     });
 
     return {
@@ -28,4 +24,4 @@ async function getCurrent(location) {
   }
 }
 
-export default getCurrent;
+export default getCitiesList;

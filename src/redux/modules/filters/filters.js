@@ -15,6 +15,12 @@ const initialState = {
     error: false,
     success: false,
   },
+  cities: {
+    initial: true,
+    loading: false,
+    error: false,
+    success: false,
+  },
   default: {
     initial: true,
     loading: false,
@@ -71,6 +77,12 @@ const initialState = {
           name: 'Под заказ',
         },
       ],
+    },
+    [`${FILTER_NAMES.CITY}`]: {
+      type: FILTER_TYPES.SELECT,
+      active: -1,
+      text: 'Регион',
+      options: [],
     },
     [`${FILTER_NAMES.SORT}`]: {
       type: FILTER_TYPES.SELECT,
@@ -189,7 +201,48 @@ export default function filtersReducer(state = initialState, action = {}) {
         },
       };
     }
-    case T.FILTERS_DEAFULT_FETCH_START: {
+    case T.FILTERS_CITIES_FETCH_START: {
+      return {
+        ...state,
+        cities: {
+          ...state.cities,
+          initial: false,
+          loading: true,
+        },
+      };
+    }
+    case T.FILTERS_CITIES_FETCH_END: {
+      return {
+        ...state,
+        cities: {
+          ...state.cities,
+          loading: false,
+        },
+      };
+    }
+    case T.FILTERS_CITIES_FETCH_ERROR: {
+      return {
+        ...state,
+        cities: {
+          ...state.cities,
+          error: action.data,
+        },
+      };
+    }
+    case T.FILTERS_CITIES_SUCCESS_LOADED: {
+      return {
+        ...state,
+        cities: {
+          ...state.cities,
+          success: true,
+        },
+        data: {
+          ...state.data,
+          ...action.data,
+        },
+      };
+    }
+    case T.FILTERS_DEFAULT_FETCH_START: {
       return {
         ...state,
         default: {
@@ -199,7 +252,7 @@ export default function filtersReducer(state = initialState, action = {}) {
         },
       };
     }
-    case T.FILTERS_DEAFULT_FETCH_END: {
+    case T.FILTERS_DEFAULT_FETCH_END: {
       return {
         ...state,
         default: {
@@ -208,7 +261,7 @@ export default function filtersReducer(state = initialState, action = {}) {
         },
       };
     }
-    case T.FILTERS_DEAFULT_FETCH_ERROR: {
+    case T.FILTERS_DEFAULT_FETCH_ERROR: {
       return {
         ...state,
         default: {
@@ -217,7 +270,7 @@ export default function filtersReducer(state = initialState, action = {}) {
         },
       };
     }
-    case T.FILTERS_DEAFULT_SUCCESS_LOADED: {
+    case T.FILTERS_DEFAULT_SUCCESS_LOADED: {
       return {
         ...state,
         default: {

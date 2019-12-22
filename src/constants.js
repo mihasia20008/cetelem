@@ -69,7 +69,7 @@ export const FILTER_TYPES = {
 };
 
 export const FILTER_NAMES = {
-  CITY: 'CITY',
+  CITY: 'region_id',
   DEALER_ID: 'dealer_id',
   SORT: 'SORT',
   //
@@ -109,7 +109,7 @@ export const BASE_FILTERS = [
 
 export const FILTERS_SORT = {
   HEAD: [
-    // FILTER_NAMES.CITY,
+    FILTER_NAMES.CITY,
     FILTER_NAMES.DEALER_ID,
     FILTER_NAMES.SORT
   ],

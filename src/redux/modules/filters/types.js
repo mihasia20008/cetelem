@@ -8,10 +8,15 @@ export const FILTERS_BASE_FETCH_END = 'filters/base/FETCH_END';
 export const FILTERS_BASE_FETCH_ERROR = 'filters/base/FETCH_ERROR';
 export const FILTERS_BASE_SUCCESS_LOADED = 'filters/base/SUCCESS_LOADED';
 
-export const FILTERS_DEAFULT_FETCH_START = 'filters/default/FETCH_START';
-export const FILTERS_DEAFULT_FETCH_END = 'filters/default/FETCH_END';
-export const FILTERS_DEAFULT_FETCH_ERROR = 'filters/default/FETCH_ERROR';
-export const FILTERS_DEAFULT_SUCCESS_LOADED = 'filters/default/SUCCESS_LOADED';
+export const FILTERS_DEFAULT_FETCH_START = 'filters/default/FETCH_START';
+export const FILTERS_DEFAULT_FETCH_END = 'filters/default/FETCH_END';
+export const FILTERS_DEFAULT_FETCH_ERROR = 'filters/default/FETCH_ERROR';
+export const FILTERS_DEFAULT_SUCCESS_LOADED = 'filters/default/SUCCESS_LOADED';
+
+export const FILTERS_CITIES_FETCH_START = 'filters/cities/FETCH_START';
+export const FILTERS_CITIES_FETCH_END = 'filters/cities/FETCH_END';
+export const FILTERS_CITIES_FETCH_ERROR = 'filters/cities/FETCH_ERROR';
+export const FILTERS_CITIES_SUCCESS_LOADED = 'filters/cities/SUCCESS_LOADED';
 
 export const FILTERS_CAR_FETCH_START = 'filters/car/FETCH_START';
 export const FILTERS_CAR_FETCH_END = 'filters/car/FETCH_END';

@@ -83,6 +83,7 @@ class CarsPage extends PureComponent {
         return allSettled([
           dispatch(filtersActions.getDealers()),
           dispatch(filtersActions.getBase()),
+          dispatch(filtersActions.getCitiesFilter()),
           dispatch(
             filtersActions.getCarFilter({
               markId,
@@ -126,6 +127,11 @@ class CarsPage extends PureComponent {
         filtersActions.setInitialFilters({ type: 'dealer', filters: currentFilters.data, query })
       );
     }
+    if (currentFilters.cities.success && !prevFilters.cities.success) {
+      dispatch(
+        filtersActions.setInitialFilters({ type: 'cities', filters: currentFilters.data, query })
+      );
+    }
     if (currentFilters.car.success && !prevFilters.car.success) {
       dispatch(
         filtersActions.setInitialFilters({ type: 'car', filters: currentFilters.data, query })
@@ -137,10 +143,12 @@ class CarsPage extends PureComponent {
       currentFilters.car.success &&
       currentFilters.dealer.success &&
       currentFilters.base.success &&
+      currentFilters.cities.success &&
       (!prevCarsLoadSuccess ||
         !prevFilters.car.success ||
         !prevFilters.dealer.success ||
-        !prevFilters.base.success)
+        !prevFilters.base.success ||
+        !prevFilters.cities.success)
     ) {
       this.handleFilterApply();
     }
@@ -234,11 +242,15 @@ class CarsPage extends PureComponent {
       const cleanQuery = _omit(location.query, ['sort', 'order']);
       query = { ...cleanQuery, sort: option.sort, order: option.order };
     } else {
-      const cleanQuery = _omit(location.query, name);
-      query = { ...cleanQuery, [`${name}`]: value };
+      query = _omit(location.query, name);
+      if (value > 0) {
+        query[`${name}`] = value;
+      }
     }
 
-    history.push(`${location.pathname}?${qs.stringify(query)}`);
+    if (!_isEqual(location.query, query)) {
+      history.push(`${location.pathname}?${qs.stringify(query)}`);
+    }
   };
 
   handleFilterApply = () => {
@@ -287,11 +299,14 @@ class CarsPage extends PureComponent {
     const cleanQuery = _omit(location.query, Object.values(FILTER_NAMES));
     const query = { ...cleanQuery, ...params };
 
-    history.push(`${location.pathname}?${qs.stringify(query)}`);
+    if (!_isEqual(location.query, query)) {
+      history.push(`${location.pathname}?${qs.stringify(query)}`);
 
-    this.setState({
-      title: this.getActualTitle(),
-    });
+      this.setState({
+        title: this.getActualTitle(),
+      });
+    }
+
     if (layout.isMobile) {
       this.handleCloseModal();
     }

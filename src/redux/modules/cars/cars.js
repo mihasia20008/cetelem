@@ -15,6 +15,7 @@ export default function carsReducer(state = initialState, action = {}) {
       return {
         ...state,
         initial: false,
+        error: false,
         loading: true,
       };
     }
