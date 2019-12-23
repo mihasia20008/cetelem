@@ -98,9 +98,10 @@
 }
 
 .optionsWrap {
-  height: calc(100vh - 140px);
+  height: calc(100% - 65px);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   @media (min-width: 768px) {
     height: 200px;
   }
-  overflow-y: scroll;
 }

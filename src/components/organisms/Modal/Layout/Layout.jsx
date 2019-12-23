@@ -70,7 +70,9 @@ function Layout(props) {
         ref={contentRef}
       >
         {renderHeader()}
-        {children}
+        <div className={styles.wrapper}>
+          {children}
+        </div>
         {renderCloseButton()}
       </div>
     </div>

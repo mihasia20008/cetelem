@@ -31,13 +31,18 @@
 }
 
 .fullScreenContent {
-  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  top: -75px;
+  transform: translateY(75px);
+  padding: 0 15px 75px;
 
   background-color: #fff;
-  padding: 0 15px;
+
+  .wrapper {
+    height: calc(100% - 75px);
+  }
 }
 
 .header {
@@ -137,4 +142,8 @@
   width: 18px;
   height: 18px;
   fill: #000;
+}
+
+.wrapper {
+  height: 100%;
 }

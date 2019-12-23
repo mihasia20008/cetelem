@@ -13,6 +13,9 @@
 .sideFilter {
   flex-basis: 250px;
   flex-shrink: 0;
+  @media (max-width: 767px) {
+    height: 100%;
+  }
   @media (min-width: 1100px) {
     flex-basis: 297px;
   }
