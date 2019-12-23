@@ -202,6 +202,22 @@ export default function setInitialFilters({ type, filters, query = {} }) {
           active: Number.isNaN(active) ? -1 : active,
         };
       }
+
+      if (query.price !== undefined && typeof query.price !== 'object') {
+        const value = parseInt(query.price, 10);
+        if (!Number.isNaN(value)) {
+          const priceFilter = filters[FILTER_NAMES.PRICE];
+          const actualMin =
+            value > priceFilter.min && value < priceFilter.max && value
+              ? value
+              : priceFilter.values[0];
+
+          updatedFilters[FILTER_NAMES.PRICE] = {
+            ...priceFilter,
+            values: [actualMin, priceFilter.values[1]],
+          };
+        }
+      }
     }
 
     if (Object.keys(updatedFilters).length) {
