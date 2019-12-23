@@ -66,8 +66,6 @@ function CarForm(props) {
     errors: {},
   });
 
-  console.log(formState);
-
   useEffect(() => {
     const errors = validate(formState.values, defaultSchema);
 
