@@ -1,11 +1,6 @@
-import axios from 'axios';
-import qs from 'qs';
 import _get from 'lodash/get';
 
-const page = 'x-page';
-const pagesCount = 'x-pages-number';
-const perPage = 'x-per-page';
-const total = 'x-total';
+import getListWithServerPaginate from '../getListWithServerParinate';
 
 function prepareCars(list) {
   return list.map(item => {
@@ -21,22 +16,17 @@ function prepareCars(list) {
 
 export async function carListRequest(params) {
   try {
-    const { headers, data } = await axios({
-      method: 'GET',
-      url: `/api/v1/dealer_cars?${qs.stringify(params)}`,
-    });
+    const {
+      error,
+      data: { list, ...restData },
+    } = await getListWithServerPaginate('/api/v1/dealer_cars', params);
 
     return {
       data: {
-        list: prepareCars(data),
-        meta: {
-          page: +headers[page],
-          total: +headers[total],
-          perPage: +headers[perPage],
-          pagesCount: +headers[pagesCount],
-        },
+        ...restData,
+        list: prepareCars(list),
       },
-      error: null,
+      error,
     };
   } catch (err) {
     // eslint-disable-next-line no-console

@@ -1,30 +1,8 @@
-import axios from 'axios';
-import qs from 'qs';
-
-const page = 'x-page';
-const pagesCount = 'x-pages-number';
-const perPage = 'x-per-page';
-const total = 'x-total';
+import getListWithServerPaginate from '../../getListWithServerParinate';
 
 async function getList(params) {
   try {
-    const { headers, data } = await axios({
-      method: 'GET',
-      url: `/api/v1/admin/cars?${qs.stringify(params)}`,
-    });
-
-    return {
-      data: {
-        list: data,
-        meta: {
-          page: +headers[page],
-          total: +headers[total],
-          perPage: +headers[perPage],
-          pagesCount: +headers[pagesCount],
-        },
-      },
-      error: null,
-    };
+    return await getListWithServerPaginate('/api/v1/admin/cars', params);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log(err);
