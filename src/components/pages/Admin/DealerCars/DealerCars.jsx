@@ -160,7 +160,6 @@ function DealerCars(props) {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     dealerCars: state.admin.dealerCars,
     dealers: _get(state, 'filters.data.dealer_id.options', []),
