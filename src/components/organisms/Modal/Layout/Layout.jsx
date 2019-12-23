@@ -70,7 +70,7 @@ function Layout(props) {
         ref={contentRef}
       >
         {renderHeader()}
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} data-allow-touch-move="true">
           {children}
         </div>
         {renderCloseButton()}

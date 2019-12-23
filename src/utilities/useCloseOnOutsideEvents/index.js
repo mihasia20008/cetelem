@@ -15,28 +15,37 @@ const useCloseOnOutsideEvents = ({ ref, callback, isOpen, disableBody }) => {
     [domNode, callback]
   );
 
-  useEffect(
-    () => {
-      if (isOpen) {
-        if (disableBody) {
-          disableBodyScroll(ref);
-        }
-        document.addEventListener('mousedown', closeOnOutsideClick);
-        document.addEventListener('touchstart', closeOnOutsideClick);
-      } else {
-        document.removeEventListener('mousedown', closeOnOutsideClick);
-        document.removeEventListener('touchstart', closeOnOutsideClick);
+  useEffect(() => {
+    if (isOpen) {
+      if (disableBody) {
+        disableBodyScroll(domNode, {
+          allowTouchMove: el => {
+            let current = el;
+            while (current && current !== domNode) {
+              if (current.hasAttribute && current.hasAttribute('data-allow-touch-move')) {
+                return true;
+              }
+              current = current.parentNode;
+            }
+
+            return false;
+          },
+        });
       }
-      return () => {
-        if (disableBody) {
-          enableBodyScroll(ref);
-        }
-        document.removeEventListener('mousedown', closeOnOutsideClick);
-        document.removeEventListener('touchstart', closeOnOutsideClick);
-      };
-    },
-    [closeOnOutsideClick, disableBody, isOpen, ref]
-  );
+      document.addEventListener('mousedown', closeOnOutsideClick);
+      document.addEventListener('touchstart', closeOnOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', closeOnOutsideClick);
+      document.removeEventListener('touchstart', closeOnOutsideClick);
+    }
+    return () => {
+      if (disableBody) {
+        enableBodyScroll(domNode);
+      }
+      document.removeEventListener('mousedown', closeOnOutsideClick);
+      document.removeEventListener('touchstart', closeOnOutsideClick);
+    };
+  }, [closeOnOutsideClick, disableBody, domNode, isOpen]);
 };
 
 export default useCloseOnOutsideEvents;
