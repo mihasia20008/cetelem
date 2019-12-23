@@ -290,7 +290,7 @@ class CarsPage extends PureComponent {
       return acc;
     }, {});
 
-    const cleanQuery = _omit(location.query, Object.values(FILTER_NAMES));
+    const cleanQuery = _omit(location.query, [...Object.values(FILTER_NAMES), 'type']);
     const query = { ...cleanQuery, ...params };
 
     if (!_isEqual(location.query, query)) {

@@ -194,6 +194,14 @@ export default function setInitialFilters({ type, filters, query = {} }) {
           }
         }
       });
+
+      if (query.type !== undefined) {
+        const active = parseInt(query.type, 10);
+        updatedFilters[FILTER_NAMES.NEW] = {
+          ...filters[FILTER_NAMES.NEW],
+          active: Number.isNaN(active) ? -1 : active,
+        };
+      }
     }
 
     if (Object.keys(updatedFilters).length) {
