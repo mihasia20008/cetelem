@@ -90,7 +90,13 @@
 }
 
 .lightCloser {
-  background-color: #cbcbcb;
+  background-color: #000;
+  opacity: 0.2;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    opacity: 0.5;
+  }
 }
 
 .closerIcon {
