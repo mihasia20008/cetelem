@@ -1,7 +1,7 @@
 import _pick from 'lodash/pick';
 import _get from 'lodash/get';
 
-import { FILTER_NAMES, BASE_FILTERS, FILTER_TYPES } from '../../../../constants';
+import { FILTER_NAMES, BASE_FILTERS, FILTER_TYPES, CLIENT_REGION_KEY } from '../../../../constants';
 
 import { SET_INITIAL_FILTERS } from '../types';
 
@@ -11,28 +11,37 @@ export default function setInitialFilters({ type, filters, query = {} }) {
 
     if (type === 'dealer') {
       const dealerId = query[FILTER_NAMES.DEALER_ID];
-      if (!dealerId) {
-        dispatch({ type: 'do_noting' });
-        return;
+      if (dealerId) {
+        updatedFilters[FILTER_NAMES.DEALER_ID] = {
+          ...filters[FILTER_NAMES.DEALER_ID],
+          active: parseInt(query[FILTER_NAMES.DEALER_ID], 10),
+        };
       }
-
-      updatedFilters[FILTER_NAMES.DEALER_ID] = {
-        ...filters[FILTER_NAMES.DEALER_ID],
-        active: parseInt(query[FILTER_NAMES.DEALER_ID], 10),
-      };
     }
 
     if (type === 'cities') {
       const regionId = query[FILTER_NAMES.CITY];
-      if (!regionId) {
-        dispatch({ type: 'do_noting' });
-        return;
+      if (regionId) {
+        updatedFilters[FILTER_NAMES.CITY] = {
+          ...filters[FILTER_NAMES.CITY],
+          active: regionId,
+        };
       }
 
-      updatedFilters[FILTER_NAMES.CITY] = {
-        ...filters[FILTER_NAMES.CITY],
-        active: regionId,
-      };
+      if (!regionId) {
+        const regionFromStorage = localStorage.getItem(CLIENT_REGION_KEY);
+        if (regionFromStorage) {
+          const isRegionInFilter = filters[FILTER_NAMES.CITY].options.some(
+            option => option.id === regionFromStorage
+          );
+          if (isRegionInFilter) {
+            updatedFilters[FILTER_NAMES.CITY] = {
+              ...filters[FILTER_NAMES.CITY],
+              active: regionFromStorage,
+            };
+          }
+        }
+      }
     }
 
     if (type === 'car') {
@@ -187,9 +196,11 @@ export default function setInitialFilters({ type, filters, query = {} }) {
       });
     }
 
-    dispatch({
-      type: SET_INITIAL_FILTERS,
-      filters: updatedFilters,
-    });
+    if (Object.keys(updatedFilters).length) {
+      dispatch({
+        type: SET_INITIAL_FILTERS,
+        filters: updatedFilters,
+      });
+    }
   };
 }

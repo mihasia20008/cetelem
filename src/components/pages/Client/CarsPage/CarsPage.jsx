@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import _isEqual from 'lodash/isEqual';
 import _omit from 'lodash/omit';
+import _get from 'lodash/get';
 
 import Container from '../../../base/Container';
 import Button from '../../../base/Button';
@@ -32,31 +33,6 @@ class CarsPage extends PureComponent {
     super(props);
 
     this.state = {
-      // eslint-disable-next-line react/no-unused-state
-      filters: {
-        [`${FILTER_NAMES.CITY}`]: {
-          type: FILTER_TYPES.SELECT,
-          active: 0,
-          options: [
-            {
-              id: 0,
-              name: 'Все города',
-            },
-            {
-              id: 1,
-              name: 'Москва',
-            },
-            {
-              id: 2,
-              name: 'Санкт-Петербург',
-            },
-            {
-              id: 3,
-              name: 'Казань',
-            },
-          ],
-        },
-      },
       title: 'Подбор автомобиля',
       modalOpen: false,
     };
@@ -107,15 +83,29 @@ class CarsPage extends PureComponent {
       filters: prevFilters,
       layout: prevLayout,
       success: prevCarsLoadSuccess,
+      userLocation: prevLocation,
     } = prevProps;
     const {
       location: { query },
       filters: currentFilters,
       layout: nowLayout,
       success: nowCarsLoadSuccess,
+      userLocation: nowLocation,
       dispatch,
     } = this.props;
     const { modalOpen } = this.state;
+
+    const prevRegionId = _get(prevLocation, 'parents.0.id');
+    const nowRegionId = _get(nowLocation, 'parents.0.id');
+    if (prevLocation.id && nowLocation.id !== prevLocation.id && prevRegionId !== nowRegionId) {
+      const cityFilter = currentFilters.data[FILTER_NAMES.CITY];
+      const option = cityFilter.options.find(
+        item => item.id === nowLocation.id || item.id === nowRegionId
+      );
+      if (option) {
+        this.handleFilterChange(FILTER_NAMES.CITY, option.id);
+      }
+    }
 
     if (currentFilters.base.success && !prevFilters.base.success) {
       dispatch(
@@ -129,7 +119,11 @@ class CarsPage extends PureComponent {
     }
     if (currentFilters.cities.success && !prevFilters.cities.success) {
       dispatch(
-        filtersActions.setInitialFilters({ type: 'cities', filters: currentFilters.data, query })
+        filtersActions.setInitialFilters({
+          type: 'cities',
+          filters: currentFilters.data,
+          query,
+        })
       );
     }
     if (currentFilters.car.success && !prevFilters.car.success) {
@@ -562,6 +556,7 @@ const mapStateToProps = state => {
     list: state.cars.list,
     meta: state.cars.meta,
     filters: state.filters,
+    userLocation: state.location.current,
   };
 };
 
