@@ -20,9 +20,15 @@ export default function createCar(values) {
         mark: form.mark,
         model: form.model,
         modification: form.modification,
-        body_type: form.body_type,
-        complectation: form.complectation === undefined ? null : form.complectation,
         years,
+        engine_type: form.engine_type === undefined ? null : form.engine_type,
+        engine_volume: form.engine_volume === undefined ? null : form.engine_volume,
+        engine_hp: form.engine_hp === undefined ? null : form.engine_hp,
+        body_type: form.body_type === undefined ? null : form.body_type,
+        doors_count: form.doors_count === undefined ? null : form.doors_count,
+        drive: form.drive === undefined ? null : form.drive,
+        gearbox: form.gearbox === undefined ? null : form.gearbox,
+        complectation: form.complectation === undefined ? null : form.complectation,
       };
 
       const { error } = await adminCarsRequests.createCar(preparedForm);

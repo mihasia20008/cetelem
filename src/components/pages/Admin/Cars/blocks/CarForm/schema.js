@@ -20,20 +20,6 @@ export const defaultSchema = {
       tooLong: '^Неверный формат'
     },
   },
-  body_type: {
-    presence: { allowEmpty: false, message: '^Тип кузова - обязательное поле!' },
-    length: {
-      maximum: 64,
-      tooLong: '^Неверный формат'
-    },
-  },
-  complectation: {
-    presence: { allowEmpty: true },
-    length: {
-      maximum: 64,
-      tooLong: '^Неверный формат'
-    },
-  },
   yearStart: {
     presence: { allowEmpty: false, message: '^Год начала выпуска - обязательное поле!' },
     length: {
@@ -45,6 +31,62 @@ export const defaultSchema = {
     presence: { allowEmpty: true },
     length: {
       maximum: 4,
+      tooLong: '^Неверный формат'
+    },
+  },
+  engine_type: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 64,
+      tooLong: '^Неверный формат'
+    },
+  },
+  engine_volume: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 64,
+      tooLong: '^Неверный формат'
+    },
+  },
+  engine_hp: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 64,
+      tooLong: '^Неверный формат'
+    },
+  },
+  body_type: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 64,
+      tooLong: '^Неверный формат'
+    },
+  },
+  doors_count: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 64,
+      tooLong: '^Неверный формат'
+    },
+  },
+  drive: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 64,
+      tooLong: '^Неверный формат'
+    },
+  },
+  gearbox: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 64,
+      tooLong: '^Неверный формат'
+    },
+  },
+  complectation: {
+    presence: { allowEmpty: true },
+    length: {
+      maximum: 64,
       tooLong: '^Неверный формат'
     },
   },

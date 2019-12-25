@@ -57,9 +57,15 @@ function CarForm(props) {
       mark: car.mark || '',
       model: car.model || '',
       modification: car.modification || '',
-      body_type: car.body_type || '',
       yearStart,
       yearEnd: yearEnd === 'по н.в.' ? '' : yearEnd,
+      engine_type: car.engine_type || '',
+      engine_volume: (car.engine_volume || '').toString(),
+      engine_hp: (car.engine_hp || '').toString(),
+      body_type: car.body_type || '',
+      doors_count: (car.doors_count || '').toString(),
+      drive: car.drive || '',
+      gearbox: car.gearbox || '',
       complectation: car.complectation || '',
     },
     touched: {},
@@ -110,6 +116,9 @@ function CarForm(props) {
         <CardContent>
           <Grid container spacing={3}>
             <Grid item xs={12}>
+              <Typography variant="subtitle1">Основные характеристики</Typography>
+            </Grid>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 error={hasError('mark')}
@@ -152,33 +161,6 @@ function CarForm(props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                error={hasError('body_type')}
-                helperText={hasError('body_type') ? formState.errors.body_type[0] : null}
-                label="Тип кузова"
-                margin="dense"
-                name="body_type"
-                onChange={handleChange}
-                required
-                value={formState.values.body_type}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                error={hasError('complectation')}
-                helperText={hasError('complectation') ? formState.errors.complectation[0] : null}
-                label="Комплектация"
-                margin="dense"
-                name="complectation"
-                onChange={handleChange}
-                value={formState.values.complectation}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
               <Typography variant="subtitle1">Годы выпуска</Typography>
             </Grid>
             <Grid item xs={12}>
@@ -209,9 +191,119 @@ function CarForm(props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="body1">
+              <Typography variant="body2">
                 Если выпуск автомобиля еще не завершен - оставьте поле пустым
               </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="subtitle1">Двигатель</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('engine_type')}
+                helperText={hasError('engine_type') ? formState.errors.engine_type[0] : null}
+                label="Тип"
+                margin="dense"
+                name="engine_type"
+                onChange={handleChange}
+                value={formState.values.engine_type}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('engine_volume')}
+                helperText={hasError('engine_volume') ? formState.errors.engine_volume[0] : null}
+                label="Объем (л)"
+                margin="dense"
+                name="engine_volume"
+                onChange={handleChange}
+                value={formState.values.engine_volume}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('engine_hp')}
+                helperText={hasError('engine_hp') ? formState.errors.engine_hp[0] : null}
+                label="Мощность (л/с)"
+                margin="dense"
+                name="engine_hp"
+                onChange={handleChange}
+                value={formState.values.engine_hp}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="subtitle1">Дополнительные характеристики</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('body_type')}
+                helperText={hasError('body_type') ? formState.errors.body_type[0] : null}
+                label="Тип кузова"
+                margin="dense"
+                name="body_type"
+                onChange={handleChange}
+                value={formState.values.body_type}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('doors_count')}
+                helperText={hasError('doors_count') ? formState.errors.doors_count[0] : null}
+                label="Количество дверей"
+                margin="dense"
+                name="doors_count"
+                onChange={handleChange}
+                value={formState.values.doors_count}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('drive')}
+                helperText={hasError('drive') ? formState.errors.drive[0] : null}
+                label="Привод"
+                margin="dense"
+                name="drive"
+                onChange={handleChange}
+                value={formState.values.drive}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('gearbox')}
+                helperText={hasError('gearbox') ? formState.errors.gearbox[0] : null}
+                label="Коробка передач"
+                margin="dense"
+                name="gearbox"
+                onChange={handleChange}
+                value={formState.values.gearbox}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                error={hasError('complectation')}
+                helperText={hasError('complectation') ? formState.errors.complectation[0] : null}
+                label="Комплектация"
+                margin="dense"
+                name="complectation"
+                onChange={handleChange}
+                value={formState.values.complectation}
+                variant="outlined"
+              />
             </Grid>
           </Grid>
         </CardContent>
