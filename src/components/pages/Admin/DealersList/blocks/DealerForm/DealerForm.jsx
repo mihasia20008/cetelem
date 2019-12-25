@@ -310,6 +310,7 @@ function DealerForm(props) {
                 margin="dense"
                 name="postcode"
                 onChange={handleChange}
+                required
                 value={formState.values.postcode}
                 variant="outlined"
               />
@@ -323,6 +324,7 @@ function DealerForm(props) {
                 margin="dense"
                 name="country"
                 onChange={handleChange}
+                required
                 value={formState.values.country}
                 variant="outlined"
               />
