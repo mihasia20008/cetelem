@@ -207,14 +207,14 @@ export default function setInitialFilters({ type, filters, query = {} }) {
         const value = parseInt(query.price, 10);
         if (!Number.isNaN(value)) {
           const priceFilter = filters[FILTER_NAMES.PRICE];
-          const actualMin =
+          const actualMax =
             value > priceFilter.min && value < priceFilter.max && value
               ? value
-              : priceFilter.values[0];
+              : priceFilter.values[1];
 
           updatedFilters[FILTER_NAMES.PRICE] = {
             ...priceFilter,
-            values: [actualMin, priceFilter.values[1]],
+            values: [priceFilter.values[0], actualMax],
           };
         }
       }
