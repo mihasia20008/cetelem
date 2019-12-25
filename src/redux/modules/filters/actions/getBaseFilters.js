@@ -6,6 +6,7 @@ import { FILTER_TYPES, FILTER_NAMES } from "../../../../constants";
 
 const baseNameMap = {
   [`${FILTER_NAMES.BODY_TYPE}`]: 'Все типы кузова',
+  [`${FILTER_NAMES.GEARBOX}`]: 'Любая коробка передач',
   [`${FILTER_NAMES.COLOR}`]: 'Все цвета',
   [`${FILTER_NAMES.ENGINE_TYPE}`]: 'Все виды двигателя',
   [`${FILTER_NAMES.STATE}`]: 'Все состояния',
