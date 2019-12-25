@@ -21,25 +21,37 @@ export default function setInitialFilters({ type, filters, query = {} }) {
 
     if (type === 'cities') {
       const regionId = query[FILTER_NAMES.CITY];
-      if (regionId) {
+      const initialRegion = query.region;
+      const regionFromStorage = localStorage.getItem(CLIENT_REGION_KEY);
+
+      if (initialRegion) {
+        const region = filters[FILTER_NAMES.CITY].options.find(
+          option => option.id.toString().search(initialRegion) === 0
+        );
+        if (region) {
+          updatedFilters[FILTER_NAMES.CITY] = {
+            ...filters[FILTER_NAMES.CITY],
+            active: region.id,
+          };
+        }
+      }
+
+      if (!initialRegion && regionId) {
         updatedFilters[FILTER_NAMES.CITY] = {
           ...filters[FILTER_NAMES.CITY],
           active: regionId,
         };
       }
 
-      if (!regionId) {
-        const regionFromStorage = localStorage.getItem(CLIENT_REGION_KEY);
-        if (regionFromStorage) {
-          const isRegionInFilter = filters[FILTER_NAMES.CITY].options.some(
-            option => option.id === regionFromStorage
-          );
-          if (isRegionInFilter) {
-            updatedFilters[FILTER_NAMES.CITY] = {
-              ...filters[FILTER_NAMES.CITY],
-              active: regionFromStorage,
-            };
-          }
+      if (!initialRegion && !regionId && regionFromStorage) {
+        const isRegionInFilter = filters[FILTER_NAMES.CITY].options.some(
+          option => option.id === regionFromStorage
+        );
+        if (isRegionInFilter) {
+          updatedFilters[FILTER_NAMES.CITY] = {
+            ...filters[FILTER_NAMES.CITY],
+            active: regionFromStorage,
+          };
         }
       }
     }
