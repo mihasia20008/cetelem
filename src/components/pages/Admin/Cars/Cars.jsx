@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import qs from 'qs';
 
 import _get from 'lodash/get';
+import _omit from 'lodash/omit';
 
 import { Card, Drawer } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
@@ -45,10 +47,12 @@ function CarsPage(props) {
     cars: { data, meta, ...statuses },
     location,
     dispatch,
+    history,
   } = props;
   const styles = useStyles();
 
-  const [searchText, onChangeSearchText] = useState('');
+  const initialSearch = location.query.query || '';
+  const [searchText, onChangeSearchText] = useState(initialSearch);
   const [openCarForm, toggleCarForm] = useState(false);
   const [editingCar, setCarEdit] = useState({ id: null });
   const [deletingCarId, setCarDelete] = useState(null);
@@ -91,9 +95,14 @@ function CarsPage(props) {
     }
   };
 
-  const handleSearch = event => {
+  const handleChangeSearch = event => {
     event.persist();
     onChangeSearchText(event.target.value);
+  };
+
+  const handleStartSearch = () => {
+    const cleanQuery = _omit(location.query, 'query');
+    history.push(`${location.pathname}?${qs.stringify({ ...cleanQuery, query: searchText })}`);
   };
 
   const handleEditCar = id => {
@@ -112,22 +121,6 @@ function CarsPage(props) {
     setCarDelete(null);
   };
 
-  const filteredList = searchText
-    ? data.filter(item =>
-        Object.values(item).some(value => {
-          if (!value) {
-            return false;
-          }
-          return (
-            value
-              .toString()
-              .toLowerCase()
-              .search(searchText.toLowerCase()) !== -1
-          );
-        })
-      )
-    : data;
-
   if (!openCarForm && (statuses.initial || statuses.loading)) {
     return <PageLoading />;
   }
@@ -136,7 +129,8 @@ function CarsPage(props) {
     <div className={styles.root}>
       <CarsToolbar
         searchText={searchText}
-        onSearch={handleSearch}
+        onChangeSearch={handleChangeSearch}
+        onStartSearch={handleStartSearch}
         onOpenCreateForm={handleOpenCarForm}
       />
       <div className={styles.content}>
@@ -189,7 +183,7 @@ function CarsPage(props) {
                     text: '',
                   },
                 ]}
-                list={filteredList}
+                list={data}
                 meta={meta}
                 statuses={openCarForm ? {} : statuses}
                 onEdit={handleEditCar}

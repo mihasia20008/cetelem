@@ -25,11 +25,12 @@ const useStyles = makeStyles(theme => ({
   searchInput: {
     minWidth: '420px',
     marginRight: theme.spacing(1),
+    padding: '4px 8px'
   },
 }));
 
 const CarsToolbar = props => {
-  const { className, searchText, onSearch, onOpenCreateForm } = props;
+  const { className, searchText, onChangeSearch, onStartSearch, onOpenCreateForm } = props;
 
   const styles = useStyles();
 
@@ -40,8 +41,11 @@ const CarsToolbar = props => {
           className={styles.searchInput}
           placeholder="Найти"
           value={searchText}
-          onChange={onSearch}
+          onChange={onChangeSearch}
         />
+        <Button color="primary" variant="contained" onClick={onStartSearch}>
+          Найти
+        </Button>
       </div>
       <div className={styles.row}>
         <span className={styles.spacer} />
