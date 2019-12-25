@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
   searchInput: {
     minWidth: '420px',
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    padding: '4px 8px'
   }
 }));
 

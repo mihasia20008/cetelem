@@ -5,8 +5,6 @@ import cls from 'classnames';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
 
-// import SearchInput from '../../../../../organisms/Admin/SearchInput';
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -38,12 +36,7 @@ const DealersToolbar = props => {
       {...rest}
       className={cls(styles.root, className)}
     >
-      <div className={styles.row}>
-        {/* <SearchInput */}
-        {/*  className={styles.searchInput} */}
-        {/*  placeholder="Найти" */}
-        {/* /> */}
-      </div>
+      <div className={styles.row} />
       <div className={styles.row}>
         <span className={styles.spacer} />
         <Button
