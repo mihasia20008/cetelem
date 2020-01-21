@@ -141,17 +141,15 @@ class CarsDetail extends PureComponent {
   renderDealerInfo = () => {
     const { dealer } = this.props;
     return (
-      <div className={styles.companyHead}>
+      <button type="button" className={styles.companyHead} onClick={this.goToMap}>
         <div className={styles.pinIconWrap}>
           <PinIcon className={styles.pinIcon} />
         </div>
         <div className={styles.dealerContent}>
-          <button type="button" className={styles.dealerAnchor} onClick={this.goToMap}>
-            <h3 className={styles.dealerName}>{dealer.trade_name}</h3>
-          </button>
+          <h3 className={styles.dealerName}>{dealer.trade_name}</h3>
           <p className={styles.dealerAddress}>{this.renderDealerAddress(dealer.address)}</p>
         </div>
-      </div>
+      </button>
     );
   };
 

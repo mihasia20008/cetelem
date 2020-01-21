@@ -94,8 +94,19 @@
   display: flex;
   padding: 20px 30px 16px;
   width: 360px;
+  background-color: transparent;
   border: 1px solid rgba(#b5a779, 20%);
   border-radius: 8px;
+  font-family: TTNorms, Arial, sans-serif;
+  text-align: left;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
 
   @media (max-width: 1099px) {
     margin-top: 20px;
@@ -117,26 +128,10 @@
 }
 
 .dealerName {
-  margin: 0;
+  margin: 0 0 5px;
   font-size: 14px;
   font-weight: 500;
   color: #000;
-}
-
-.dealerAnchor {
-  margin: 0 0 5px;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-  font-family: TTNorms, Arial, sans-serif;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:focus {
-    outline: none;
-  }
 }
 
 .dealerAddress {
