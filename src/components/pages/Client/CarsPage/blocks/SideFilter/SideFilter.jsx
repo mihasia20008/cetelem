@@ -114,7 +114,13 @@ class SideFilter extends PureComponent {
     const bottomFilters = isSelectOld
       ? sort.BOTTOM
       : sort.BOTTOM.filter(
-          key => ![FILTER_NAMES.STATE, FILTER_NAMES.RUN, FILTER_NAMES.MODIFICATION].includes(key)
+          key =>
+            ![
+              FILTER_NAMES.STATE,
+              FILTER_NAMES.RUN,
+              FILTER_NAMES.MODIFICATION,
+              FILTER_NAMES.YEAR,
+            ].includes(key)
         );
 
     return (
