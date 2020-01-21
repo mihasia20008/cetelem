@@ -378,7 +378,12 @@ class CarsDetail extends PureComponent {
               {this.renderShortInfo()}
               {viewportWidth < 1100 && this.renderDealerInfo()}
             </div>
-            {car.description && <p className={styles.description}>{car.description}</p>}
+            {Boolean(car.description) && (
+              <p
+                className={styles.description}
+                dangerouslySetInnerHTML={{ __html: car.description }}
+              />
+            )}
             <div className={styles.info}>
               <h2 className={styles.infoTitle}>Дополнительные характеристики</h2>
               {this.renderMainFeatures()}
