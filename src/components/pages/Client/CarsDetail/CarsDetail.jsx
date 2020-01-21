@@ -297,7 +297,7 @@ class CarsDetail extends PureComponent {
 
     return (
       <div className={styles.priceSidebar}>
-        <h3 className={styles.pricesTitle}>Цена для вас</h3>
+        <h3 className={styles.pricesTitle}>Минимальная цена</h3>
         <div className={styles.totalPrice}>
           <span className={cls(styles.basePrice, styles.priceWithSale)}>
             {formatNumber(salePrice)} ₽
@@ -321,7 +321,7 @@ class CarsDetail extends PureComponent {
           {/*    <span className={styles.saleValue}>- {formatNumber(car.insurance_discount)} ₽</span> */}
           {/*  </div> */}
           {/* )} */}
-          {car.tradein_discount && (
+          {Boolean(car.tradein_discount) && (
             <div className={styles.saleItem}>
               <span className={styles.saleName}>Trade-In</span>
               <span className={styles.saleValue}>- {formatNumber(car.tradein_discount)} ₽</span>
