@@ -20,13 +20,13 @@ function RenderComponent({ matchProps, component: Component }) {
         localStorage.setItem(CLIENT_NAME_KEY, query.name);
       }
       const params = {
-        type: query.type || 1,
+        type: query.type,
         brand: query.brand || '',
         model: query.model || '',
         price: query.price,
-        rate: query.rate,
         downpayment: query.downpayment,
-        monthlypayment: query.monthlypayment,
+        interestrate: query.interestrate,
+        credit_sum: query.credit_sum,
         sum: query.sum,
       };
       localStorage.setItem(CLIENT_PARAMS_KEY, JSON.stringify(params));
