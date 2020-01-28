@@ -2,7 +2,7 @@ import { filtersRequests } from '../../../../api';
 
 import * as T from '../types';
 
-import { FILTER_TYPES, FILTER_NAMES } from "../../../../constants";
+import { FILTER_TYPES, FILTER_NAMES, FLOAT_RANGE } from "../../../../constants";
 
 const baseNameMap = {
   [`${FILTER_NAMES.BODY_TYPE}`]: 'Все типы кузова',
@@ -39,6 +39,7 @@ function prepareFilters(filters) {
           min: filters[key].min,
           max: filters[key].max,
           values: [filters[key].min, filters[key].max],
+          step: FLOAT_RANGE.includes(key) ? 0.2 : 1,
         };
         break;
       }

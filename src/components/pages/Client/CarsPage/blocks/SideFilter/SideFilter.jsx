@@ -71,7 +71,7 @@ class SideFilter extends PureComponent {
   };
 
   renderRange = (name, filter) => {
-    const { min, max, text, ...current } = filter;
+    const { min, max, text, step, ...current } = filter;
 
     return (
       <div key={name} className={styles.range}>
@@ -81,6 +81,7 @@ class SideFilter extends PureComponent {
           min={min}
           max={max}
           current={current}
+          step={step}
           onChange={this.handlerChangeFilter(FILTER_TYPES.RANGE)}
         />
       </div>

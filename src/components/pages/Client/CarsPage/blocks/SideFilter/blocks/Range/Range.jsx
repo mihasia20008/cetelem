@@ -6,6 +6,7 @@ import cls from 'classnames';
 
 import InputRange from 'react-input-range';
 
+import { FILTER_NAMES, FLOAT_RANGE } from "../../../../../../../../constants";
 import formatNumber from '../../../../../../../../utilities/formatNumber';
 
 import styles from './Range.module.scss';
@@ -13,7 +14,7 @@ import styles from './Range.module.scss';
 const { classNames } = InputRange.defaultProps;
 
 function Range(props) {
-  const { name, current, min, max, onChange } = props;
+  const { name, current, min, max, step, onChange } = props;
 
   const handleChange = updatedValue => onChange(name, updatedValue);
 
@@ -26,11 +27,14 @@ function Range(props) {
       };
 
   const getFormattedValue = (value) => {
-    if (name === 'price') {
+    if (name === FILTER_NAMES.PRICE) {
       return `${formatNumber(value)} ₽`;
     }
-    if (name === 'year') {
+    if (name === FILTER_NAMES.YEAR) {
       return value;
+    }
+    if (FLOAT_RANGE.includes(name)) {
+      return value.toFixed(1);
     }
     return formatNumber(value);
   };
@@ -58,6 +62,7 @@ function Range(props) {
           maxValue={max}
           minValue={min}
           value={range}
+          step={step}
           onChange={handleChange}
         />
       </div>

@@ -1,7 +1,7 @@
 import _pick from 'lodash/pick';
 import _get from 'lodash/get';
 
-import { FILTER_NAMES, BASE_FILTERS, FILTER_TYPES, CLIENT_REGION_KEY } from '../../../../constants';
+import { FILTER_NAMES, BASE_FILTERS, FILTER_TYPES, CLIENT_REGION_KEY, FLOAT_RANGE } from '../../../../constants';
 
 import { SET_INITIAL_FILTERS } from '../types';
 
@@ -181,8 +181,16 @@ export default function setInitialFilters({ type, filters, query = {} }) {
               break;
             }
             case FILTER_TYPES.RANGE: {
-              const minValue = parseInt(baseFiltersFromQuery[key][0], 10);
-              const maxValue = parseInt(baseFiltersFromQuery[key][1], 10);
+              let minValue;
+              let maxValue;
+
+              if (FLOAT_RANGE.includes(key)) {
+                minValue = parseFloat(baseFiltersFromQuery[key][0]);
+                maxValue = parseFloat(baseFiltersFromQuery[key][1]);
+              } else {
+                minValue = parseInt(baseFiltersFromQuery[key][0], 10);
+                maxValue = parseInt(baseFiltersFromQuery[key][1], 10);
+              }
 
               const actualMin =
                 minValue > filter.min && minValue < filter.max && minValue

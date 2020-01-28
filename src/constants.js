@@ -141,3 +141,5 @@ export const FILTERS_SORT = {
     ],
   },
 };
+
+export const FLOAT_RANGE = [FILTER_NAMES.ENGINE_VOLUME];
