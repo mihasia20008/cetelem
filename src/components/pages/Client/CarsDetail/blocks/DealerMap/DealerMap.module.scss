@@ -2,21 +2,21 @@
   position: relative;
   margin: 0 -15px;
   height: 320px;
-  overflow: hidden;
 
   @media (min-width: 768px) {
     margin: 0;
     height: 570px;
     border: 1px solid #d8d8d8;
     border-radius: 12px;
+    overflow: hidden;
   }
 }
 
 .dealerInfo {
   display: none;
   position: absolute;
-  bottom: 30px;
-  right: 60px;
+  left: 16px;
+  right: 16px;
   z-index: 2;
   align-items: flex-start;
   padding: 20px 30px;
@@ -24,7 +24,16 @@
   background-color: #fff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 
+  bottom: 30px;
+
   @media (min-width: 768px) {
+    top: auto;
+    left: auto;
+    bottom: 30px;
+    right: 60px;
+  }
+
+  &.visible {
     display: flex;
   }
 }

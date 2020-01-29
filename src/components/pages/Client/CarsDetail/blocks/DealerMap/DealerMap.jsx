@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
+import cls from 'classnames';
 import { Map, Placemark, YMaps } from 'react-yandex-maps';
+
+import { useLayoutContext } from '../../../../../../utilities/layoutContext';
+import useCloseOnOutsideEvents from '../../../../../../utilities/useCloseOnOutsideEvents';
 
 import PinIcon from '../../../../../icons/PinIcon';
 // import RatingIcon from '../../../../../icons/RatingIcon';
@@ -8,6 +12,53 @@ import styles from './DealerMap.module.scss';
 
 const DealerMap = React.forwardRef((props, ref) => {
   const { name, address, /* rating, */ location, phone } = props;
+
+  const dealerInfoRef = useRef(null);
+  const {
+    layout: { isMobile },
+  } = useLayoutContext();
+  const [dealerInfoVisible, toggleDealerInfoVisibility] = useState(!isMobile);
+  const [bottomPos, setBottomPos] = useState(220);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (isMobile && dealerInfoVisible) {
+        toggleDealerInfoVisibility(false);
+      }
+      if (!isMobile && !dealerInfoVisible) {
+        toggleDealerInfoVisibility(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isMobile, dealerInfoVisible]);
+
+  useCloseOnOutsideEvents({
+    ref: dealerInfoRef,
+    callback: useCallback(() => {
+      if (isMobile) {
+        toggleDealerInfoVisibility(false);
+      }
+    }, [isMobile, toggleDealerInfoVisibility]),
+    isOpen: dealerInfoVisible,
+  });
+
+  const handleClickByPin = useCallback(() => {
+    if (!isMobile) {
+      return;
+    }
+
+    const container = ref.current;
+    if (container) {
+      setBottomPos(container.clientHeight / 2 + 60 || 220);
+    }
+
+    if (!dealerInfoVisible) {
+      toggleDealerInfoVisibility(true);
+    }
+  }, [isMobile, ref, dealerInfoVisible]);
 
   const formatPhone = text => {
     try {
@@ -32,6 +83,7 @@ const DealerMap = React.forwardRef((props, ref) => {
           }}
         >
           <Placemark
+            onClick={handleClickByPin}
             geometry={[+location.x, +location.y]}
             options={{
               iconLayout: 'default#image',
@@ -42,7 +94,11 @@ const DealerMap = React.forwardRef((props, ref) => {
           />
         </Map>
       </YMaps>
-      <div className={styles.dealerInfo}>
+      <div
+        ref={dealerInfoRef}
+        style={{ bottom: bottomPos }}
+        className={cls(styles.dealerInfo, dealerInfoVisible && styles.visible)}
+      >
         <div className={styles.pinWrap}>
           <PinIcon />
         </div>
