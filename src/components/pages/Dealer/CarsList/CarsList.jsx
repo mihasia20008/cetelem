@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
 function CarsListPage(props) {
   const styles = useStyles();
   const {
+    id,
     carsList: { data, ...statuses },
     dispatch,
   } = props;
@@ -79,7 +80,7 @@ function CarsListPage(props) {
 
   return (
     <div className={styles.root}>
-      <CarsListToolbar onOpenImportForm={handleOpenImportForm} />
+      <CarsListToolbar id={id} onOpenImportForm={handleOpenImportForm} />
       <div className={styles.content}>
         <Card className={styles.wrapper}>
           <PerfectScrollbar>
@@ -112,7 +113,7 @@ function CarsListPage(props) {
                   {
                     id: 'updated_at',
                     text: 'Дата изменения',
-                    formatter: formatDate
+                    formatter: formatDate,
                   },
                 ]}
                 list={data}
@@ -153,6 +154,7 @@ function CarsListPage(props) {
 const mapStateToProps = state => {
   return {
     carsList: state.dealer.carsList,
+    id: _get(state, 'user.data.dealer_id'),
   };
 };
 

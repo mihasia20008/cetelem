@@ -15,36 +15,44 @@ const useStyles = makeStyles(theme => ({
     height: '42px',
     display: 'flex',
     alignItems: 'center',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   spacer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   searchInput: {
     minWidth: '420px',
-    marginRight: theme.spacing(1)
-  }
+    marginRight: theme.spacing(1),
+  },
+  downloadButton: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 const CarsListToolbar = props => {
-  const { className, onOpenImportForm, ...rest } = props;
+  const { id, className, onOpenImportForm, ...rest } = props;
 
   const styles = useStyles();
+  // const id = 4;
 
   return (
-    <div
-      {...rest}
-      className={cls(styles.root, className)}
-    >
+    <div {...rest} className={cls(styles.root, className)}>
       <div className={styles.row} />
       <div className={styles.row}>
         <span className={styles.spacer} />
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={onOpenImportForm}
-        >
-          Импорт данных
+        {Boolean(id) && (
+          <Button
+            href={`/api/v1/dealers/${id}/cars.xls`}
+            className={styles.downloadButton}
+            color="primary"
+            variant="outlined"
+            download
+          >
+            Экспорт .xsl
+          </Button>
+        )}
+        <Button color="primary" variant="contained" onClick={onOpenImportForm}>
+          Импорт .xsl
         </Button>
       </div>
     </div>
@@ -52,12 +60,13 @@ const CarsListToolbar = props => {
 };
 
 CarsListToolbar.propTypes = {
+  id: PropTypes.number,
   className: PropTypes.string,
   onOpenImportForm: PropTypes.func.isRequired,
 };
 
-
 CarsListToolbar.defaultProps = {
+  id: undefined,
   className: undefined,
 };
 
